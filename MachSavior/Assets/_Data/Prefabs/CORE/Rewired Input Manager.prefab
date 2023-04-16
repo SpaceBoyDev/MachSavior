@@ -276,6 +276,15 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 2
+    - _id: 6
+      _name: ResumeTime
+      _type: 1
+      _descriptiveName: ResumeTime
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 3
     actionCategories:
     - _name: Default
       _descriptiveName: Default
@@ -292,6 +301,11 @@ MonoBehaviour:
       _tag: 
       _id: 2
       _userAssignable: 1
+    - _name: TimeControl
+      _descriptiveName: TimeControl
+      _tag: 
+      _id: 3
+      _userAssignable: 1
     actionCategoryMap:
       list:
       - categoryId: 0
@@ -300,6 +314,8 @@ MonoBehaviour:
         actionIds: 000000000200000003000000
       - categoryId: 2
         actionIds: 0400000005000000
+      - categoryId: 3
+        actionIds: 06000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -412,6 +428,17 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 6
+        _elementType: 1
+        _elementIdentifierId: -1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 101
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
     mouseMaps:
     - id: 0
       categoryId: 0
@@ -447,8 +474,8 @@ MonoBehaviour:
     controllerMapLayoutManagerRuleSets: []
     controllerMapEnablerRuleSets: []
     playerIdCounter: 2
-    actionIdCounter: 6
-    actionCategoryIdCounter: 3
+    actionIdCounter: 7
+    actionCategoryIdCounter: 4
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1
     joystickLayoutIdCounter: 1
