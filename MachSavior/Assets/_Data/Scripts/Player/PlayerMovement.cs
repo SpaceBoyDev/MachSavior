@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private float playerVelocityY = 0;
 
     public float gravityToApply;
+    
     [SerializeField]
     float gravityAcceleration = 0;
     float gravityDrag = 1.5f;
@@ -71,16 +72,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 verticalMovement = rb.transform.forward * verticalAxis;
         Vector3 horizontalMovement = rb.transform.right * horizontalAxis;
-        
-        
+
         Vector3 combinedMovement = verticalMovement + horizontalMovement;
         combinedMovement = Mathf.Clamp01(combinedMovement.sqrMagnitude) * combinedMovement.normalized;
         
         Vector3 moveDirection = new Vector3(combinedMovement.x, playerVelocityY, combinedMovement.z);
         moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
-        
-        rb.velocity = moveDirection;
 
+        rb.velocity = moveDirection;
+        
     }
 
     private void JumpInput()

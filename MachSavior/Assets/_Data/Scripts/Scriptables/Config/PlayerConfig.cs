@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerConfig : ScriptableObject
 {
     [Header("Movement")]
+
+  
     private float playerAcceleration = 12f;
     public float PlayerAcceleration
     {
