@@ -7,8 +7,8 @@ public class TimeObject : MonoBehaviour
     private Vector3 recordedVelocity;
     private float recordeMagnitude;
 
-    public bool isStopped;
     public bool isTimeAffected;
+    private bool isStopped;
 
     Rigidbody rb;
 
@@ -22,16 +22,13 @@ public class TimeObject : MonoBehaviour
     {
         if(isTimeAffected && TimeManager.Instance.isTimeStopped && !isStopped)
         {
-            if (rb.velocity.magnitude >= 0f) //If its moving
-            {
-                recordedVelocity = rb.velocity.normalized;
-                recordeMagnitude = rb.velocity.magnitude;
+            recordedVelocity = rb.velocity.normalized;
+            recordeMagnitude = rb.velocity.magnitude;
 
-                //Stop movement
-                rb.velocity = Vector3.zero;
-                rb.isKinematic = true;
-                isStopped = true;
-            }
+            //Stop movement
+            rb.velocity = Vector3.zero;
+            rb.isKinematic = true;
+            isStopped = true;
         }
     }
 

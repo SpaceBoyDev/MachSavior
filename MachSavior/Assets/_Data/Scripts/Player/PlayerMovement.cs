@@ -47,22 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
         Move();
         JumpInput();
-
-        //TEMP:: Testing time control.
-        if (PlayerInputManager.Instance.IsResumeTime())
-        {
-            if (TimeManager.Instance.isTimeStopped)
-            {
-                Debug.Log("Resume time.");
-                TimeManager.Instance.ContinueTime();
-            }
-            else
-            {
-                Debug.Log("Stop time.");
-                TimeManager.Instance.StopTime();
-            }
-        }
-        //TEMP
     }
  
     private void FixedUpdate()
