@@ -6,24 +6,25 @@ using UnityEngine;
 public class PlayerConfig : ScriptableObject
 {
     [Header("Movement")]
-    private float playerAcceleration = 12f;
+    [SerializeField]
+    private float playerAcceleration = 150f;
     public float PlayerAcceleration
     {
         get { return playerAcceleration; }
     }
-
-    private float playerGroundDrag = 3f;
+    [SerializeField]
+    private float playerGroundDrag = 1f;
     public float PlayerGroundDrag
     {
         get { return playerGroundDrag; }
     }
-
+    [SerializeField]
     private float playerAirDrag = 3f;
     public float PlayerAirDrag
     {
         get { return playerAirDrag; }
     }
-
+    [SerializeField]
     private float playerMaxHorizontalSpeed = 3f;
 
     public float PlayerMaxHorizontalSpeed
@@ -32,7 +33,7 @@ public class PlayerConfig : ScriptableObject
     }
 
     [SerializeField]
-    private float jumpForce = 3f;
+    private float jumpForce = 10.5f;
     public float JumpForce
     {
         get { return jumpForce; }
@@ -46,7 +47,7 @@ public class PlayerConfig : ScriptableObject
     }
 
     [SerializeField]
-    private float gravity = 3f;
+    private float gravity = 1f;
     public float Gravity
     {
         get { return gravity; }
