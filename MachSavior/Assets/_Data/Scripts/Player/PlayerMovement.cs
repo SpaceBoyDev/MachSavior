@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
         playerCamera = CameraManager.Instance.GetPlayerCamera();
+        playerVelocityY = 0;
     }
 
     private void Update()
