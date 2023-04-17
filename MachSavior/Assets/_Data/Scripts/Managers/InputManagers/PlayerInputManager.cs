@@ -11,6 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     private const string VERTICAL_MOVEMENT = "VerticalMovement";
     private const string HORIZONTAL_MOVEMENT = "HorizontalMovement";
     private const string JUMP = "Jump";
+    private const string RESUME_TIME = "ResumeTime";
 
     //Camera mouse
     private const string VERTICAL_MOUSE = "VerticalMouse";
@@ -21,6 +22,7 @@ public class PlayerInputManager : MonoBehaviour
     private bool isMovementAllowed = true;
     private bool isJumpAllowed = true;
     private bool isCameraAllowed = true;
+    private bool isResumeTimeAllowed = true;
 
     public bool IsMovementAllowed
     {
@@ -71,6 +73,14 @@ public class PlayerInputManager : MonoBehaviour
             return false;
 
         return playerInput.GetButtonDown(JUMP);
+    }
+
+    public bool IsResumeTime()
+    {
+        if (!isResumeTimeAllowed)
+            return false;
+
+        return playerInput.GetButtonDown(RESUME_TIME);
     }
 
     public float GetVerticalMouse()
