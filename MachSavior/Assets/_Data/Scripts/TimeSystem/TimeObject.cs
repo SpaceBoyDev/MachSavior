@@ -5,7 +5,9 @@ using UnityEngine;
 public class TimeObject : MonoBehaviour
 {
     private Vector3 recordedVelocity;
-    private float recordeMagnitude;
+    private float recordedMagnitude;
+
+    private float slowtime;
 
     public bool isTimeAffected;
     private bool isStopped;
@@ -23,19 +25,21 @@ public class TimeObject : MonoBehaviour
         if(isTimeAffected && TimeManager.Instance.isTimeStopped && !isStopped)
         {
             recordedVelocity = rb.velocity.normalized;
-            recordeMagnitude = rb.velocity.magnitude;
+            recordedMagnitude = rb.velocity.magnitude;
 
             //Stop movement
-            rb.velocity = Vector3.zero;
-            rb.isKinematic = true;
+            slowtime = 0.1f;
+            //rb.isKinematic = true;
             isStopped = true;
         }
+        rb.velocity *= slowtime;
     }
 
     public void ContinueObjectTime()
     {
+        slowtime = 1f;
         rb.isKinematic = false;
         isStopped = false;
-        rb.velocity = recordedVelocity * recordeMagnitude; //Adds back the velocity that had before it got stopped.
+        rb.velocity = recordedVelocity * recordedMagnitude; //Adds back the velocity that had before it got stopped.
     }
 }
