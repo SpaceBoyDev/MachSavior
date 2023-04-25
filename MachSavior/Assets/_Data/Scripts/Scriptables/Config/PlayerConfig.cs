@@ -7,7 +7,7 @@ public class PlayerConfig : ScriptableObject
 {
     [Header("Movement")]
     [SerializeField]
-    private float playerAcceleration = 150f;
+    private float playerAcceleration = 500f;
     public float PlayerAcceleration
     {
         get { return playerAcceleration; }

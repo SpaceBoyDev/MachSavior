@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpAcceleration = 1;
 
     private bool canCheckGround = true;
+    private bool canJump = true;
 
 
     private void Start()
@@ -65,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
             gravityAcceleration = 0;
             gravityToApply = 0;
             playerVelocityY = 0;
+            canJump = true;
         }
     }
 
@@ -81,21 +83,44 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
         
         rb.velocity = moveDirection;
-
     }
 
     private void JumpInput()
     {
-        if (PlayerInputManager.Instance.IsJumpPressed() && isGrounded)
+        if (PlayerInputManager.Instance.IsJumpDown() && isGrounded)
         {
             isGrounded = false;
             canCheckGround = false;
-            jumpForceToApply = playerConfig.JumpForce;
-            jumpAcceleration++;
-            playerVelocityY = playerConfig.JumpForce;
+            //jumpForceToApply = playerConfig.JumpForce;
+            //jumpAcceleration++;
+            //playerVelocityY = playerConfig.JumpForce;
+
+            Jump();
             print("Salto");
             StartCoroutine(EnableCheckGround());
         }
+    }
+
+    private void Jump()
+    {
+        while (PlayerInputManager.Instance.IsJumpPressed() && canJump)
+        {
+            playerVelocityY+= 0.1f;
+
+            if (rb.velocity.y >= 80)
+            {
+                playerVelocityY = 10;
+                canJump = false;
+            }
+        }
+
+        canJump = false;
+    }
+
+    private IEnumerator JumpTimer()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        canJump = false;
     }
 
     private void ApplyGravity()
@@ -112,6 +137,11 @@ public class PlayerMovement : MonoBehaviour
             //gravityAcceleration += 0.3f;
             playerVelocityY -= gravityToApply / gravityDrag;
         }
+
+        //if (rb.velocity.y >= 10)
+        //{
+        //    rb.velocity = new Vector3(rb.velocity.x, 10, rb.velocity.z);
+        //}
 
         //rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
     }
