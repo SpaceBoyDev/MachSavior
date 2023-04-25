@@ -12,6 +12,16 @@ public class FallingCube : MonoBehaviour
             StartCoroutine(ResetPos());
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "FallingObject")
+        {
+            transform.position = startPos;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+    }
+
     private void Start()
     {
         startPos = transform.position;
