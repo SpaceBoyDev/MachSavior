@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0.2708192, y: -0.9, z: 0.2318058}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1892117650321510193}
   m_Father: {fileID: 1915959385190008619}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -22.787, y: 0, z: 0}
@@ -196,6 +197,7 @@ GameObject:
   - component: {fileID: 1915959385190008623}
   - component: {fileID: 1915959385190008616}
   - component: {fileID: 1915959385190008622}
+  - component: {fileID: 1146949193601931338}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -346,3 +348,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerConfig: {fileID: 11400000, guid: b35cfb4d25b6956418d2c77a93249cb2, type: 2}
+--- !u!114 &1146949193601931338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915959385190008615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97d159555aaa8f478afaf45a9dffa07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handPosition: {fileID: 8670436449809582057}
+  distanceToPick: 0
+--- !u!1 &8670436449809582057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1892117650321510193}
+  m_Layer: 0
+  m_Name: HandPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1892117650321510193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670436449809582057}
+  m_LocalRotation: {x: 0.19754337, y: -0, z: -0, w: 0.9802941}
+  m_LocalPosition: {x: 0.029181004, y: 0.5864333, z: 1.2531226}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981426199}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
