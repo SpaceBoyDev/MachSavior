@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5fefa54c9aa5243a28cdb0b1bf6f96, type: 3}
   m_Name: PlayerConfiguration
   m_EditorClassIdentifier: 
-  playerAcceleration: 150
+  playerAcceleration: 450
   playerGroundDrag: 1
-  playerAirDrag: 3
+  playerAirDrag: 1.32
+  playerSlopeDrag: 1
   playerMaxHorizontalSpeed: 3
-  jumpForce: 10.5
+  jumpForce: 5
   maxGravity: -80
-  gravity: 1
+  gravity: 0.01
   sensibilityX: 0.4
   sensibilityY: 0.4

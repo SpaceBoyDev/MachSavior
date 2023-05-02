@@ -1,6 +1,5 @@
+using Rewired;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Networking.PlayerConnection;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,35 +8,38 @@ public class PlayerMovement : MonoBehaviour
     private PlayerConfig playerConfig;
 
     private Rigidbody rb;
+    private GameObject root;
 
     [SerializeField]
     private bool isGrounded = false;
+    [SerializeField]
+    private bool onSlope = false;
 
     private Camera playerCamera;
 
     private float horizontalAxis;
     private float verticalAxis;
 
-    private float playerVelocityY = 0;
+    private float verticalSpeed = 0;
 
     public float gravityToApply;
-    [SerializeField]
-    float gravityAcceleration = 0;
-    float gravityDrag = 1.5f;
 
-    public float jumpForceToApply;
-    private float jumpAcceleration = 1;
-
+    public float jumpForce;
     private bool canCheckGround = true;
-    private bool canJump = true;
+    public float initialGravity = 1;
+    public float jumpHover = 0.6f;
+    public float jumpHoverPercent = 0.2f;
+
 
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
+        root = PlayerManager.Instance.GetRoot();
         playerCamera = CameraManager.Instance.GetPlayerCamera();
-        playerVelocityY = 0;
+        verticalSpeed = 0;
+        rb.velocity = -Vector3.up;
     }
 
     private void Update()
@@ -47,103 +49,99 @@ public class PlayerMovement : MonoBehaviour
 
         Move();
         JumpInput();
+        ApplyGravity();
     }
 
     private void FixedUpdate()
     {
         if (canCheckGround)
         {
-            if (PlayerManager.Instance.checkFloor())
-                isGrounded = true;
-            else
-                isGrounded = false;
+            isGrounded = PlayerManager.Instance.checkFloor();
+            onSlope = PlayerManager.Instance.OnSlope();
         }
-
-        if (!isGrounded)
-            ApplyGravity();
-        else
-        {
-            gravityAcceleration = 0;
-            gravityToApply = 0;
-            playerVelocityY = 0;
-            canJump = true;
-        }
+        
     }
 
     private void Move()
     {
-        Vector3 verticalMovement = rb.transform.forward * verticalAxis;
-        Vector3 horizontalMovement = rb.transform.right * horizontalAxis;
-        
-        
-        Vector3 combinedMovement = verticalMovement + horizontalMovement;
+
+        if (onSlope)
+        {
+            RaycastHit slopeHit = PlayerManager.Instance.GetSlopeHit();
+            root.transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(transform.forward, slopeHit.normal), slopeHit.normal);
+        }
+        else
+        {
+            root.transform.rotation = transform.rotation;
+        }
+
+
+        Vector3 verticalMovement = root.transform.forward * verticalAxis;
+        Vector3 horizontalMovement = root.transform.right * horizontalAxis;
+
+        Vector3 combinedMovement = (verticalMovement + horizontalMovement);
         combinedMovement = Mathf.Clamp01(combinedMovement.sqrMagnitude) * combinedMovement.normalized;
-        
-        Vector3 moveDirection = new Vector3(combinedMovement.x, playerVelocityY, combinedMovement.z);
-        moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
-        
+
+        Vector3 moveDirection = new Vector3(combinedMovement.x, verticalSpeed, combinedMovement.z);
+
+        if (onSlope)
+            moveDirection = (PlayerManager.Instance.SlopeDirection(moveDirection) * playerConfig.PlayerAcceleration / playerConfig.PlayerSlopeDrag) * Time.fixedDeltaTime;
+        else if (isGrounded)
+            moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
+        else
+            moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerAirDrag) * Time.fixedDeltaTime;
+
+
         rb.velocity = moveDirection;
     }
 
     private void JumpInput()
     {
-        if (PlayerInputManager.Instance.IsJumpDown() && isGrounded)
+        if (PlayerInputManager.Instance.IsJumpDown() && isGrounded || PlayerInputManager.Instance.IsJumpDown() && onSlope)
         {
             isGrounded = false;
+            onSlope = false;
             canCheckGround = false;
-            //jumpForceToApply = playerConfig.JumpForce;
-            //jumpAcceleration++;
-            //playerVelocityY = playerConfig.JumpForce;
-
-            Jump();
-            print("Salto");
             StartCoroutine(EnableCheckGround());
+            verticalSpeed = jumpForce;
+            gravityToApply = initialGravity;
+
         }
-    }
-
-    private void Jump()
-    {
-        while (PlayerInputManager.Instance.IsJumpPressed() && canJump)
-        {
-            playerVelocityY+= 0.1f;
-
-            if (rb.velocity.y >= 80)
-            {
-                playerVelocityY = 10;
-                canJump = false;
-            }
-        }
-
-        canJump = false;
-    }
-
-    private IEnumerator JumpTimer()
-    {
-        yield return new WaitForSecondsRealtime(2f);
-        canJump = false;
     }
 
     private void ApplyGravity()
     {
-        gravityToApply = playerConfig.Gravity + gravityAcceleration;
-
-        if (rb.velocity.y <= playerConfig.MaxGravity)
+        if (isGrounded)
         {
-            //playerVelocityY = playerConfig.MaxGravity;
-            rb.velocity = new Vector3(rb.velocity.x, playerConfig.MaxGravity, rb.velocity.z);
+            ResetVerticalSpeed();
+            gravityToApply = initialGravity;
         }
-        else
+        else if (onSlope)
         {
-            //gravityAcceleration += 0.3f;
-            playerVelocityY -= gravityToApply / gravityDrag;
+            ResetVerticalSpeed();
+            gravityToApply = initialGravity;
         }
+        else 
+        {
+            if (verticalSpeed >= -jumpHover && verticalSpeed <= jumpHover)
+            {
+                gravityToApply = initialGravity * jumpHoverPercent;
+            }
+            else if (verticalSpeed < -jumpHover)
+                gravityToApply = initialGravity;
 
-        //if (rb.velocity.y >= 10)
-        //{
-        //    rb.velocity = new Vector3(rb.velocity.x, 10, rb.velocity.z);
-        //}
+            if (rb.velocity.y > 0 && !isGrounded && !onSlope && !PlayerInputManager.Instance.IsJumpPressed())
+            {
+                gravityToApply = initialGravity * 3;
+            }
 
-        //rb.velocity = new Vector3(rb.velocity.x, gravity, rb.velocity.z);
+            verticalSpeed -= gravityToApply * Time.fixedDeltaTime;
+        }
+    }
+
+    private void ResetVerticalSpeed()
+    {
+        verticalSpeed = 0;
     }
 
     private IEnumerator EnableCheckGround()

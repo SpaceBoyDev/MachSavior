@@ -79,8 +79,16 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (!isJumpAllowed)
             return false;
-
+        
         return playerInput.GetButton(JUMP);
+    }
+
+    public bool IsJumpUp()
+    {
+        if (!isJumpAllowed)
+            return false;
+
+        return playerInput.GetButtonUp(JUMP);
     }
 
     public bool IsResumeTime()

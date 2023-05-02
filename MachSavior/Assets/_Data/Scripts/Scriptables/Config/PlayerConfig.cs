@@ -24,6 +24,13 @@ public class PlayerConfig : ScriptableObject
     {
         get { return playerAirDrag; }
     }
+
+    [SerializeField]
+    private float playerSlopeDrag = 1.5f;
+    public float PlayerSlopeDrag
+    {
+        get { return playerSlopeDrag; }
+    }
     [SerializeField]
     private float playerMaxHorizontalSpeed = 3f;
 
