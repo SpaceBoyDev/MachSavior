@@ -17,12 +17,17 @@ public class PlayerInputManager : MonoBehaviour
     private const string VERTICAL_MOUSE = "VerticalMouse";
     private const string HORIZONTAL_MOUSE = "HorizontalMouse";
 
+    //Player PickObjects
+    private const string PICK_OBJECTS = "Pick";
+
+
     private Player playerInput;
 
     private bool isMovementAllowed = true;
     private bool isJumpAllowed = true;
     private bool isCameraAllowed = true;
     private bool isResumeTimeAllowed = true;
+    private bool isPickAllowed = true;
 
     public bool IsMovementAllowed
     {
@@ -97,5 +102,13 @@ public class PlayerInputManager : MonoBehaviour
             return 0f;
 
         return playerInput.GetAxis(HORIZONTAL_MOUSE);
+    }
+
+    public bool IsPickButtonPressed()
+    {
+        if (!isPickAllowed)
+            return false;
+
+        return playerInput.GetButtonDown(PICK_OBJECTS);
     }
 }
