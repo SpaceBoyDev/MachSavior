@@ -16,9 +16,10 @@ MonoBehaviour:
   playerGroundDrag: 1
   playerAirDrag: 1.32
   playerSlopeDrag: 1
-  playerMaxHorizontalSpeed: 3
-  jumpForce: 5
+  jumpForce: 1.5
+  jumpHover: 0.1
+  jumpHoverPercent: 0.3
   maxGravity: -80
-  gravity: 0.01
+  gravity: 3.5
   sensibilityX: 0.4
   sensibilityY: 0.4

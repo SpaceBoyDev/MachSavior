@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Scriptable PlayerConfig")]
     [SerializeField]
     private PlayerConfig playerConfig;
 
+    [Header("References")]
     private Rigidbody rb;
     private GameObject root;
 
+    [Header("Movement bools")]
     [SerializeField]
     private bool isGrounded = false;
     [SerializeField]
     private bool onSlope = false;
+    private bool canCheckGround = true; //If the raycast can check for ground and slopes
 
     private Camera playerCamera;
 
+    [Header("Vertical Velocity")]
+    private float verticalSpeed = 0;
+    private float gravityToApply;
+
+    [Header("Axis")]
     private float horizontalAxis;
     private float verticalAxis;
-
-    private float verticalSpeed = 0;
-
-    public float gravityToApply;
-
-    public float jumpForce;
-    private bool canCheckGround = true;
-    public float initialGravity = 1;
-    public float jumpHover = 0.6f;
-    public float jumpHoverPercent = 0.2f;
-
 
 
     private void Start()
@@ -64,16 +62,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-
         if (onSlope)
         {
             RaycastHit slopeHit = PlayerManager.Instance.GetSlopeHit();
             root.transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(transform.forward, slopeHit.normal), slopeHit.normal);
         }
         else
-        {
             root.transform.rotation = transform.rotation;
-        }
 
 
         Vector3 verticalMovement = root.transform.forward * verticalAxis;
@@ -91,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
         else
             moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerAirDrag) * Time.fixedDeltaTime;
 
-
         rb.velocity = moveDirection;
     }
 
@@ -103,9 +97,8 @@ public class PlayerMovement : MonoBehaviour
             onSlope = false;
             canCheckGround = false;
             StartCoroutine(EnableCheckGround());
-            verticalSpeed = jumpForce;
-            gravityToApply = initialGravity;
-
+            verticalSpeed = playerConfig.JumpForce;
+            gravityToApply = playerConfig.Gravity;
         }
     }
 
@@ -114,25 +107,25 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             ResetVerticalSpeed();
-            gravityToApply = initialGravity;
+            gravityToApply = playerConfig.Gravity;
         }
         else if (onSlope)
         {
             ResetVerticalSpeed();
-            gravityToApply = initialGravity;
+            gravityToApply = playerConfig.Gravity;
         }
         else 
         {
-            if (verticalSpeed >= -jumpHover && verticalSpeed <= jumpHover)
+            if (verticalSpeed >= -playerConfig.JumpHover && verticalSpeed <= playerConfig.JumpHover)
             {
-                gravityToApply = initialGravity * jumpHoverPercent;
+                gravityToApply = playerConfig.Gravity * playerConfig.JumpHoverPercent;
             }
-            else if (verticalSpeed < -jumpHover)
-                gravityToApply = initialGravity;
+            else if (verticalSpeed < -playerConfig.JumpHover)
+                gravityToApply = playerConfig.Gravity;
 
             if (rb.velocity.y > 0 && !isGrounded && !onSlope && !PlayerInputManager.Instance.IsJumpPressed())
             {
-                gravityToApply = initialGravity * 3;
+                gravityToApply = playerConfig.Gravity * 3;
             }
 
             verticalSpeed -= gravityToApply * Time.fixedDeltaTime;

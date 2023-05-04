@@ -7,18 +7,23 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
 
+    [Header("References")]
     [SerializeField]
     private GameObject root;
     [SerializeField]
+    [Tooltip("Points of origin for the ground raycast")]
     private Transform[] raycastOrigin;
+    [SerializeField]
+    private Camera playerCamera;
+    [SerializeField]
+    private Transform cameraPos;
+
+    [Header("Ground/Slopes")]
+    [SerializeField]
+    public float maxSlopeAngle = 40f;
     [SerializeField]
     private LayerMask groundMask;
     private RaycastHit slopeHit;
-    public float maxSlopeAngle = 40f;
-
-    public Camera playerCamera;
-    public Transform cameraPos;
-
     [SerializeField]
     int raycastHits = 0;
 
@@ -71,6 +76,16 @@ public class PlayerManager : MonoBehaviour
     public GameObject GetRoot()
     {
         return root;
+    }
+
+    public Camera GetPlayerCamera()
+    {
+        return playerCamera;
+    }
+
+    public Transform GetCameraPos()
+    {
+        return cameraPos;
     }
 
     public RaycastHit GetSlopeHit()
