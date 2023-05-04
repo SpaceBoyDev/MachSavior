@@ -11,19 +11,18 @@ public class PlayerInputManager : MonoBehaviour
     private const string VERTICAL_MOVEMENT = "VerticalMovement";
     private const string HORIZONTAL_MOVEMENT = "HorizontalMovement";
     private const string JUMP = "Jump";
+    private const string RESUME_TIME = "ResumeTime";
 
     //Camera mouse
     private const string VERTICAL_MOUSE = "VerticalMouse";
     private const string HORIZONTAL_MOUSE = "HorizontalMouse";
 
-    // Pick objects
-    private const string PICK = "Pick";
     private Player playerInput;
 
     private bool isMovementAllowed = true;
     private bool isJumpAllowed = true;
     private bool isCameraAllowed = true;
-    private bool isPickAllowed = true;
+    private bool isResumeTimeAllowed = true;
 
     public bool IsMovementAllowed
     {
@@ -33,11 +32,6 @@ public class PlayerInputManager : MonoBehaviour
     public bool IsJumpAllowed
     {
         set { isJumpAllowed = value; }
-    }
-
-    public bool IsPickAllowed
-    {
-        set { isPickAllowed = value; }
     }
 
     private void Awake()
@@ -81,6 +75,14 @@ public class PlayerInputManager : MonoBehaviour
         return playerInput.GetButtonDown(JUMP);
     }
 
+    public bool IsResumeTime()
+    {
+        if (!isResumeTimeAllowed)
+            return false;
+
+        return playerInput.GetButtonDown(RESUME_TIME);
+    }
+
     public float GetVerticalMouse()
     {
         if (!isCameraAllowed)
@@ -95,13 +97,5 @@ public class PlayerInputManager : MonoBehaviour
             return 0f;
 
         return playerInput.GetAxis(HORIZONTAL_MOUSE);
-    }
-
-    public bool IsPickButtonPressed()
-    {
-        if (!isPickAllowed)
-            return false;
-
-        return playerInput.GetButtonDown(PICK);
     }
 }
