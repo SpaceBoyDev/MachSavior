@@ -11,7 +11,7 @@ public class CameraManager : MonoBehaviour
 
     public Camera GetPlayerCamera()
     {
-        return PlayerManager.Instance.playerCamera;
+        return PlayerManager.Instance.GetPlayerCamera();
     }
 
     [SerializeField]
@@ -30,12 +30,12 @@ public class CameraManager : MonoBehaviour
     }
     private void Start()
     {
-        cameraPos = PlayerManager.Instance.cameraPos;
-        PlayerManager.Instance.playerCamera.transform.parent = null;
+        cameraPos = PlayerManager.Instance.GetCameraPos();
+        PlayerManager.Instance.GetPlayerCamera().transform.parent = null;
     }
 
     private void Update()
     {
-        PlayerManager.Instance.playerCamera.transform.position = cameraPos.position;
+        PlayerManager.Instance.GetPlayerCamera().transform.position = cameraPos.position;
     }
 }

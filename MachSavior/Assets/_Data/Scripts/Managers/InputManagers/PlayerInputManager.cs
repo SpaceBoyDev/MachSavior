@@ -67,12 +67,28 @@ public class PlayerInputManager : MonoBehaviour
         return playerInput.GetAxis(HORIZONTAL_MOVEMENT);
     }
 
-    public bool IsJumpPressed()
+    public bool IsJumpDown()
     {
         if (!isJumpAllowed)
             return false;
 
         return playerInput.GetButtonDown(JUMP);
+    }
+
+    public bool IsJumpPressed()
+    {
+        if (!isJumpAllowed)
+            return false;
+        
+        return playerInput.GetButton(JUMP);
+    }
+
+    public bool IsJumpUp()
+    {
+        if (!isJumpAllowed)
+            return false;
+
+        return playerInput.GetButtonUp(JUMP);
     }
 
     public bool IsResumeTime()
