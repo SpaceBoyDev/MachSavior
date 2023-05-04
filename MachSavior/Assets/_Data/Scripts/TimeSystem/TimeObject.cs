@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class TimeObject : MonoBehaviour
+public class TimeObject : MonoBehaviour, ITimeAffected
 {
     private Vector3 recordedVelocity;
     private float recordedMagnitude;
-
+    
+    //This variable modifies the speed of the rb when the object is time affected.
     private float slowtime;
 
     public bool isTimeAffected = true;
-    [SerializeField] private bool isFreeze = false;
-    private bool isStopped;
+    [SerializeField] private bool isFreezeInTime = false;
+    [HideInInspector] public bool isStopped = true;
 
     Rigidbody rb;
 
@@ -23,14 +25,14 @@ public class TimeObject : MonoBehaviour
 
     private void Update()
     {
-        if(isTimeAffected && TimeManager.Instance.isTimeStopped && !isStopped)
+        if(isTimeAffected && isStopped)
         {
             //Record last velocity values before it slows
             recordedVelocity = rb.velocity.normalized;
             recordedMagnitude = rb.velocity.magnitude;
 
             // If  the object doesnt move at all when time is slowed, make it kinematic.
-            if (isFreeze)
+            if (isFreezeInTime)
                 rb.isKinematic = true; 
 
             //Stop movement
@@ -40,11 +42,16 @@ public class TimeObject : MonoBehaviour
         rb.velocity *= slowtime;
     }
 
-    public void ContinueObjectTime()
+    public void StopTime()
+    {
+        isStopped = true;
+    }
+
+    public void ResumeTime()
     {
         slowtime = 1f;
 
-        if(isFreeze)
+        if(isFreezeInTime)
             rb.isKinematic = false;
 
         isStopped = false;

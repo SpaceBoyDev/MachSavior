@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8038583028184255925}
   - component: {fileID: 8038583028184255924}
   - component: {fileID: 8038583028184255923}
+  - component: {fileID: 3403746028790272432}
   m_Layer: 0
   m_Name: Pesado
   m_TagString: FallingObject
@@ -159,6 +160,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3403746028790272432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038583028184255922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94fad7bee5a4c24994503873b2b0546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimeAffected: 1
+  isFreeze: 0
 --- !u!1 &8038583029014246234
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +188,7 @@ GameObject:
   - component: {fileID: 8038583029014246235}
   - component: {fileID: 8038583029014246239}
   - component: {fileID: 8038583029014246224}
+  - component: {fileID: 5339513749144559845}
   m_Layer: 0
   m_Name: Medio Peso
   m_TagString: FallingObject
@@ -287,6 +303,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5339513749144559845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038583029014246234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94fad7bee5a4c24994503873b2b0546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimeAffected: 1
+  isFreeze: 0
 --- !u!1 &8038583029450408280
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +360,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8038583029450408280}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4, y: 0.71354294, z: 7.797966}
@@ -378,6 +408,7 @@ GameObject:
   - component: {fileID: 8038583029491331352}
   - component: {fileID: 8038583029491331335}
   - component: {fileID: 8038583029491331334}
+  - component: {fileID: 5833773543950316689}
   m_Layer: 0
   m_Name: Ligero
   m_TagString: FallingObject
@@ -492,6 +523,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5833773543950316689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038583029491331333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94fad7bee5a4c24994503873b2b0546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimeAffected: 1
+  isFreeze: 0
 --- !u!1 &8038583029816399340
 GameObject:
   m_ObjectHideFlags: 0

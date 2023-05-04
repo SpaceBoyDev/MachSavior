@@ -4,20 +4,51 @@ using UnityEngine;
 
 public class PlayerTimeController : MonoBehaviour
 {
+    [SerializeField] private float selectDistance;
+    
     void Update()
     {
-        if (PlayerInputManager.Instance.IsResumeTime())
+        SelectTimeObject();
+        // if (PlayerInputManager.Instance.IsResumeTime())
+        // {
+        //     if (TimeManager.Instance.isTimeStopped)
+        //     {
+        //         Debug.Log("$<color=green>Resume time </color> in object: <color=yellow>");
+        //         //TimeManager.Instance.ContinueTime();
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("<color=red>Stop time.</color>");
+        //         //TimeManager.Instance.StopTime();
+        //     }
+        // }
+    }
+    
+    void SelectTimeObject()
+    {
+        RaycastHit hitInfo;
+        bool hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo);
+        if (hit)
         {
-            if (TimeManager.Instance.isTimeStopped)
+            GameObject hitObj = hitInfo.collider.gameObject;
+            //If we dont hit a time controlled object return.
+            if (hitObj.GetComponent<ITimeAffected>() == null)
+                return;
+            if (PlayerInputManager.Instance.IsResumeTime())
             {
-                Debug.Log("Resume time.");
-                TimeManager.Instance.ContinueTime();
+                if (hitObj.GetComponent<TimeObject>().isStopped)
+                {
+                    Debug.Log($"$<color=green>Resume time</color> in object: <color=yellow>{hitObj.name} </color>");
+                    hitObj.GetComponent<ITimeAffected>().ResumeTime();
+                }
+                else
+                {
+                    Debug.Log($"<color=red>Stop time</color> in object: <color=yellow> {hitObj.name} </color>");
+                    hitObj.GetComponent<ITimeAffected>().StopTime();
+                }
             }
-            else
-            {
-                Debug.Log("Stop time.");
-                TimeManager.Instance.StopTime();
-            }
+        
         }
+        
     }
 }
