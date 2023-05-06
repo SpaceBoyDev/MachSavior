@@ -5,7 +5,8 @@ using UnityEngine;
 public class PickObjects : MonoBehaviour
 {
     [SerializeField]
-    private GameObject handPosition;
+    private GameObject pickPosition;
+
     [SerializeField] private float distanceToPick;
     private GameObject pickedObject = null;
 
@@ -38,6 +39,8 @@ public class PickObjects : MonoBehaviour
                 {
                     if (PlayerInputManager.Instance.IsPickButtonPressed())
                     {
+                        pickPosition.transform.position = hit.transform.position;
+
                         PickObject(hit.collider.gameObject);
                     }
                 }
@@ -58,8 +61,8 @@ public class PickObjects : MonoBehaviour
         objectToPick.GetComponent<Collider>().isTrigger = true;
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        objectToPick.transform.position = handPosition.transform.position;
-        objectToPick.transform.SetParent(handPosition.gameObject.transform);
+        objectToPick.transform.position = pickPosition.transform.position;
+        objectToPick.transform.SetParent(pickPosition.gameObject.transform);
         pickedObject = objectToPick;
 
     }

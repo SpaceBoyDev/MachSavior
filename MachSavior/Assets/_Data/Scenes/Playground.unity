@@ -435,6 +435,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &478495006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2897573186583090007, guid: 63d87668cab44da42a0ea6d35ec8065b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1915959384227152690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &774495425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,7 +1407,7 @@ GameObject:
   - component: {fileID: 2102076699}
   - component: {fileID: 2102076698}
   - component: {fileID: 2102076697}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1662,6 +1668,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5544830803333976535, guid: 63d87668cab44da42a0ea6d35ec8065b,
+        type: 3}
+      propertyPath: pickPosition
+      value: 
+      objectReference: {fileID: 478495006}
     - target: {fileID: 5544830803333976535, guid: 63d87668cab44da42a0ea6d35ec8065b,
         type: 3}
       propertyPath: distanceToPick
