@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turbine : MonoBehaviour, ITimeAffected
+public class ITimeCompositeInteractable : MonoBehaviour, ITimeInteractable
 {
-    private bool isStopped;
-    private void RotateTurbine()
+    [SerializeField] private List<GameObject> timeInteractObjects;
+
+    public bool GetIsStopped()
     {
-        
+        throw new System.NotImplementedException();
     }
-    
+
     public void StopTime()
     {
         throw new System.NotImplementedException();

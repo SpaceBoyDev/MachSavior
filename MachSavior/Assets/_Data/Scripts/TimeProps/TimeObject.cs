@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class TimeObject : MonoBehaviour, ITimeAffected
+public class TimeObject : MonoBehaviour, ITimeInteractable
 {
     private Vector3 recordedVelocity;
     private float recordedMagnitude;
@@ -13,14 +14,13 @@ public class TimeObject : MonoBehaviour, ITimeAffected
 
     public bool isTimeAffected = true;
     [SerializeField] private bool isFreezeInTime = false;
-    [HideInInspector] public bool isStopped = true;
+    public bool isStopped;
 
     Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        TimeManager.Instance.timeAffectedObjects.Add(this);
     }
 
     private void Update()
@@ -42,6 +42,12 @@ public class TimeObject : MonoBehaviour, ITimeAffected
         rb.velocity *= slowtime;
     }
 
+
+    public bool GetIsStopped()
+    {
+        return isStopped;
+    }
+
     public void StopTime()
     {
         isStopped = true;
@@ -49,13 +55,13 @@ public class TimeObject : MonoBehaviour, ITimeAffected
 
     public void ResumeTime()
     {
+        isStopped = false;
+        
         slowtime = 1f;
 
         if(isFreezeInTime)
             rb.isKinematic = false;
-
-        isStopped = false;
-
+        
         rb.velocity = recordedVelocity * recordedMagnitude; //Adds back the velocity that had before it got stopped.
     }
 }
