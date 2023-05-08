@@ -633,7 +633,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915959385190008615}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8fa6f3eefdfe0314b89a1809ec907c1f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -680,6 +680,20 @@ MonoBehaviour:
   onWallrun: 0
   leftWall: 0
   rightWall: 0
+  raycastOrigin:
+  - {fileID: 26785583}
+  - {fileID: 1746043119}
+  - {fileID: 2139269104}
+  - {fileID: 1555580255}
+  - {fileID: 300880268}
+  - {fileID: 2046676815}
+  - {fileID: 1570754759}
+  - {fileID: 855637173}
+  - {fileID: 339353189}
+  raycastHits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &1915959385190008623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,23 +707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 1915959383656605575}
-  raycastOrigin:
-  - {fileID: 26785583}
-  - {fileID: 1746043119}
-  - {fileID: 2139269104}
-  - {fileID: 1555580255}
-  - {fileID: 300880268}
-  - {fileID: 2046676815}
-  - {fileID: 1570754759}
-  - {fileID: 855637173}
-  - {fileID: 339353189}
   playerCamera: {fileID: 1981426198}
   cameraPos: {fileID: 1915959384463352058}
-  maxSlopeAngle: 40
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  raycastHits: 0
 --- !u!114 &1915959385190008622
 MonoBehaviour:
   m_ObjectHideFlags: 0
