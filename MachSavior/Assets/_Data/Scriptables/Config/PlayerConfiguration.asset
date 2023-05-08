@@ -16,6 +16,11 @@ MonoBehaviour:
   playerGroundDrag: 1
   playerAirDrag: 1.32
   playerSlopeDrag: 1
+  maximumSlopeAngle: 35
+  minimumRaycastHits: 1
+  playerWallrunDrag: 1.2
+  minimumWallrunVelocity: 5
+  minimumWallrunHeight: 1
   jumpForce: 1.5
   jumpHover: 0.1
   jumpHoverPercent: 0.3
