@@ -1562,46 +1562,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1146949193601931338, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: distanceToPick
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892117650321510193, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1915959385190008615, guid: 63d87668cab44da42a0ea6d35ec8065b,
         type: 3}
       propertyPath: m_Name
@@ -1661,26 +1621,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5544830803333976535, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: distanceToPick
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7432534294071777236, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9017901567876219109, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9017901567876219109, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63d87668cab44da42a0ea6d35ec8065b, type: 3}
