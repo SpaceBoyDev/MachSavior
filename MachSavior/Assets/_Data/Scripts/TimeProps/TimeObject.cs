@@ -10,11 +10,11 @@ public class TimeObject : MonoBehaviour, ITimeInteractable
     private float recordedMagnitude;
     
     //This variable modifies the speed of the rb when the object is time affected.
-    private float slowtime;
+    private float slowtime = 1f;
 
     public bool isTimeAffected = true;
     [SerializeField] private bool isFreezeInTime = false;
-    public bool isStopped;
+    private bool isStopped = false;
 
     Rigidbody rb;
 
