@@ -735,6 +735,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 25
+  pauseColor: {r: 1, g: 0.35400376, b: 0.25943398, a: 1}
+  playColor: {r: 1, g: 1, b: 1, a: 1}
+  selectColor: {r: 0.2971698, g: 0.48924387, b: 1, a: 1}
 --- !u!114 &5544830803333976535
 MonoBehaviour:
   m_ObjectHideFlags: 0
