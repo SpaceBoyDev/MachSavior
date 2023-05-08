@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 public class Turbine : MonoBehaviour, ITimeInteractable
 {
     private bool isStopped;
-    private float duration = 0.2f;
 
     private Tween rotTween;
 

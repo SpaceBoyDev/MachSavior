@@ -12,9 +12,12 @@ public class TimeObject : MonoBehaviour, ITimeInteractable
     //This variable modifies the speed of the rb when the object is time affected.
     private float slowtime = 1f;
 
+    [Tooltip("Makes so the object is affected by time so its controllable by the player.")]
     public bool isTimeAffected = true;
-    [SerializeField] private bool isFreezeInTime = false;
-    private bool isStopped = false;
+    [SerializeField, Tooltip("Changes the starting time state of the object.")] 
+    private bool isStopped;
+    [SerializeField, Tooltip("Makes so the object completely stops in time when stopped.")] 
+    private bool isFreezeInTime = false;
 
     Rigidbody rb;
 
