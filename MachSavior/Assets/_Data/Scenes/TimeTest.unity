@@ -566,6 +566,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7366399665713513718, guid: 63d87668cab44da42a0ea6d35ec8065b,
         type: 3}
+      propertyPath: distance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366399665713513718, guid: 63d87668cab44da42a0ea6d35ec8065b,
+        type: 3}
       propertyPath: selectDistance
       value: 300
       objectReference: {fileID: 0}

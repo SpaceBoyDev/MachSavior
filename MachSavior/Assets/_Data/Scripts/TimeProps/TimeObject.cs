@@ -41,24 +41,21 @@ public class TimeObject : MonoBehaviour, ITimeInteractable
         }
         rb.velocity *= slowtime;
     }
-
-
+    
     public bool GetIsStopped()
     {
         return isStopped;
     }
 
-    public void StopTime()
+    public void ChangeTimeState()
     {
-        isStopped = true;
-    }
+        isStopped = !isStopped;
 
-    public void ResumeTime()
-    {
-        isStopped = false;
-        
+        if (isStopped)
+            return;
+
         slowtime = 1f;
-
+        
         if(isFreezeInTime)
             rb.isKinematic = false;
         

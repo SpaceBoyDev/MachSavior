@@ -97,7 +97,7 @@ public class PlayerInputManager : MonoBehaviour
         return playerInput.GetButtonUp(JUMP);
     }
 
-    public bool IsResumeTime()
+    public bool IsChangeTimeState()
     {
         if (!isResumeTimeAllowed)
             return false;

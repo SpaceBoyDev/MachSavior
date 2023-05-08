@@ -32,7 +32,7 @@ public class TimeManager : MonoBehaviour
         isTimeStopped = false;
         foreach(ITimeInteractable obj in timeAffectedObjects)
         {
-            obj.ResumeTime();
+            obj.ChangeTimeState();
         }
     }
 

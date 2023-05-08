@@ -26,15 +26,13 @@ public class Turbine : MonoBehaviour, ITimeInteractable
         return isStopped;
     }
 
-    public void StopTime()
+    public void ChangeTimeState()
     {
-        isStopped = true;
-        rotTween.Pause();
-    }
-
-    public void ResumeTime()
-    {
-        isStopped = false;
-        rotTween.Restart();
+        isStopped = !isStopped;
+        
+        if(isStopped)
+            rotTween.Pause();
+        else
+            rotTween.Restart();
     }
 }
