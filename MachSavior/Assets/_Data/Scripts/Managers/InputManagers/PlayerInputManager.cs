@@ -11,7 +11,6 @@ public class PlayerInputManager : MonoBehaviour
     private const string VERTICAL_MOVEMENT = "VerticalMovement";
     private const string HORIZONTAL_MOVEMENT = "HorizontalMovement";
     private const string JUMP = "Jump";
-    private const string RESUME_TIME = "ResumeTime";
 
     //Camera mouse
     private const string VERTICAL_MOUSE = "VerticalMouse";
@@ -19,7 +18,9 @@ public class PlayerInputManager : MonoBehaviour
 
     //Player PickObjects
     private const string PICK_OBJECTS = "Pick";
-
+    
+    //Player Time Controll
+    private const string CHANGE_TIME_STATE = "ChangeTimeState";
 
     private Player playerInput;
 
@@ -96,12 +97,12 @@ public class PlayerInputManager : MonoBehaviour
         return playerInput.GetButtonUp(JUMP);
     }
 
-    public bool IsResumeTime()
+    public bool IsChangeTimeState()
     {
         if (!isResumeTimeAllowed)
             return false;
 
-        return playerInput.GetButtonDown(RESUME_TIME);
+        return playerInput.GetButtonDown(CHANGE_TIME_STATE);
     }
 
     public float GetVerticalMouse()
