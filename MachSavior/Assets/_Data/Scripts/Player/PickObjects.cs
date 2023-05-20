@@ -6,6 +6,7 @@ public class PickObjects : MonoBehaviour
 {
     [SerializeField]
     private GameObject pickPosition;
+ 
 
     [SerializeField] private float distanceToPick;
     private GameObject pickedObject = null;
@@ -19,7 +20,7 @@ public class PickObjects : MonoBehaviour
     {
         if (!pickedObject)
             CheckPickObject();
-        
+
         else        
             ReleaseObject();
 
@@ -40,7 +41,6 @@ public class PickObjects : MonoBehaviour
                     if (PlayerInputManager.Instance.IsPickButtonPressed())
                     {
                         pickPosition.transform.position = hit.transform.position;
-
                         PickObject(hit.collider.gameObject);
                     }
                 }
@@ -56,9 +56,10 @@ public class PickObjects : MonoBehaviour
 
     void PickObject(GameObject objectToPick)
     {
+        objectToPick.layer = LayerMask.NameToLayer("IgnorePlayer");
+
         objectToPick.GetComponent<Rigidbody>().useGravity = false;
         objectToPick.GetComponent<Rigidbody>().isKinematic = true;
-        objectToPick.GetComponent<Collider>().isTrigger = true;
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         objectToPick.transform.position = pickPosition.transform.position;
@@ -71,9 +72,10 @@ public class PickObjects : MonoBehaviour
     {
         if (PlayerInputManager.Instance.IsPickButtonPressed())
         {
+            pickedObject.layer = LayerMask.NameToLayer("Default");
+
             pickedObject.GetComponent<Rigidbody>().useGravity = true;
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-            pickedObject.GetComponent<Collider>().isTrigger = false;
             
             pickedObject.gameObject.transform.SetParent(null);
             pickedObject = null;

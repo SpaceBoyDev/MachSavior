@@ -6,6 +6,9 @@ public class PickableObject : MonoBehaviour
 {
     [SerializeField]
     private bool _canPick = true;
+    
+    [SerializeField]
+    private bool _isPicked = false;
 
     public bool CanPick()
     {
@@ -15,4 +18,14 @@ public class PickableObject : MonoBehaviour
         }
         return true;
     }
+
+    public bool IsPicked()
+    {
+        if (!_isPicked)
+        {
+            return false;
+        }
+        return true;
+    }
+    
 }
