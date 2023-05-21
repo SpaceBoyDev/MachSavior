@@ -7,10 +7,10 @@ using UnityEngine.Serialization;
 public class PlayerTimeController : MonoBehaviour
 {
     [Header("Time Control")] 
-    [SerializeField] private bool isSelectModeActive = false;
+    //[SerializeField] private bool isSelectModeActive = false;
     [SerializeField] private float distance;
     
-    private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
+    //private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
     private ITimeInteractable interactable;
 
     private void Update()
@@ -61,7 +61,7 @@ public class PlayerTimeController : MonoBehaviour
     }
     
     //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
-    private void ToggleSelectMode()
+    /*private void ToggleSelectMode()
     {
         if (PlayerInputManager.Instance.EnterSelectMode())
         {
@@ -110,5 +110,5 @@ public class PlayerTimeController : MonoBehaviour
                 Debug.Log($"<color=cyan>Object removed from select list.</color>");
             }
         }   
-    }
+    }*/
 }
