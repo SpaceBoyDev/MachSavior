@@ -514,6 +514,37 @@ Transform:
   m_Father: {fileID: 1915959385190008619}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &627165162500974012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2811895718617648826}
+  m_Layer: 0
+  m_Name: RaycastStepLow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2811895718617648826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627165162500974012}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8351295274672834584}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1915959383656605575
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +574,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1843442498}
+  - {fileID: 8351295274672834584}
   m_Father: {fileID: 1915959385190008619}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -701,7 +733,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &1915959385190008616
 MonoBehaviour:
@@ -716,17 +748,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerConfig: {fileID: 11400000, guid: b35cfb4d25b6956418d2c77a93249cb2, type: 2}
-  raycastWallrunOriginsRight:
-  - {fileID: 168403880857435592}
-  - {fileID: 6844654268365709693}
-  raycastWallrunOriginsLeft:
-  - {fileID: 409879322921611729}
-  - {fileID: 4010689321465990257}
   isGrounded: 1
   onSlope: 0
   onWallrun: 0
-  leftWall: 0
-  rightWall: 0
+  wallState: 0
   raycastOrigin:
   - {fileID: 26785583}
   - {fileID: 1746043119}
@@ -741,6 +766,23 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  secForEnableGroundCheck: 0.1
+  secForEnableWallCheck: 0.5
+  raycastWallrunOriginsRight:
+  - {fileID: 168403880857435592}
+  - {fileID: 6844654268365709693}
+  raycastWallrunOriginsLeft:
+  - {fileID: 409879322921611729}
+  - {fileID: 4010689321465990257}
+  stepRayUp: {fileID: 0}
+  stepRayLow: {fileID: 0}
+  stepOffset: 0
+  stepSmooth: 0
+  showDebugRay: 0
+  stepUpRaysColor: {r: 0, g: 0, b: 0, a: 0}
+  groundRaysColor: {r: 0, g: 0, b: 0, a: 0}
+  slopeRayColor: {r: 0, g: 0, b: 0, a: 0}
+  wallrunRayColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1915959385190008623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,4 +999,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 842425627551041466}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8387041869626007695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8351295274672834584}
+  m_Layer: 0
+  m_Name: RaycastStep
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8351295274672834584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8387041869626007695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7378863804033592404}
+  - {fileID: 2811895718617648826}
+  m_Father: {fileID: 1915959383656605572}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8638567598608923549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7378863804033592404}
+  m_Layer: 0
+  m_Name: RaycastStepUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7378863804033592404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638567598608923549}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8351295274672834584}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

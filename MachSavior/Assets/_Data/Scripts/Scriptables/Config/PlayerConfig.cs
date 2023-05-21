@@ -37,7 +37,7 @@ public class PlayerConfig : ScriptableObject
     [SerializeField]
     [Tooltip("Movement is divided by this amount when on slope")]
     [Range(1f, 2f)]
-    private float playerSlopeDrag = 1.5f;
+    private float playerSlopeDrag = 1f;
     public float PlayerSlopeDrag
     {
         get { return playerSlopeDrag; }
