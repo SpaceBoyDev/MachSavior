@@ -1,6 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-
 public class ColorizeMats : EditorWindow
 {
     private Color color;
@@ -34,3 +34,4 @@ public class ColorizeMats : EditorWindow
         }
     }
 }
+#endif
