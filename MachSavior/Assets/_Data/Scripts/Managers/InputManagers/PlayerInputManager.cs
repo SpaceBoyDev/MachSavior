@@ -132,9 +132,14 @@ public class PlayerInputManager : MonoBehaviour
         return playerInput.GetButtonDown(CHANGE_TIME_STATE);
     }
 
-    public bool IsSelectMode()
+    public bool EnterSelectMode()
     {
-        return playerInput.GetButtonDown(SELECT_MODE);
+        return playerInput.GetButton((SELECT_MODE));
+    }
+
+    public bool ExitSelectMode()
+    {
+        return playerInput.GetButtonUp((SELECT_MODE));
     }
 
     public bool IsSelectTimeObject()

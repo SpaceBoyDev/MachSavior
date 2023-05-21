@@ -1,8 +1,11 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+
 /// <summary>
 /// Base time object class.
 /// </summary>
+
 public abstract class TimeObject : MonoBehaviour, ITimeInteractable
 {
     [Header("Time Settings")]
@@ -16,11 +19,18 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     [SerializeField,Tooltip("Selection state of the item.")] 
     protected bool isSelected = false;
 
-    private Renderer objRenderer;
+    private Outline outline;
     //--------------------------------//
+    private void Awake()
+    {
+        outline = gameObject.AddComponent<Outline>();
+        outline.OutlineMode = Outline.Mode.OutlineAll;
+        outline.OutlineColor = isStopped ? Color.blue : Color.black;
+        outline.OutlineWidth = 8f;
+    }
+
     private void Start()
     {
-        objRenderer = this.GetComponent<Renderer>();
     }
 
     public bool GetIsStopped() { return isStopped; }
@@ -29,6 +39,9 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     public void SetIsSelected(bool selected)
     {
         isSelected = selected;
+        if (isSelected)
+            outline.OutlineColor = Color.white;
+        //outline.OutlineWidth = 8f;
     }
 
     public void ChangeTimeState()
@@ -41,10 +54,16 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
         if (isStopped)
         {
             StopTime();
+            outline.OutlineColor = Color.blue;
+            //outline.OutlineWidth = 8f;
+            //Debug.Log($"<color=green>Resume time</color> in object: <color=yellow>{target.name} </color>");
         }
         else
         {
             ResumeTime();
+            outline.OutlineColor = Color.black;
+            //outline.OutlineWidth = 8f;
+            //Debug.Log($"<color=red>Stop time</color> in object: <color=yellow> {target.name} </color>");
         }
     }
     public abstract void ResumeTime();

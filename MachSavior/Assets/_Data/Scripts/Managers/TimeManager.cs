@@ -30,10 +30,6 @@ public class TimeManager : MonoBehaviour
     public void ContinueTime()
     {
         isTimeStopped = false;
-        foreach(ITimeInteractable obj in timeAffectedObjects)
-        {
-            obj.ChangeTimeState();
-        }
     }
 
     public void StopTime()

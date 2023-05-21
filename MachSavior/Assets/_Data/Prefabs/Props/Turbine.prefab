@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 960510603192704205}
   - component: {fileID: 5919918505279140538}
   - component: {fileID: 642353533506067484}
+  - component: {fileID: 6154613784423348306}
   m_Layer: 0
   m_Name: Turbine
   m_TagString: Untagged
@@ -25,9 +26,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868721952979372178}
-  m_LocalRotation: {x: -0, y: 0.7071066, z: -0, w: 0.707107}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2475, y: 1.2475, z: 1.2475}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8936698808579899565}
@@ -59,6 +60,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b035d86d0e57c4980713936cd47aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0.5
+--- !u!114 &6154613784423348306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868721952979372178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482b384f0c427314abbd503ec26e5c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeAffected: 1
+  isStopped: 0
+  freezeInTime: 0
+  isSelected: 0
 --- !u!1 &1034196327357189810
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +240,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ff60bcc36e103e848bbf96dfe1a06342, type: 2}
+  - {fileID: 2100000, guid: 72b4a4e757329e445a7386b6be798cb6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
