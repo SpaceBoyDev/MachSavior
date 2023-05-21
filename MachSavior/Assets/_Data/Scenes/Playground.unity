@@ -764,6 +764,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canPick: 1
   _isPicked: 0
+  CanInteraccion: {fileID: 0}
+  Active: {fileID: 0}
 --- !u!4 &991125388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 806094162058984845, guid: 4433f51d7556a8442aa4266f68e4e761,
@@ -1067,6 +1069,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canPick: 1
   _isPicked: 0
+  CanInteraccion: {fileID: 0}
+  Active: {fileID: 0}
 --- !u!114 &1274573498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,6 +1488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canPick: 1
   _isPicked: 0
+  CanInteraccion: {fileID: 0}
+  Active: {fileID: 0}
 --- !u!1 &2102076695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,6 +1663,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1915959384227152694, guid: 63d87668cab44da42a0ea6d35ec8065b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1915959385190008615, guid: 63d87668cab44da42a0ea6d35ec8065b,
         type: 3}
       propertyPath: m_Name
