@@ -19,16 +19,18 @@ public class PlayerInputManager : MonoBehaviour
     //Player PickObjects
     private const string PICK_OBJECTS = "Pick";
     
-    //Player Time Controll
+    //Player Time Control
     private const string CHANGE_TIME_STATE = "ChangeTimeState";
+    private const string SELECT_MODE = "SelectMode";
+    private const string SELECT_TIME_OBJECT = "SelectTimeObject";
 
     private Player playerInput;
 
     private bool isMovementAllowed = true;
     private bool isJumpAllowed = true;
     private bool isCameraAllowed = true;
-    private bool isResumeTimeAllowed = true;
     private bool isPickAllowed = true;
+    private bool isTimeChangeAllowed = true;
 
     public bool IsMovementAllowed
     {
@@ -96,15 +98,7 @@ public class PlayerInputManager : MonoBehaviour
 
         return playerInput.GetButtonUp(JUMP);
     }
-
-    public bool IsChangeTimeState()
-    {
-        if (!isResumeTimeAllowed)
-            return false;
-
-        return playerInput.GetButtonDown(CHANGE_TIME_STATE);
-    }
-
+    
     public float GetVerticalMouse()
     {
         if (!isCameraAllowed)
@@ -127,5 +121,29 @@ public class PlayerInputManager : MonoBehaviour
             return false;
 
         return playerInput.GetButtonDown(PICK_OBJECTS);
+    }
+    
+    //------ TIME SYSTEM ------//
+    public bool IsChangeTimeState()
+    {
+        if (!isTimeChangeAllowed)
+            return false;
+
+        return playerInput.GetButtonDown(CHANGE_TIME_STATE);
+    }
+
+    public bool EnterSelectMode()
+    {
+        return playerInput.GetButton((SELECT_MODE));
+    }
+
+    public bool ExitSelectMode()
+    {
+        return playerInput.GetButtonUp((SELECT_MODE));
+    }
+
+    public bool IsSelectTimeObject()
+    {
+        return playerInput.GetButtonDown(SELECT_TIME_OBJECT);
     }
 }

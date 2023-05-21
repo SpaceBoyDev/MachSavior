@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,38 +6,112 @@ using UnityEngine.Serialization;
 
 public class PlayerTimeController : MonoBehaviour
 {
+    [Header("Time Control")] 
+    [SerializeField] private bool isSelectModeActive = false;
     [SerializeField] private float distance;
     
-    void Update()
+    private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
+    private ITimeInteractable interactable;
+
+    private void Update()
     {
-        SelectTimeObject();
+        ToggleSelectMode();
+        ChangeTimeState();
     }
     
-    void SelectTimeObject()
+    /// <summary>
+    /// Raycast that checks if the aimed object is Time Interactable.
+    /// </summary>
+    private void CheckTimeObject()
     {
-        RaycastHit hitInfo;
-        bool hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, distance);
-        if (hit)
+        bool hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hitInfo, distance);
+        
+        if (!hit)
+            return;
+        
+        interactable = hitInfo.collider.gameObject.GetComponent<ITimeInteractable>();
+    }
+    
+    /// <summary>
+    /// Changes the current time state of an aimed object or from all the selected objects inside select mode.
+    /// </summary>
+    private void ChangeTimeState()
+    {
+
+        if (PlayerInputManager.Instance.IsChangeTimeState())
         {
-            GameObject hitObj = hitInfo.collider.gameObject;
-            //If we dont hit a time controlled object return.
-            if (hitObj.GetComponent<ITimeInteractable>() == null)
-                return;
-            if (PlayerInputManager.Instance.IsChangeTimeState())
+            // Change te time state in the selected objects inside selection mode.
+            if (isSelectModeActive && selectedTimeObjects != null) 
             {
-                if (hitObj.GetComponent<ITimeInteractable>().GetIsStopped()) 
+                foreach (var selection in selectedTimeObjects)
                 {
-                    Debug.Log($"$<color=green>Resume time</color> in object: <color=yellow>{hitObj.name} </color>");
-                    hitObj.GetComponent<ITimeInteractable>().ChangeTimeState();
-                }
-                else
-                {
-                    Debug.Log($"<color=red>Stop time</color> in object: <color=yellow> {hitObj.name} </color>");
-                    hitObj.GetComponent<ITimeInteractable>().ChangeTimeState();
+                    if (selection.GetIsSelected())
+                    {
+                        selection.ChangeTimeState();
+                        //selection.SetIsSelected(false);
+                    }
                 }
             }
-        
+            else
+            {
+                CheckTimeObject();
+                if (interactable == null) 
+                    return;
+                //Single object time change.
+                interactable.ChangeTimeState();
+            }
         }
-        
+    }
+
+    private void ToggleSelectMode()
+    {
+        if (PlayerInputManager.Instance.EnterSelectMode())
+        {
+            //TODO:: Add effects for selection mode.
+            Debug.Log($"<color=Blue>Selection mode activated.</color>");
+            isSelectModeActive = true;
+            SelectMode();
+        }
+        else if(PlayerInputManager.Instance.ExitSelectMode())
+        {
+            Debug.Log($"<color=Yellow>Selection mode exited.</color>");
+            isSelectModeActive = false;
+            
+            foreach (var selection in selectedTimeObjects)
+            {
+                selection.SetIsSelected(false);
+            }
+            //Empty the list of objects when exiting select mode.
+            selectedTimeObjects.Clear();
+            interactable = null;
+        }
+    }
+    
+    /// <summary>
+    /// Contains all behaviour related to the time object selection mode.
+    /// </summary>
+    private void SelectMode()
+    {
+
+        if (PlayerInputManager.Instance.IsSelectTimeObject())
+        {
+            CheckTimeObject();
+            if (interactable == null)
+                return;
+            if (!interactable.GetIsSelected())
+            {
+                interactable.SetIsSelected(true);
+                selectedTimeObjects.Add(interactable);
+                interactable = null;
+                Debug.Log($"<color=green>Object added to select list.</color>");
+            }
+            else
+            {
+                interactable.SetIsSelected(false);
+                selectedTimeObjects.Remove(interactable);
+                interactable = null;
+                Debug.Log($"<color=cyan>Object removed from select list.</color>");
+            }
+        }   
     }
 }
