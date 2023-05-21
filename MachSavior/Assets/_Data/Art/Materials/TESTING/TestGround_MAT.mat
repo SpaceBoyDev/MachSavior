@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 93b1287b4a087f84c95c72f49ec94e83, type: 3}
+        m_Texture: {fileID: 2800000, guid: 58bfa7cdcdc123141b6f2af7058c9022, type: 3}
         m_Scale: {x: 30, y: 30}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 93b1287b4a087f84c95c72f49ec94e83, type: 3}
+        m_Texture: {fileID: 2800000, guid: 58bfa7cdcdc123141b6f2af7058c9022, type: 3}
         m_Scale: {x: 30, y: 30}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -98,7 +98,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.245
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -106,8 +106,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.5416722, b: 0.2783019, a: 1}
-    - _Color: {r: 1, g: 0.54167217, b: 0.27830186, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

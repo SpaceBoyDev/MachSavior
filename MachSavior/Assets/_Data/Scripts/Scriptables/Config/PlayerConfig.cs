@@ -5,14 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="PlayerConfiguration", menuName = "MachSavior/Player/PlayerConfiguration", order = 1)]
 public class PlayerConfig : ScriptableObject
 {
+    #region Movement
     [Header("Movement")]
     [SerializeField]
+    [Tooltip("Player Acceleration")]
     private float playerAcceleration = 500f;
     public float PlayerAcceleration
     {
         get { return playerAcceleration; }
     }
     [SerializeField]
+    [Tooltip("Movement is divided by this amount when on ground")]
     [Range(1f, 2f)]
     private float playerGroundDrag = 1f;
     public float PlayerGroundDrag
@@ -20,6 +23,7 @@ public class PlayerConfig : ScriptableObject
         get { return playerGroundDrag; }
     }
     [SerializeField]
+    [Tooltip("Movement is divided by this amount when not grounded")]
     [Range(1f, 2f)]
     private float playerAirDrag = 3f;
     public float PlayerAirDrag
@@ -27,13 +31,69 @@ public class PlayerConfig : ScriptableObject
         get { return playerAirDrag; }
     }
 
+    #endregion
+    #region Slopes
+    [Header("Slopes")]
     [SerializeField]
+    [Tooltip("Movement is divided by this amount when on slope")]
     [Range(1f, 2f)]
     private float playerSlopeDrag = 1.5f;
     public float PlayerSlopeDrag
     {
         get { return playerSlopeDrag; }
     }
+
+    [SerializeField]
+    [Tooltip("Maximum slope angle the player can walk on")]
+    [Range(1f, 45f)]
+    private float maximumSlopeAngle = 35f;
+    public float MaximumSlopeAngle
+    {
+        get { return maximumSlopeAngle; }
+    }
+
+    [SerializeField]
+    [Tooltip("Minimum number of raycast hits needed for the player to consider itself grounded")]
+    [Range(1f, 9f)]
+    private int minimumRaycastHits = 1;
+    public float MinimumRaycastHits
+    {
+        get { return minimumRaycastHits; }
+    }
+
+    #endregion
+    #region Wallrun Movement
+
+    [Header("Wallrun Movement")]
+    [SerializeField]
+    [Tooltip("Movement is divided by this amount when wallrunning")]
+    [Range(1f, 2f)]
+    private float playerWallrunDrag = 1.2f;
+    public float PlayerWallrunDrag
+    {
+        get { return playerWallrunDrag; }
+    }
+
+    [SerializeField]
+    [Tooltip("Minimum rigidbody velocity required to start wallrunning")]
+    [Range(0f, 10f)]
+    private float minimumWallrunVelocity = 5f;
+    public float MinimumWallrunVelocity
+    {
+        get { return minimumWallrunVelocity; }
+    }
+
+    [SerializeField]
+    [Tooltip("Minimum height from ground required to start wallrunning")]
+    [Range(0f, 10f)]
+    private float minimumWallrunHeight = 2f;
+    public float MinimumWallrunHeight
+    {
+        get { return minimumWallrunHeight; }
+    }
+
+    #endregion
+    #region Jump/Gravity
 
     [Header("Jump/Gravity")]
     [SerializeField]
@@ -73,9 +133,12 @@ public class PlayerConfig : ScriptableObject
         get { return gravity; }
     }
 
+    #endregion
+    #region Camera
+
     [Header("Camera")]
     public float sensibilityX = 1;
     public float sensibilityY = 1;
 
-
+    #endregion
 }
