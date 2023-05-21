@@ -23,27 +23,14 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     //--------------------------------//
     private void Awake()
     {
-        outline = gameObject.AddComponent<Outline>();
+        outline = GetComponent<Outline>();
         outline.OutlineMode = Outline.Mode.OutlineAll;
         outline.OutlineColor = isStopped ? Color.blue : Color.black;
         outline.OutlineWidth = 8f;
     }
 
-    private void Start()
-    {
-    }
-
     public bool GetIsStopped() { return isStopped; }
-
-    public bool GetIsSelected() { return isSelected; }
-    public void SetIsSelected(bool selected)
-    {
-        isSelected = selected;
-        if (isSelected)
-            outline.OutlineColor = Color.white;
-        //outline.OutlineWidth = 8f;
-    }
-
+    
     public void ChangeTimeState()
     {
         if (!timeAffected)
@@ -68,4 +55,16 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     }
     public abstract void ResumeTime();
     public abstract void StopTime();
+    
+    //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
+    public bool GetIsSelected() { return isSelected; }
+    public void SetIsSelected(bool selected)
+    {
+        isSelected = selected;
+        if (isSelected)
+            outline.OutlineColor = Color.white;
+        else
+            outline.OutlineColor = isStopped ? Color.blue : Color.black;
+        //outline.OutlineWidth = 8f;
+    }
 }

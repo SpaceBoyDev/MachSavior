@@ -15,7 +15,7 @@ public class PlayerTimeController : MonoBehaviour
 
     private void Update()
     {
-        ToggleSelectMode();
+        //ToggleSelectMode();
         ChangeTimeState();
     }
     
@@ -24,12 +24,10 @@ public class PlayerTimeController : MonoBehaviour
     /// </summary>
     private void CheckTimeObject()
     {
-        bool hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hitInfo, distance);
+        var hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hitInfo, distance);
         
-        if (!hit)
-            return;
-        
-        interactable = hitInfo.collider.gameObject.GetComponent<ITimeInteractable>();
+        if (hit)
+            interactable = hitInfo.collider.gameObject.GetComponent<ITimeInteractable>();
     }
     
     /// <summary>
@@ -37,11 +35,19 @@ public class PlayerTimeController : MonoBehaviour
     /// </summary>
     private void ChangeTimeState()
     {
-
-        if (PlayerInputManager.Instance.IsChangeTimeState())
+        if (!PlayerInputManager.Instance.IsChangeTimeState())
+            return;
+        //Raycast for checking objects.
+        CheckTimeObject();
+        
+        if (interactable != null)
         {
-            // Change te time state in the selected objects inside selection mode.
-            if (isSelectModeActive && selectedTimeObjects != null) 
+            //Single object time change.
+            interactable.ChangeTimeState();
+            interactable = null;
+        }
+        // Change te time state in the selected objects inside selection mode.-> [SELECT MODE CURRENTLY UNUSED]
+        /*if (isSelectModeActive && selectedTimeObjects != null) 
             {
                 foreach (var selection in selectedTimeObjects)
                 {
@@ -51,18 +57,10 @@ public class PlayerTimeController : MonoBehaviour
                         //selection.SetIsSelected(false);
                     }
                 }
-            }
-            else
-            {
-                CheckTimeObject();
-                if (interactable == null) 
-                    return;
-                //Single object time change.
-                interactable.ChangeTimeState();
-            }
-        }
+            }*/
     }
-
+    
+    //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
     private void ToggleSelectMode()
     {
         if (PlayerInputManager.Instance.EnterSelectMode())
@@ -86,7 +84,6 @@ public class PlayerTimeController : MonoBehaviour
             interactable = null;
         }
     }
-    
     /// <summary>
     /// Contains all behaviour related to the time object selection mode.
     /// </summary>
