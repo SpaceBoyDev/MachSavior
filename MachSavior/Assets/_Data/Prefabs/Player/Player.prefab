@@ -290,7 +290,7 @@ Transform:
   m_Children:
   - {fileID: 9152079636442281975}
   m_Father: {fileID: 1915959385190008619}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -22.787, y: 0, z: 0}
 --- !u!20 &1981426198
 Camera:
@@ -438,6 +438,51 @@ Transform:
   m_Father: {fileID: 1843442498}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1767632841379498495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4036292675405628610}
+  - component: {fileID: 7263499994891615803}
+  m_Layer: 0
+  m_Name: ItemPickCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4036292675405628610
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767632841379498495}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1915959385190008619}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7263499994891615803
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767632841379498495}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1915959383656605575
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +585,7 @@ Transform:
   m_Children:
   - {fileID: 1915959383656605572}
   - {fileID: 1915959384463352058}
+  - {fileID: 4036292675405628610}
   - {fileID: 1981426199}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -707,6 +753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickPosition: {fileID: 0}
+  pickObjCollider: {fileID: 0}
   distanceToPick: 0.2
 --- !u!1 &2897573186583090007
 GameObject:

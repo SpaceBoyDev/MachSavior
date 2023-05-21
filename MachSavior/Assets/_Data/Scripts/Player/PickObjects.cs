@@ -6,7 +6,9 @@ public class PickObjects : MonoBehaviour
 {
     [SerializeField]
     private GameObject pickPosition;
- 
+
+    [SerializeField]
+    private GameObject pickObjCollider;
 
     [SerializeField] private float distanceToPick;
     private GameObject pickedObject = null;
@@ -63,6 +65,9 @@ public class PickObjects : MonoBehaviour
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         objectToPick.transform.position = pickPosition.transform.position;
+        pickObjCollider.transform.position = objectToPick.transform.position;
+        pickObjCollider.GetComponent<Collider>().isTrigger = false;
+
         objectToPick.transform.SetParent(pickPosition.gameObject.transform);
         pickedObject = objectToPick;
 
@@ -76,7 +81,8 @@ public class PickObjects : MonoBehaviour
 
             pickedObject.GetComponent<Rigidbody>().useGravity = true;
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-            
+            pickObjCollider.GetComponent<Collider>().isTrigger = true;
+
             pickedObject.gameObject.transform.SetParent(null);
             pickedObject = null;
             
