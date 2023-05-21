@@ -10,6 +10,9 @@ public class PickableObject : MonoBehaviour
     [SerializeField]
     private bool _isPicked = false;
 
+
+    [SerializeField] public Material CanInteraccion;
+    [SerializeField] public Material Active;
     public bool CanPick()
     {
         if (!_canPick)

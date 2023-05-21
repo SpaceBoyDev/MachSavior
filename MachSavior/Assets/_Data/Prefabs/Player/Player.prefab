@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 26785583}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 300880268}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 339353189}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 855637173}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1555580255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1570754759}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1746043119}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1843442498}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RaycastOrigins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 1981426198}
   - component: {fileID: 1981426197}
   - component: {fileID: 1981426200}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FirstPersonCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2046676815}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2139269104}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Origin3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ Transform:
   m_Father: {fileID: 1843442498}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &228246204507819759
+--- !u!1 &311103698965304078
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -446,13 +446,54 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4036292675405628610}
-  - component: {fileID: 7263499994891615803}
-  m_Layer: 0
-  m_Name: ItemPickCollider
+  - component: {fileID: 2200271001427935346}
+  - component: {fileID: 1915959384227152694}
+  m_Layer: 3
+  m_Name: PickObjCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2200271001427935346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311103698965304078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1915959385190008619}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1915959384227152694
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311103698965304078}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1440754156316722900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
   - component: {fileID: 409879322921611729}
   m_Layer: 0
-  m_Name: RaycastIzqInf
+  m_Name: 'Recovery GameObject for Transform (ID in file: 409879322921611729)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,28 +505,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767632841379498495}
+  m_GameObject: {fileID: 1440754156316722900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1915959385190008619}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7263499994891615803
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767632841379498495}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1915959383656605575
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,7 +523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915959383656605572}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +555,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915959384463352058}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +595,7 @@ GameObject:
   - component: {fileID: 1915959385190008622}
   - component: {fileID: 7366399665713513718}
   - component: {fileID: 5544830803333976535}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,8 +617,9 @@ Transform:
   - {fileID: 1915959383656605572}
   - {fileID: 842425627551041466}
   - {fileID: 1915959384463352058}
-  - {fileID: 4036292675405628610}
   - {fileID: 1981426199}
+  - {fileID: 409879322921611729}
+  - {fileID: 2200271001427935346}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -765,7 +794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97d159555aaa8f478afaf45a9dffa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickPosition: {fileID: 0}
+  pickPosition: {fileID: 2897573186583090007}
+  pickObjCollider: {fileID: 311103698965304078}
   distanceToPick: 2
 --- !u!1 &2024731695260059532
 GameObject:
@@ -796,7 +826,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 168403880857435592}
-  - {fileID: 409879322921611729}
   - {fileID: 6844654268365709693}
   - {fileID: 4010689321465990257}
   m_Father: {fileID: 1915959385190008619}
@@ -811,7 +840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9152079636442281975}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HandPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -825,13 +854,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2897573186583090007}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 2}
+  m_LocalRotation: {x: 0.19754338, y: -0, z: -0, w: 0.9802942}
+  m_LocalPosition: {x: -0.2708192, y: 0.37542242, z: 2.0755887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1915959385190008619}
-  m_RootOrder: 4
+  m_Father: {fileID: 1981426199}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4739892699426397151
 GameObject:
@@ -893,7 +922,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 842425627551041466}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5792827412398319382
 GameObject:
@@ -924,5 +953,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 842425627551041466}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

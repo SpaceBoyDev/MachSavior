@@ -64,8 +64,11 @@ public class PickObjects : MonoBehaviour
         objectToPick.GetComponent<Rigidbody>().isKinematic = true;
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+        // TO DO Cambio de textura
+        //objectToPick.GetComponent<Material>().color = pickedObject.GetComponent<PickableObject>().Active.color;
+
         objectToPick.transform.position = pickPosition.transform.position;
-        pickObjCollider.transform.position = objectToPick.transform.position;
+        pickObjCollider.transform.position = pickPosition.transform.position;
         pickObjCollider.GetComponent<Collider>().isTrigger = false;
 
         objectToPick.transform.SetParent(pickPosition.gameObject.transform);
@@ -82,6 +85,10 @@ public class PickObjects : MonoBehaviour
             pickedObject.GetComponent<Rigidbody>().useGravity = true;
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
             pickObjCollider.GetComponent<Collider>().isTrigger = true;
+
+            // TO DO Cambio de textura
+            //pickedObject.GetComponent<Material>().color = pickedObject.GetComponent<PickableObject>().CanInteraccion.color;
+
 
             pickedObject.gameObject.transform.SetParent(null);
             pickedObject = null;
