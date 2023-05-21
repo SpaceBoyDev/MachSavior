@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b721907c23d43d94697a6a671ff19318,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1327,12 +1328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a5f2334d877094a9bb0ed6d5ec294f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &897787024 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2811895718617648826, guid: 63d87668cab44da42a0ea6d35ec8065b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1915959384227152690}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &944271363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,12 +1425,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944271363}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &946903279 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7378863804033592404, guid: 63d87668cab44da42a0ea6d35ec8065b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1915959384227152690}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &991125388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 806094162058984845, guid: 4433f51d7556a8442aa4266f68e4e761,
@@ -6710,115 +6699,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1915959385190008612, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_Height
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1915959385190008615, guid: 63d87668cab44da42a0ea6d35ec8065b,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepRayUp
-      value: 
-      objectReference: {fileID: 946903279}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepOffset
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepRayLow
-      value: 
-      objectReference: {fileID: 897787024}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepSmooth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: showDebugRay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: slopeRayColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: slopeRayColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: slopeRayColor.g
-      value: 0.17377008
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: slopeRayColor.r
-      value: 0.745283
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: groundRaysColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: groundRaysColor.b
-      value: 0.9339623
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: groundRaysColor.g
-      value: 0.005873861
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: groundRaysColor.r
-      value: 0.025703508
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepUpRaysColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepUpRaysColor.g
-      value: 0.990566
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: stepUpRaysColor.r
-      value: 0.81662434
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: wallrunRayColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: wallrunRayColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: wallrunRayColor.g
-      value: 0.6698113
-      objectReference: {fileID: 0}
-    - target: {fileID: 1915959385190008616, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: wallrunRayColor.r
-      value: 0.0030584875
       objectReference: {fileID: 0}
     - target: {fileID: 1915959385190008619, guid: 63d87668cab44da42a0ea6d35ec8065b,
         type: 3}
@@ -6874,16 +6758,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2811895718617648826, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 7378863804033592404, guid: 63d87668cab44da42a0ea6d35ec8065b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63d87668cab44da42a0ea6d35ec8065b, type: 3}

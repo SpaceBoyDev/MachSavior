@@ -1,6 +1,5 @@
 using Rewired;
 using System.Collections;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -153,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
             zSpeed = -1;
 
 
-        print("x= " + xSpeed + " y z= " +zSpeed);
+        //print("x= " + xSpeed + " y z= " +zSpeed);
 
         Vector3 moveDirection = new Vector3(xSpeed, verticalSpeed, zSpeed);
 
