@@ -289,6 +289,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9152079636442281975}
+  - {fileID: 1356359812334705134}
+  - {fileID: 8532074910517420321}
   m_Father: {fileID: 1915959385190008619}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -22.787, y: 0, z: 0}
@@ -858,7 +860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a7da03b944b6840a2f3e33d44e67ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelectModeActive: 0
   distance: 25
 --- !u!114 &5544830803333976535
 MonoBehaviour:
@@ -872,7 +873,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97d159555aaa8f478afaf45a9dffa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickPosition: {fileID: 2897573186583090007}
+  pickPositions:
+  - {fileID: 9152079636442281975}
+  - {fileID: 1356359812334705134}
+  - {fileID: 8532074910517420321}
+  pickObjectWeight: 0
   pickObjCollider: {fileID: 311103698965304078}
   distanceToPick: 2
 --- !u!1 &2024731695260059532
@@ -909,6 +914,37 @@ Transform:
   m_Father: {fileID: 1915959385190008619}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2143230261287003472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1356359812334705134}
+  m_Layer: 3
+  m_Name: MidHandPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1356359812334705134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143230261287003472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981426199}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2897573186583090007
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,9 +955,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9152079636442281975}
   m_Layer: 3
-  m_Name: HandPosition
+  m_Name: LightHandPosition
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -932,8 +968,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2897573186583090007}
-  m_LocalRotation: {x: 0.19754338, y: -0, z: -0, w: 0.9802942}
-  m_LocalPosition: {x: -0.2708192, y: 0.37542242, z: 2.0755887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1166,6 +1202,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 842425627551041466}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7857903610420343013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8532074910517420321}
+  m_Layer: 3
+  m_Name: HeavyHandPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8532074910517420321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7857903610420343013}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981426199}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8387041869626007695
