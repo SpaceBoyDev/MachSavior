@@ -5,7 +5,11 @@ using UnityEngine;
 public class PickObjects : MonoBehaviour
 {
     [SerializeField]
-    private GameObject pickPosition;
+    private Transform[] pickPositions;
+
+    private enum PickObjectWeightPosition { lightWeightPos = 0, midWeightPos = 1, heavyWeightPos = 2 }
+    [SerializeField] private PickObjectWeightPosition pickObjectWeight;
+
 
     [SerializeField]
     private GameObject pickObjCollider;
@@ -15,8 +19,7 @@ public class PickObjects : MonoBehaviour
 
     private float pickAndReleaseCooldawn;
 
-
-
+  
     // Update is called once per frame
     void Update()
     {
@@ -31,6 +34,7 @@ public class PickObjects : MonoBehaviour
              
     }
 
+    #region CheckPick
     void CheckPickObject()
     {
         RaycastHit hit;
@@ -42,7 +46,6 @@ public class PickObjects : MonoBehaviour
                 {
                     if (PlayerInputManager.Instance.IsPickButtonPressed())
                     {
-                        pickPosition.transform.position = hit.transform.position;
                         PickObject(hit.collider.gameObject);
                     }
                 }
@@ -55,7 +58,9 @@ public class PickObjects : MonoBehaviour
         }
 
     }
+    #endregion
 
+    #region Pick
     void PickObject(GameObject objectToPick)
     {
         objectToPick.layer = LayerMask.NameToLayer("IgnorePlayer");
@@ -64,18 +69,52 @@ public class PickObjects : MonoBehaviour
         objectToPick.GetComponent<Rigidbody>().isKinematic = true;
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        // TO DO Cambio de textura
-        //objectToPick.GetComponent<Material>().color = pickedObject.GetComponent<PickableObject>().Active.color;
-
-        objectToPick.transform.position = pickPosition.transform.position;
-        pickObjCollider.transform.position = pickPosition.transform.position;
-        pickObjCollider.GetComponent<Collider>().isTrigger = false;
-
-        objectToPick.transform.SetParent(pickPosition.gameObject.transform);
         pickedObject = objectToPick;
 
+
+        // TO DO ANIMACIÓN COGER OBJETO
+
+        // Delay se puede usar para posteriormente cuando en cierto momento de la animación
+        // el objeto se attache a la mano o al cuerpo
+
+        StartCoroutine(PickCourutine(0.1f));
     }
 
+    IEnumerator PickCourutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (pickedObject.GetComponent<PickableObject>().ObjectWeight() == 0)
+        {
+            pickedObject.transform.position = pickPositions[0].position;
+            pickObjCollider.transform.position = pickPositions[0].position;
+            pickObjCollider.GetComponent<Collider>().isTrigger = false;
+
+            pickedObject.transform.SetParent(pickPositions[0]);
+        }
+        
+        if (pickedObject.GetComponent<PickableObject>().ObjectWeight() == 1)
+        {
+            pickedObject.transform.position = pickPositions[1].position;
+            pickObjCollider.transform.position = pickPositions[1].position;
+            pickObjCollider.GetComponent<Collider>().isTrigger = false;
+
+            pickedObject.transform.SetParent(pickPositions[1]);
+        }
+        
+        if (pickedObject.GetComponent<PickableObject>().ObjectWeight() == 2)
+        {
+            pickedObject.transform.position = pickPositions[2].position;
+            pickObjCollider.transform.position = pickPositions[2].position;
+            pickObjCollider.GetComponent<Collider>().isTrigger = false;
+
+            pickedObject.transform.SetParent(pickPositions[2]);
+        }
+    }
+
+    #endregion
+
+    #region Release
     void ReleaseObject()
     {
         if (PlayerInputManager.Instance.IsPickButtonPressed())
@@ -86,14 +125,12 @@ public class PickObjects : MonoBehaviour
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
             pickObjCollider.GetComponent<Collider>().isTrigger = true;
 
-            // TO DO Cambio de textura
-            //pickedObject.GetComponent<Material>().color = pickedObject.GetComponent<PickableObject>().CanInteraccion.color;
-
-
             pickedObject.gameObject.transform.SetParent(null);
             pickedObject = null;
             
             pickAndReleaseCooldawn =+ 0.5f;       
         }
     }
+    #endregion
+
 }

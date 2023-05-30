@@ -9,10 +9,12 @@ public class PickableObject : MonoBehaviour
     
     [SerializeField]
     private bool _isPicked = false;
+    
+    private enum ObjectWeightCategory { 
+        lightWeight = 0, midWeight = 1, heavyWeight = 2 };
 
+    [SerializeField] private ObjectWeightCategory objectWeight;
 
-    [SerializeField] public Material CanInteraccion;
-    [SerializeField] public Material Active;
     public bool CanPick()
     {
         if (!_canPick)
@@ -29,6 +31,27 @@ public class PickableObject : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public int ObjectWeight()
+    {
+        if(objectWeight == ObjectWeightCategory.heavyWeight)
+        {
+            return 2;
+        }
+
+        if (objectWeight == ObjectWeightCategory.midWeight)
+        {
+            return 1;
+        }
+
+        if (objectWeight == ObjectWeightCategory.lightWeight)
+        {
+            return 0;
+        }
+
+        return 0;
+
     }
     
 }
