@@ -6,12 +6,19 @@ using UnityEngine.Serialization;
 
 public class PlayerTimeController : MonoBehaviour
 {
-    [Header("Time Control")] 
+    [Header("General")] 
     //[SerializeField] private bool isSelectModeActive = false;
-    [SerializeField] private float distance;
+    [SerializeField] private TimeControlSettings _timeControlSettings;
+
+    [SerializeField] private GameEvent onTimeCellUsed;
     
     //private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
-    private ITimeInteractable interactable;
+    private TimeObject timeObject; // Stores currently selected interactable object.
+
+    private void Start()
+    {
+        _timeControlSettings.currentTimeCells = _timeControlSettings.GetMaxTimeCells;
+    }
 
     private void Update()
     {
@@ -24,10 +31,10 @@ public class PlayerTimeController : MonoBehaviour
     /// </summary>
     private void CheckTimeObject()
     {
-        var hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hitInfo, distance);
+        var hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hitInfo, _timeControlSettings.GetMaxDistance);
         
         if (hit)
-            interactable = hitInfo.collider.gameObject.GetComponent<ITimeInteractable>();
+            timeObject = hitInfo.collider.gameObject.GetComponent<TimeObject>();
     }
     
     /// <summary>
@@ -39,12 +46,13 @@ public class PlayerTimeController : MonoBehaviour
             return;
         //Raycast for checking objects.
         CheckTimeObject();
-        
-        if (interactable != null)
+
+        if (_timeControlSettings.currentTimeCells > 0 && !timeObject.hasTimeCell)
         {
+            UseTimeCell();
             //Single object time change.
-            interactable.ChangeTimeState();
-            interactable = null;
+            timeObject.ChangeTimeState();
+            timeObject = null;
         }
         // Change te time state in the selected objects inside selection mode.-> [SELECT MODE CURRENTLY UNUSED]
         /*if (isSelectModeActive && selectedTimeObjects != null) 
@@ -58,6 +66,13 @@ public class PlayerTimeController : MonoBehaviour
                     }
                 }
             }*/
+    }
+
+    private void UseTimeCell()
+    {
+        _timeControlSettings.currentTimeCells --;
+        timeObject.hasTimeCell = true;
+        onTimeCellUsed.Raise();
     }
     
     //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//

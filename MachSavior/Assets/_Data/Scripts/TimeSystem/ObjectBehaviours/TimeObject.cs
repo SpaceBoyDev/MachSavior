@@ -19,6 +19,8 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     [SerializeField,Tooltip("Selection state of the item.")] 
     protected bool isSelected = false;
 
+    [HideInInspector] public bool hasTimeCell = false;
+
     private Outline outline;
     //--------------------------------//
     private void Awake()
