@@ -75,6 +75,24 @@ public class PlayerConfig : ScriptableObject
     }
 
     [SerializeField]
+    [Tooltip("Vertical jump force when walljumping")]
+    [Range(0f, 4f)]
+    private float wallJumpForce = 3f;
+    public float WallJumpForce
+    {
+        get { return wallJumpForce; }
+    }
+
+    [SerializeField]
+    [Tooltip("Multiplier applied to the wall's normal when walljumping")]
+    [Range(0f, 2f)]
+    private float wallJumpSideForce = 1f;
+    public float WallJumpSideForce
+    {
+        get { return wallJumpForce; }
+    }
+
+    [SerializeField]
     [Tooltip("Minimum rigidbody velocity required to start wallrunning")]
     [Range(0f, 10f)]
     private float minimumWallrunVelocity = 5f;
@@ -103,14 +121,14 @@ public class PlayerConfig : ScriptableObject
         get { return jumpForce; }
     }
     [SerializeField]
-    [Range(0.1f, 0.7f)]
+    [Range(0.01f, 0.7f)]
     private float jumpHover = 0.1f; //When it has to be applied the jumpHoverPercent (between 0.1 and -0.1 rb.velocity.y)
     public float JumpHover
     {
         get { return jumpHover; }
     }
     [SerializeField]
-    [Range(0.1f, 0.7f)]
+    [Range(0.1f, 0.99f)]
     private float jumpHoverPercent = 0.3f; //Percent of the gravity that will be applied when climax of the jump
     public float JumpHoverPercent
     {
@@ -126,7 +144,7 @@ public class PlayerConfig : ScriptableObject
     }
 
     [SerializeField]
-    [Range(1f,5f)]
+    [Range(1f,20f)]
     private float gravity = 1f; //Initial gravity to apply
     public float Gravity
     {

@@ -483,7 +483,7 @@ Transform:
   m_Children:
   - {fileID: 2222290657266378256}
   m_Father: {fileID: 1915959385190008619}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311103698965304078
 GameObject:
@@ -515,7 +515,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1915959385190008619}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1915959384227152694
 BoxCollider:
@@ -571,7 +571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 409879322921611729}
   m_Layer: 0
-  m_Name: 'Recovery GameObject for Transform (ID in file: 409879322921611729)'
+  m_Name: RaycastIzqInf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -584,13 +584,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440754156316722900}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.45, y: -0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1915959385190008619}
-  m_RootOrder: 4
+  m_Father: {fileID: 842425627551041466}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1915959383656605575
 GameObject:
@@ -697,7 +697,6 @@ Transform:
   - {fileID: 842425627551041466}
   - {fileID: 1915959384463352058}
   - {fileID: 1981426199}
-  - {fileID: 409879322921611729}
   - {fileID: 2200271001427935346}
   - {fileID: 6905841046115560221}
   m_Father: {fileID: 0}
@@ -924,6 +923,7 @@ Transform:
   - {fileID: 168403880857435592}
   - {fileID: 6844654268365709693}
   - {fileID: 4010689321465990257}
+  - {fileID: 409879322921611729}
   m_Father: {fileID: 1915959385190008619}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

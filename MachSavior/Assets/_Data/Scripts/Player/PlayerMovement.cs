@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player References")]
     private Rigidbody rb;
     private GameObject root;
-    private CapsuleCollider collider;
 
     [Header("Axis")]
     private float horizontalAxis;
@@ -21,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float verticalSpeed = 0;
     private float xSpeed = 0;
     private float zSpeed = 0;
+    [SerializeField] private Vector2 wallrunSpeed = Vector2.zero;
     private float gravityToApply;
 
     [Header("Movement bools")]
@@ -79,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
         root = PlayerManager.Instance.GetRoot();
-        collider = GetComponent<CapsuleCollider>();
         playerCamera = CameraManager.Instance.GetPlayerCamera();
 
         stepRayUp.position = new Vector3(stepRayLow.position.x, stepRayLow.position.y + stepOffset, stepRayLow.position.z);
@@ -96,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         JumpInput();
         ApplyGravity();
         StepClimb();
+        ReduceWallrunSpeed();
     }
 
     private void FixedUpdate()
@@ -140,21 +140,21 @@ public class PlayerMovement : MonoBehaviour
 
         xSpeed = combinedMovement.x;
         zSpeed = combinedMovement.z;
-
-        if (xSpeed > 1)
-            xSpeed = 1;
-        else if (xSpeed < -1)
-            xSpeed = -1;
-
-        if (zSpeed > 1)
-            zSpeed = 1;
-        else if (zSpeed < -1)
-            zSpeed = -1;
+        //
+        //if (xSpeed > 1)
+        //    xSpeed = 1;
+        //else if (xSpeed < -1)
+        //    xSpeed = -1;
+        //
+        //if (zSpeed > 1)
+        //    zSpeed = 1;
+        //else if (zSpeed < -1)
+        //    zSpeed = -1;
 
 
         //print("x= " + xSpeed + " y z= " +zSpeed);
 
-        Vector3 moveDirection = new Vector3(xSpeed, verticalSpeed, zSpeed);
+        Vector3 moveDirection = new Vector3(xSpeed + wallrunSpeed.x, verticalSpeed, zSpeed + wallrunSpeed.y);
 
         if (onSlope)
             moveDirection = (SlopeDirection(moveDirection) * playerConfig.PlayerAcceleration / playerConfig.PlayerSlopeDrag) * Time.fixedDeltaTime;
@@ -275,13 +275,64 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(EnableCheckGround());
             StartCoroutine(EnableCheckWall());
             gravityToApply = playerConfig.Gravity;
-            Vector3 wallrunJump = (transform.up * 10 + (hitWallrun.normal * 5));
-            //rb.velocity += wallrunJump;
-            //rb.AddForce(wallrunJump, ForceMode.Impulse);
-            //rb.MovePosition(rb.position + wallrunJump * Time.deltaTime * 5);
+            Vector3 tempDirection = transform.up * playerConfig.WallJumpForce + hitWallrun.normal * playerConfig.WallJumpSideForce;
+            verticalSpeed = tempDirection.y;
+            wallrunSpeed = new Vector2(tempDirection.x, tempDirection.z);
+
             print("walljump");
             
         }
+    }
+
+    private void ReduceWallrunSpeed()
+    {
+        if (wallrunSpeed.x > 0f)
+        {
+            wallrunSpeed -= new Vector2(1,0) * Time.deltaTime;
+
+            if (wallrunSpeed.x < 0f)
+            {
+                wallrunSpeed = new Vector2(0f, wallrunSpeed.y);
+            }
+        }
+        else if (wallrunSpeed.x < 0f)
+        {
+            wallrunSpeed += new Vector2(1, 0) * Time.deltaTime;
+
+            if (wallrunSpeed.x > 0f)
+            {
+                wallrunSpeed = new Vector2(0f, wallrunSpeed.y);
+            }
+        }
+
+        if (wallrunSpeed.y > 0f)
+        {
+            wallrunSpeed -= new Vector2(0, 1) * Time.deltaTime;
+
+            if (wallrunSpeed.y < 0f)
+            {
+                wallrunSpeed = new Vector2(wallrunSpeed.x, 0f);
+            }
+        }
+        else if (wallrunSpeed.y < 0f)
+        {
+            wallrunSpeed += new Vector2(0, 1) * Time.deltaTime;
+
+            if (wallrunSpeed.y > 0f)
+            {
+                wallrunSpeed = new Vector2(wallrunSpeed.x, 0f);
+            }
+        }
+
+
+        //if (wallrunSpeed.y > 0f)
+        //{
+        //    wallrunSpeed -= new Vector2(0, 1) * Time.deltaTime;
+        //}
+        //else if (wallrunSpeed.y < 0f)
+        //{
+        //    wallrunSpeed = new Vector2(wallrunSpeed.x, 0f);
+        //}
     }
 
     private void ApplyGravity()
@@ -382,8 +433,10 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (!Physics.Raycast(root.transform.position, Vector3.down, playerConfig.MinimumWallrunHeight))
                 {
+                    wallrunSpeed = Vector2.zero;
                     onWallrun = true;
                     wallState = WallState.leftWall;
+                    CameraManager.Instance.clampCameraHorizontal = true;
                     return;
                 }
             }
@@ -391,6 +444,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 onWallrun = false;
                 wallState = WallState.none;
+                CameraManager.Instance.clampCameraHorizontal = false;
                 hits = 0;
             }
 
@@ -411,8 +465,10 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (!Physics.Raycast(root.transform.position, Vector3.down, playerConfig.MinimumWallrunHeight))
                 {
+                    wallrunSpeed = Vector2.zero;
                     onWallrun = true;
                     wallState = WallState.rightWall;
+                    CameraManager.Instance.clampCameraHorizontal = true;
                     return;
                 }
             }
@@ -420,12 +476,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 onWallrun = false;
                 wallState = WallState.none;
+                CameraManager.Instance.clampCameraHorizontal = false;
             }
         }
         else
         {
             onWallrun = false;
             wallState = WallState.none;
+            CameraManager.Instance.clampCameraHorizontal = false;
         }
     }
 

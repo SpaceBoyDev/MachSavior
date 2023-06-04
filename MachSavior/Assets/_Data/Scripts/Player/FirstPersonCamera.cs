@@ -13,6 +13,8 @@ public class FirstPersonCamera : MonoBehaviour
 
     private int maxY = 89;
     private int minY = -89;
+    private int maxX = 89;
+    private int minX = -89;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,12 @@ public class FirstPersonCamera : MonoBehaviour
         mouseY -= PlayerInputManager.Instance.GetVerticalMouse() * playerConfig.sensibilityY;
 
         mouseY = Mathf.Clamp(mouseY, minY, maxY);
+
+        if (CameraManager.Instance.clampCameraHorizontal)
+        {
+            //mouseX = Mathf.Clamp(mouseX, minX, maxX);
+        }
+
         playerCamera.transform.eulerAngles = new Vector3(mouseY, mouseX, 0);
 
         transform.eulerAngles = new Vector3(0, mouseX, 0);

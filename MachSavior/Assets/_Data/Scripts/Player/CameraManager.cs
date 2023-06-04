@@ -6,8 +6,8 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance;
 
-    [SerializeField]
-    //private Camera playerCamera; //FirstPersonCamera
+    public bool clampCameraHorizontal = false;
+
 
     public Camera GetPlayerCamera()
     {
@@ -19,8 +19,8 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 0;
+        //Application.targetFrameRate = 60;
+        //QualitySettings.vSyncCount = 0;
         if (Instance == null)
         {
             Instance = this;
@@ -36,7 +36,7 @@ public class CameraManager : MonoBehaviour
         PlayerManager.Instance.GetPlayerCamera().transform.parent = null;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         PlayerManager.Instance.GetPlayerCamera().transform.position = cameraPos.position;
     }
