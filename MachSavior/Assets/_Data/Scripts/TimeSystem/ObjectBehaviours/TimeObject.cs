@@ -27,39 +27,49 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     {
         outline = GetComponent<Outline>();
         outline.OutlineMode = Outline.Mode.OutlineAll;
-        outline.OutlineColor = isStopped ? Color.blue : Color.black;
-        outline.OutlineWidth = 8f;
+        outline.OutlineColor = Color.black;
+        outline.OutlineWidth = 4f;
     }
 
     public bool GetIsStopped() { return isStopped; }
-    
+    public void OnHoverEnter()
+    {
+        outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+        outline.OutlineColor = Color.yellow;
+        outline.OutlineWidth = 8f;
+    }
+
+    public void OnHoverExit()
+    {
+        outline.OutlineMode = Outline.Mode.OutlineAll;
+        outline.OutlineColor = Color.black;
+        outline.OutlineWidth = 4f;
+    }
+
     public void ChangeTimeState()
     {
         if (!timeAffected)
             return;
+        
+        hasTimeCell = true; //Makes sure it uses only one time cell.
+        
         // Flip the time state.
         isStopped = !isStopped;
 
         if (isStopped)
         {
             StopTime();
-            outline.OutlineColor = Color.blue;
-            //outline.OutlineWidth = 8f;
-            //Debug.Log($"<color=green>Resume time</color> in object: <color=yellow>{target.name} </color>");
         }
         else
         {
             ResumeTime();
-            outline.OutlineColor = Color.black;
-            //outline.OutlineWidth = 8f;
-            //Debug.Log($"<color=red>Stop time</color> in object: <color=yellow> {target.name} </color>");
         }
     }
     public abstract void ResumeTime();
     public abstract void StopTime();
     
     //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
-    public bool GetIsSelected() { return isSelected; }
+    /*public bool GetIsSelected() { return isSelected; }
     public void SetIsSelected(bool selected)
     {
         isSelected = selected;
@@ -68,5 +78,5 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
         else
             outline.OutlineColor = isStopped ? Color.blue : Color.black;
         //outline.OutlineWidth = 8f;
-    }
+    }*/
 }

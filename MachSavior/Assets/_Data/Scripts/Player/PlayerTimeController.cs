@@ -7,13 +7,15 @@ using UnityEngine.Serialization;
 public class PlayerTimeController : MonoBehaviour
 {
     [Header("General")] 
+    
+    [SerializeField] private Camera cam;
     //[SerializeField] private bool isSelectModeActive = false;
     [SerializeField] private TimeControlSettings _timeControlSettings;
 
     [SerializeField] private GameEvent onTimeCellUsed;
     
     //private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
-    private TimeObject timeObject; // Stores currently selected interactable object.
+    private ITimeInteractable timeObject; // Stores currently selected interactable object.
 
     private void Start()
     {
@@ -23,18 +25,35 @@ public class PlayerTimeController : MonoBehaviour
     private void Update()
     {
         //ToggleSelectMode();
-        ChangeTimeState();
+        CheckTimeObject();
     }
     
     /// <summary>
-    /// Raycast that checks if the aimed object is Time Interactable.
+    /// Raycast that checks if the aimed object is a time object.
     /// </summary>
     private void CheckTimeObject()
     {
-        var hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hitInfo, _timeControlSettings.GetMaxDistance);
+        if (timeObject != null)
+        {
+            timeObject.OnHoverExit();
+            timeObject = null;
+        }
         
-        if (hit)
-            timeObject = hitInfo.collider.gameObject.GetComponent<TimeObject>();
+        var ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (!Physics.Raycast(ray, out var hit, _timeControlSettings.GetMaxDistance)) 
+            return;
+        
+        var selection = hit.transform;
+        var timeSelection = selection.GetComponent<ITimeInteractable>();
+        
+        //Check if there is an item selected and the performs the selection behaviour
+        timeSelection?.OnHoverEnter();
+
+        timeObject = timeSelection;
+        
+        ChangeTimeState();
+
     }
     
     /// <summary>
@@ -44,12 +63,14 @@ public class PlayerTimeController : MonoBehaviour
     {
         if (!PlayerInputManager.Instance.IsChangeTimeState())
             return;
-        //Raycast for checking objects.
-        CheckTimeObject();
 
-        if (_timeControlSettings.currentTimeCells > 0 && !timeObject.hasTimeCell)
+        if (_timeControlSettings.currentTimeCells > 0 )//&& !timeObject.hasTimeCell)
         {
-            UseTimeCell();
+            //Time cells
+            _timeControlSettings.currentTimeCells --;
+            //timeObject.hasTimeCell = true;
+            onTimeCellUsed.Raise();
+            
             //Single object time change.
             timeObject.ChangeTimeState();
             timeObject = null;
@@ -67,14 +88,6 @@ public class PlayerTimeController : MonoBehaviour
                 }
             }*/
     }
-
-    private void UseTimeCell()
-    {
-        _timeControlSettings.currentTimeCells --;
-        timeObject.hasTimeCell = true;
-        onTimeCellUsed.Raise();
-    }
-    
     //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
     /*private void ToggleSelectMode()
     {
