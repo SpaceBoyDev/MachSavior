@@ -8,16 +8,28 @@ public class PickableObject : MonoBehaviour
     private bool _canPick = true;
     
     [SerializeField]
-    private bool _isPicked = false;
+    private bool _useGravity = false;
+    
+    [SerializeField]
+    public bool _isPicked = false;
     
     private enum ObjectWeightCategory { 
         lightWeight = 0, midWeight = 1, heavyWeight = 2 };
 
     [SerializeField] private ObjectWeightCategory objectWeight;
 
+    #region Bolean
     public bool CanPick()
     {
         if (!_canPick)
+        {
+            return false;
+        }
+        return true;
+    }
+    public bool UseGravity()
+    {
+        if (!_useGravity)
         {
             return false;
         }
@@ -33,6 +45,10 @@ public class PickableObject : MonoBehaviour
         return true;
     }
 
+    #endregion
+
+
+    #region ObjectWeight
     public int ObjectWeight()
     {
         if(objectWeight == ObjectWeightCategory.heavyWeight)
@@ -53,5 +69,5 @@ public class PickableObject : MonoBehaviour
         return 0;
 
     }
-    
+    #endregion
 }

@@ -65,7 +65,11 @@ public class PickObjects : MonoBehaviour
     {
         objectToPick.layer = LayerMask.NameToLayer("IgnorePlayer");
 
-        objectToPick.GetComponent<Rigidbody>().useGravity = false;
+        objectToPick.GetComponent<PickableObject>()._isPicked = true;
+
+        if (objectToPick.GetComponent<PickableObject>().UseGravity()) { 
+            objectToPick.GetComponent<Rigidbody>().useGravity = false; }
+        
         objectToPick.GetComponent<Rigidbody>().isKinematic = true;
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
@@ -121,7 +125,11 @@ public class PickObjects : MonoBehaviour
         {
             pickedObject.layer = LayerMask.NameToLayer("Default");
 
-            pickedObject.GetComponent<Rigidbody>().useGravity = true;
+            pickedObject.GetComponent<PickableObject>()._isPicked = false;
+
+            if (pickedObject.GetComponent<PickableObject>().UseGravity()){
+                pickedObject.GetComponent<Rigidbody>().useGravity = true; }
+
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
             pickObjCollider.GetComponent<Collider>().isTrigger = true;
 
