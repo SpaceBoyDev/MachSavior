@@ -10,7 +10,8 @@ public class PhysicsTimeObject : TimeObject
     private float recordedMagnitude;
     
     //This variable modifies the speed of the rb when the object is time affected.
-    private float slowtime = 1f;
+    [HideInInspector]
+    public float slowtime = 1f;
     
     Rigidbody rb;
 

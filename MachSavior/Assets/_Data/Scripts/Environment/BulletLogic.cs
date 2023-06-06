@@ -42,7 +42,7 @@ public class BulletLogic : PickableObject
     {
         if (!IsPicked())
         {
-            transform.position += bulletDirection * bulletSpeed * Time.deltaTime;
+            transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
         }
     }
 
