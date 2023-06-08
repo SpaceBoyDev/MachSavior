@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Time Control Settings", menuName = ("MachSavior/TimeSystem"), order = 0)]
 public class TimeControlSettings : ScriptableObject
@@ -26,8 +27,8 @@ public class TimeControlSettings : ScriptableObject
         get { return maxTimeCells; }
     }
     
-    [HideInInspector]
-    public int currentTimeCells;
+    [FormerlySerializedAs("currentTimeCells")] [HideInInspector]
+    public int CurrentTimeCells;
     
     #endregion
 }

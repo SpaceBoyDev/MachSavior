@@ -6,5 +6,7 @@ public interface ITimeInteractable
     //void SetIsSelected(bool selected);
     void OnHoverEnter();
     void OnHoverExit();
-    void ChangeTimeState();
+    bool GetHasTimeCell();
+    void UseTimeCell();
+    void TakeTimeCell();
 }

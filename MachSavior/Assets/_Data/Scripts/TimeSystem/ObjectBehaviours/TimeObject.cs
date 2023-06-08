@@ -16,12 +16,21 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
     [SerializeField,Tooltip("Makes so the object has no movement at all when its stopped in time.")] 
     protected bool freezeInTime;
     
-    [SerializeField,Tooltip("Selection state of the item.")] 
-    protected bool isSelected = false;
+    /*[SerializeField,Tooltip("Selection state of the item.")] 
+    protected bool isSelected = false;*/
 
     [HideInInspector] public bool hasTimeCell = false;
 
+    [Header("Effects")]
+    private Material highlightMat;
+
     private Outline outline;
+
+    [SerializeField] private Renderer highlightRenderer;
+
+    [Header("Events")] 
+    
+    [SerializeField] private GameEvent onHoverEnter, onHoverExit;
     //--------------------------------//
     private void Awake()
     {
@@ -31,40 +40,53 @@ public abstract class TimeObject : MonoBehaviour, ITimeInteractable
         outline.OutlineWidth = 4f;
     }
 
+    private void Start()
+    {
+        hasTimeCell = !isStopped;
+        //renderer = GetComponentInChildren<Renderer>();
+    }
+
     public bool GetIsStopped() { return isStopped; }
     public void OnHoverEnter()
     {
+        onHoverEnter.Raise();
         outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
         outline.OutlineColor = Color.yellow;
         outline.OutlineWidth = 8f;
+        
+        highlightRenderer.material.SetFloat("_EffectBlend", 1f);
     }
 
     public void OnHoverExit()
     {
+        onHoverExit.Raise();
         outline.OutlineMode = Outline.Mode.OutlineAll;
         outline.OutlineColor = Color.black;
         outline.OutlineWidth = 4f;
+        
+        highlightRenderer.material.SetFloat("_EffectBlend", 0f);
     }
 
-    public void ChangeTimeState()
+    public bool GetHasTimeCell()
     {
-        if (!timeAffected)
-            return;
-        
+        return hasTimeCell;
+    }
+
+    public void UseTimeCell()
+    {
         hasTimeCell = true; //Makes sure it uses only one time cell.
-        
         // Flip the time state.
         isStopped = !isStopped;
-
-        if (isStopped)
-        {
-            StopTime();
-        }
-        else
-        {
-            ResumeTime();
-        }
+        ResumeTime();
     }
+
+    public void TakeTimeCell()
+    {
+        hasTimeCell = false;
+        isStopped = !isStopped;
+        StopTime();
+    }
+
     public abstract void ResumeTime();
     public abstract void StopTime();
     

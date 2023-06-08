@@ -19,7 +19,7 @@ public class PlayerTimeController : MonoBehaviour
 
     private void Start()
     {
-        _timeControlSettings.currentTimeCells = _timeControlSettings.GetMaxTimeCells;
+        _timeControlSettings.CurrentTimeCells = _timeControlSettings.GetMaxTimeCells;
     }
 
     private void Update()
@@ -52,29 +52,46 @@ public class PlayerTimeController : MonoBehaviour
 
         timeObject = timeSelection;
         
-        ChangeTimeState();
+        OnHoverInput();
 
     }
     
     /// <summary>
     /// Changes the current time state of an aimed object or from all the selected objects inside select mode.
     /// </summary>
-    private void ChangeTimeState()
+    private void OnHoverInput()
     {
-        if (!PlayerInputManager.Instance.IsChangeTimeState())
-            return;
-
-        if (_timeControlSettings.currentTimeCells > 0 )//&& !timeObject.hasTimeCell)
+        if (PlayerInputManager.Instance.IsUseTimeCell())
         {
+            if (_timeControlSettings.CurrentTimeCells <= 0 || timeObject.GetHasTimeCell()) 
+                return;
+            
             //Time cells
-            _timeControlSettings.currentTimeCells --;
+            _timeControlSettings.CurrentTimeCells --;
             //timeObject.hasTimeCell = true;
             onTimeCellUsed.Raise();
             
             //Single object time change.
-            timeObject.ChangeTimeState();
+            timeObject.UseTimeCell();
             timeObject = null;
         }
+        
+        if (PlayerInputManager.Instance.IsTakeTimeCell())
+        {
+            if (_timeControlSettings.CurrentTimeCells >= _timeControlSettings.GetMaxTimeCells || !timeObject.GetHasTimeCell()) 
+                return;
+            
+            //Time cells
+            _timeControlSettings.CurrentTimeCells ++;
+            //timeObject.hasTimeCell = true;
+            onTimeCellUsed.Raise();
+            
+            //Single object time change.
+            timeObject.TakeTimeCell();
+            timeObject = null;
+        }
+
+
         // Change te time state in the selected objects inside selection mode.-> [SELECT MODE CURRENTLY UNUSED]
         /*if (isSelectModeActive && selectedTimeObjects != null) 
             {

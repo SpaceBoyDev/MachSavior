@@ -31,7 +31,7 @@ public class TimeCellsUI : MonoBehaviour
 
         for (int i = 0; i < timeCells.Count; i++)
         {
-            int cellStatus = Mathf.Clamp(_timeControlSettings.currentTimeCells - i, 0, 1);
+            int cellStatus = Mathf.Clamp(_timeControlSettings.CurrentTimeCells - i, 0, 1);
             timeCells[i].SetCellImage((TimeCellStatus)cellStatus);
         }
     }
