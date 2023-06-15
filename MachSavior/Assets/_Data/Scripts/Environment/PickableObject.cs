@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PickableObject : MonoBehaviour
 {
@@ -13,10 +14,16 @@ public class PickableObject : MonoBehaviour
     [SerializeField]
     public bool _isPicked = false;
     
-    private enum ObjectWeightCategory { 
-        lightWeight = 0, midWeight = 1, heavyWeight = 2 };
+    private enum ObjectWeightCategory 
+    { 
+        lightWeight = 0, 
+        midWeight = 1, 
+        heavyWeight = 2 
+    };
 
     [SerializeField] private ObjectWeightCategory objectWeight;
+    [SerializeField] private Vector3 _rotationWhenPick = Vector3.zero;
+    [SerializeField] private Vector3 _positionWhenPick = Vector3.zero;
 
     #region Bolean
     public bool CanPick()
@@ -46,8 +53,8 @@ public class PickableObject : MonoBehaviour
     }
 
     #endregion
-
-
+    
+    
     #region ObjectWeight
     public int ObjectWeight()
     {
@@ -69,5 +76,23 @@ public class PickableObject : MonoBehaviour
         return 0;
 
     }
+    #endregion
+
+    #region  RotationWhenPick
+
+    public Vector3 RotationWhenPick()
+    {
+        return _rotationWhenPick;
+    }
+
+    #endregion
+    
+    #region  PositionWhenPick
+
+    public Vector3 PositionWhenPick()
+    {
+        return _positionWhenPick;
+    }
+
     #endregion
 }
