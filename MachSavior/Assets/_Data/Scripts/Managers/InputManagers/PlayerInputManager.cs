@@ -43,7 +43,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         set { isJumpAllowed = value; }
     }
-
+    
     private void Awake()
     {
         if (Instance == null)

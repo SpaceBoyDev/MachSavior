@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PickObjects : MonoBehaviour
 {
-    [SerializeField] 
-    private Transform[] pickPositions;
-
+    [FormerlySerializedAs("pickPositions")] [SerializeField] 
+    private Transform pickPosition;
+    
     private enum PickObjectWeightPosition
     {   lightWeightPos = 0,
         midWeightPos = 1,
@@ -15,16 +16,18 @@ public class PickObjects : MonoBehaviour
     
     [SerializeField] 
     private PickObjectWeightPosition pickObjectWeight;
-    
-    [SerializeField]
-    private GameObject pickObjCollider;
 
     [SerializeField] 
     private float distanceToPick;
     
+    [SerializeField] 
+    float pickDuration = 0.5f;
+
+    [SerializeField] private AnimationCurve _curve;
     private GameObject _pickedObject = null;
 
     private float _pickAndReleaseCooldawn;
+    
     
     void Update()
     {
@@ -89,8 +92,7 @@ public class PickObjects : MonoBehaviour
 
     IEnumerator PickCourutine(float delay)
     { 
-        float pickDuration = 0.5f;
-        float rotationDuration = 0.1f;
+        
         float startTime = 0f;
         
         while (startTime < pickDuration)
@@ -98,69 +100,59 @@ public class PickObjects : MonoBehaviour
             if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 0 && _pickAndReleaseCooldawn <= 0)
             {
                 //Position
-                 Vector3 startPosition = _pickedObject.transform.position;
-                 Vector3 finalPosition = pickPositions[0].position + _pickedObject.GetComponent<PickableObject>().PositionWhenPick();
+                 Vector3 startPosition = _pickedObject.transform.localPosition;
+                 Vector3 finalPosition = pickPosition.transform.localPosition + _pickedObject.GetComponent<PickableObject>().PositionWhenPick();
                  
                  //Rotation
-                 Vector3 startRotation = _pickedObject.transform.rotation.eulerAngles;
+                 Vector3 startRotation = _pickedObject.transform.localRotation.eulerAngles; 
                  Vector3 finalRotation = _pickedObject.GetComponent<PickableObject>().RotationWhenPick();
-
+                 _pickedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                 
                  //Lerps
-                _pickedObject.transform.position = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
-                pickObjCollider.transform.position = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
-                _pickedObject.transform.rotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), (startTime/rotationDuration));
-                pickObjCollider.transform.rotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), (startTime/rotationDuration));
+                _pickedObject.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
+                _pickedObject.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), _curve.Evaluate(startTime/pickDuration));
                 
-                pickObjCollider.GetComponent<Collider>().isTrigger = false;
-
-                _pickedObject.transform.SetParent(pickPositions[0]);
                 startTime += Time.deltaTime;
+                _pickedObject.transform.SetParent(pickPosition);
                 yield return null;
             }
             
             if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 1 && _pickAndReleaseCooldawn <= 0)
-            { 
+            {
                 //Position
-                Vector3 startPosition = _pickedObject.transform.position;
-                Vector3 finalPosition = pickPositions[1].position + _pickedObject.GetComponent<PickableObject>().PositionWhenPick();
+                Vector3 startPosition = _pickedObject.transform.localPosition;
+                Vector3 finalPosition = pickPosition.transform.localPosition + _pickedObject.GetComponent<PickableObject>().PositionWhenPick();;
                  
                 //Rotation
-                Vector3 startRotation = _pickedObject.transform.rotation.eulerAngles;
+                Vector3 startRotation = _pickedObject.transform.localRotation.eulerAngles;
                 Vector3 finalRotation = _pickedObject.GetComponent<PickableObject>().RotationWhenPick();
-                 
-                //Lerps
-                _pickedObject.transform.position = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
-                pickObjCollider.transform.position = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
-                _pickedObject.transform.rotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), startTime/rotationDuration);
-                pickObjCollider.transform.rotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation),startTime/rotationDuration);
-                
-                pickObjCollider.GetComponent<Collider>().isTrigger = false;
 
-                _pickedObject.transform.SetParent(pickPositions[1]);
+                //Lerps
+                _pickedObject.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
+                _pickedObject.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), _curve.Evaluate(startTime/pickDuration));
+                
                 startTime += Time.deltaTime;
+                _pickedObject.transform.SetParent(pickPosition);
                 yield return null;
             }
             
             if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 2 && _pickAndReleaseCooldawn <= 0)
             {
+                
                 //Position
-                Vector3 startPosition = _pickedObject.transform.position;
-                Vector3 finalPosition = pickPositions[2].position + _pickedObject.GetComponent<PickableObject>().PositionWhenPick();
+                Vector3 startPosition = _pickedObject.transform.localPosition;
+                Vector3 finalPosition = pickPosition.transform.localPosition + _pickedObject.GetComponent<PickableObject>().PositionWhenPick();
                  
                 //Rotation
-                Vector3 startRotation = _pickedObject.transform.rotation.eulerAngles;
+                Vector3 startRotation = _pickedObject.transform.localRotation.eulerAngles;
                 Vector3 finalRotation = _pickedObject.GetComponent<PickableObject>().RotationWhenPick();
-              
-                //Lerps
-                _pickedObject.transform.position = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
-                pickObjCollider.transform.position = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
-                _pickedObject.transform.rotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation),startTime/rotationDuration);
-                pickObjCollider.transform.rotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), startTime/rotationDuration);
-                
-                pickObjCollider.GetComponent<Collider>().isTrigger = false;
 
-                _pickedObject.transform.SetParent(pickPositions[2]);
+                //Lerps
+                _pickedObject.transform.localPosition = Vector3.Lerp(startPosition, finalPosition, startTime/pickDuration);
+                _pickedObject.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(startRotation), Quaternion.Euler(finalRotation), _curve.Evaluate(startTime/pickDuration));
+                
                 startTime += Time.deltaTime;
+                _pickedObject.transform.SetParent(pickPosition);
                 yield return null;
             }
         }
@@ -176,12 +168,12 @@ public class PickObjects : MonoBehaviour
             _pickedObject.layer = LayerMask.NameToLayer("Default");
 
             _pickedObject.GetComponent<PickableObject>()._isPicked = false;
-
+            _pickedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            
             if (_pickedObject.GetComponent<PickableObject>().UseGravity()){
                 _pickedObject.GetComponent<Rigidbody>().useGravity = true; }
 
             _pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-            pickObjCollider.GetComponent<Collider>().isTrigger = true;
 
             _pickedObject.gameObject.transform.SetParent(null);
             _pickedObject = null;

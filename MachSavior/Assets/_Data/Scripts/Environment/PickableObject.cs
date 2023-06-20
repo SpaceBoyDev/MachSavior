@@ -22,8 +22,8 @@ public class PickableObject : MonoBehaviour
     };
 
     [SerializeField] private ObjectWeightCategory objectWeight;
-    [SerializeField] private Vector3 _rotationWhenPick = Vector3.zero;
     [SerializeField] private Vector3 _positionWhenPick = Vector3.zero;
+    [SerializeField] private Vector3 _rotationWhenPick = Vector3.zero;
 
     #region Bolean
     public bool CanPick()
@@ -77,21 +77,20 @@ public class PickableObject : MonoBehaviour
 
     }
     #endregion
-
-    #region  RotationWhenPick
-
-    public Vector3 RotationWhenPick()
-    {
-        return _rotationWhenPick;
-    }
-
-    #endregion
-    
     #region  PositionWhenPick
 
     public Vector3 PositionWhenPick()
     {
         return _positionWhenPick;
+    }
+
+    #endregion
+   
+    #region  RotationWhenPick
+
+    public Vector3 RotationWhenPick()
+    {
+        return _rotationWhenPick;
     }
 
     #endregion
