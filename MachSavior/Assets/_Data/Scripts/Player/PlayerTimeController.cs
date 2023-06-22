@@ -15,7 +15,7 @@ public class PlayerTimeController : MonoBehaviour
     [SerializeField] private GameEvent onTimeCellUsed;
     
     //private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
-    private ITimeInteractable timeObject; // Stores currently selected interactable object.
+    private TimeObject timeObject; // Stores currently selected interactable object.
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class PlayerTimeController : MonoBehaviour
         //ToggleSelectMode();
         CheckTimeObject();
     }
-    
+
     /// <summary>
     /// Raycast that checks if the aimed object is a time object.
     /// </summary>
@@ -35,23 +35,23 @@ public class PlayerTimeController : MonoBehaviour
     {
         if (timeObject != null)
         {
-            timeObject.OnHoverExit();
+            //timeObject.OnHoverExit();
+            //timeObject.setIsAtRange = false;
             timeObject = null;
         }
-        
+
         var ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if (!Physics.Raycast(ray, out var hit, _timeControlSettings.GetMaxDistance)) 
+        if (!Physics.Raycast(ray, out var hit, _timeControlSettings.GetMaxDistance))
             return;
         
         var selection = hit.transform;
-        var timeSelection = selection.GetComponent<ITimeInteractable>();
-        
-        //Check if there is an item selected and the performs the selection behaviour
-        timeSelection?.OnHoverEnter();
+        var timeSelection = selection.gameObject.GetComponent<TimeObject>();
 
+        //Check if there is an item selected and the performs the selection behaviour
+        //timeSelection?.OnHoverEnter();
         timeObject = timeSelection;
-        
+
         OnHoverInput();
 
     }
@@ -63,7 +63,7 @@ public class PlayerTimeController : MonoBehaviour
     {
         if (PlayerInputManager.Instance.IsUseTimeCell())
         {
-            if (_timeControlSettings.CurrentTimeCells <= 0 || timeObject.GetHasTimeCell()) 
+            if (_timeControlSettings.CurrentTimeCells <= 0 || !timeObject.getIsStopped) 
                 return;
             
             //Time cells
@@ -78,7 +78,7 @@ public class PlayerTimeController : MonoBehaviour
         
         if (PlayerInputManager.Instance.IsTakeTimeCell())
         {
-            if (_timeControlSettings.CurrentTimeCells >= _timeControlSettings.GetMaxTimeCells || !timeObject.GetHasTimeCell()) 
+            if (_timeControlSettings.CurrentTimeCells >= _timeControlSettings.GetMaxTimeCells || timeObject.getIsStopped) 
                 return;
             
             //Time cells
@@ -88,7 +88,7 @@ public class PlayerTimeController : MonoBehaviour
             
             //Single object time change.
             timeObject.TakeTimeCell();
-            timeObject = null;
+            //timeObject = null;
         }
 
 

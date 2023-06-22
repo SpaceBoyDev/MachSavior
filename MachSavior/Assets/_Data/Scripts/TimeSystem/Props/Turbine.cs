@@ -12,7 +12,7 @@ public class Turbine : MonoBehaviour
     {
         _animatedTimeObject = GetComponent<AnimatedTimeObject>();
         RotateTurbine();
-        if(_animatedTimeObject.GetIsStopped())
+        if(_animatedTimeObject.getIsStopped)
             _animatedTimeObject.StopTime();
         else 
             _animatedTimeObject.ResumeTime();
