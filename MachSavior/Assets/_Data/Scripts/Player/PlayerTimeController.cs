@@ -26,6 +26,7 @@ public class PlayerTimeController : MonoBehaviour
     {
         //ToggleSelectMode();
         CheckTimeObject();
+        OnHoverInput();
     }
 
     /// <summary>
@@ -33,27 +34,19 @@ public class PlayerTimeController : MonoBehaviour
     /// </summary>
     private void CheckTimeObject()
     {
-        if (timeObject != null)
-        {
-            //timeObject.OnHoverExit();
-            //timeObject.setIsAtRange = false;
-            timeObject = null;
-        }
-
         var ray = cam.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out var hit, _timeControlSettings.GetMaxDistance))
+        {
+            timeObject = null;
             return;
-        
+        }
         var selection = hit.transform;
         var timeSelection = selection.gameObject.GetComponent<TimeObject>();
 
         //Check if there is an item selected and the performs the selection behaviour
         //timeSelection?.OnHoverEnter();
         timeObject = timeSelection;
-
-        OnHoverInput();
-
     }
     
     /// <summary>
@@ -61,36 +54,31 @@ public class PlayerTimeController : MonoBehaviour
     /// </summary>
     private void OnHoverInput()
     {
+        if (timeObject == null)
+            return;
+        
         if (PlayerInputManager.Instance.IsUseTimeCell())
         {
-            if (_timeControlSettings.CurrentTimeCells <= 0 || !timeObject.getIsStopped) 
-                return;
             
-            //Time cells
-            _timeControlSettings.CurrentTimeCells --;
-            //timeObject.hasTimeCell = true;
-            onTimeCellUsed.Raise();
-            
-            //Single object time change.
-            timeObject.UseTimeCell();
-            timeObject = null;
-        }
-        
-        if (PlayerInputManager.Instance.IsTakeTimeCell())
-        {
-            if (_timeControlSettings.CurrentTimeCells >= _timeControlSettings.GetMaxTimeCells || timeObject.getIsStopped) 
-                return;
-            
-            //Time cells
-            _timeControlSettings.CurrentTimeCells ++;
-            //timeObject.hasTimeCell = true;
-            onTimeCellUsed.Raise();
-            
-            //Single object time change.
-            timeObject.TakeTimeCell();
-            //timeObject = null;
-        }
 
+            if (timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells > 0)
+            {
+                _timeControlSettings.CurrentTimeCells --;
+                onTimeCellUsed.Raise();
+                timeObject.UseTimeCell();
+                Debug.Log(timeObject.getIsStopped);
+                //timeObject = null;
+            }
+            else if(!timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells < _timeControlSettings.GetMaxTimeCells)
+            {
+                //Time cells
+                _timeControlSettings.CurrentTimeCells ++;
+                onTimeCellUsed.Raise();
+                timeObject.TakeTimeCell();
+                Debug.Log(timeObject.getIsStopped);
+            }
+            
+        }
 
         // Change te time state in the selected objects inside selection mode.-> [SELECT MODE CURRENTLY UNUSED]
         /*if (isSelectModeActive && selectedTimeObjects != null) 

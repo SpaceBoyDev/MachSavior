@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4007558660384445685}
   - component: {fileID: 4007558660384445687}
   - component: {fileID: 1622816738}
+  - component: {fileID: 6205241459038868138}
   m_Layer: 6
   m_Name: PropCube
   m_TagString: Untagged
@@ -128,10 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba11415795ec6f468aa92842e68ebb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeAffected: 1
-  isStopped: 1
   freezeInTime: 0
-  hasTimeCell: 0
+  isAtRange: 0
   onHoverEnter: {fileID: 11400000, guid: 6385e59ba47c20b47870b677456f3ed4, type: 2}
   onHoverExit: {fileID: 11400000, guid: 0d970a00348e12a47a38afa1aac8866e, type: 2}
   defaultFresnelColor: {r: 0, g: 1.9607843, b: 4, a: 0}
@@ -156,3 +155,15 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &6205241459038868138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4007558660384445681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736ea3777ecd3d14ba4f5f34135a7b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
