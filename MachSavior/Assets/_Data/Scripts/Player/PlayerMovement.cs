@@ -321,7 +321,7 @@ public class PlayerMovement : MonoBehaviour
                 gravityToApply = playerConfig.Gravity;
             }
 
-                verticalSpeed -= gravityToApply * Time.fixedDeltaTime;
+            verticalSpeed -= gravityToApply * Time.deltaTime;
         }
         else 
         {
@@ -338,7 +338,7 @@ public class PlayerMovement : MonoBehaviour
                 gravityToApply = playerConfig.Gravity * 3;
             }
 
-            verticalSpeed -= gravityToApply * Time.fixedDeltaTime;
+            verticalSpeed -= gravityToApply * Time.deltaTime;
         }
     }
 
