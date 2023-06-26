@@ -83,6 +83,7 @@ public class PlayerTimeController : MonoBehaviour
             Debug.Log($"<color=blue>{timeObject.gameObject.name} </color>is at range.");
             timeObject.isAtRange = true;
         }
+        //TODO::Last frame time obj 
     }
     
     /// <summary>
