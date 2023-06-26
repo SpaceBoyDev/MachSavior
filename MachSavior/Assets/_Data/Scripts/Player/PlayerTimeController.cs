@@ -11,9 +11,10 @@ public class PlayerTimeController : MonoBehaviour
     [SerializeField] private Camera cam;
     //[SerializeField] private bool isSelectModeActive = false;
     [SerializeField] private TimeControlSettings _timeControlSettings;
-
+    [SerializeField] private LayerMask mask;
+    [Header("Events")]
     [SerializeField] private GameEvent onTimeCellUsed;
-    
+    [SerializeField] private GameEvent onEmptyTimeCells;
     //private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
     private TimeObject timeObject; // Stores currently selected interactable object.
 
@@ -26,6 +27,29 @@ public class PlayerTimeController : MonoBehaviour
     {
         //ToggleSelectMode();
         CheckTimeObject();
+
+        /*var ray = new Ray(cam.transform.position, cam.transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, _timeControlSettings.GetMaxDistance, mask))
+        {
+            timeObject = hit.transform.gameObject.GetComponent<TimeObject>();
+            
+            if (Vector3.Distance(timeObject.transform.position, transform.position) > _timeControlSettings.GetMaxDistance)
+            {
+                Debug.Log($"<color=red>{timeObject.gameObject.name} </color>is NOT at range.");
+                timeObject.isAtRange = false;
+            }
+            else
+            {
+                Debug.Log($"<color=blue>{timeObject.gameObject.name} </color>is at range.");
+                timeObject.isAtRange = true;
+            }
+        }
+        else
+        {
+            timeObject = null;
+        }*/
+        
         OnHoverInput();
     }
 
@@ -41,12 +65,24 @@ public class PlayerTimeController : MonoBehaviour
             timeObject = null;
             return;
         }
+        
         var selection = hit.transform;
-        var timeSelection = selection.gameObject.GetComponent<TimeObject>();
-
-        //Check if there is an item selected and the performs the selection behaviour
-        //timeSelection?.OnHoverEnter();
-        timeObject = timeSelection;
+        timeObject = selection.gameObject.GetComponent<TimeObject>();
+        
+        if (timeObject == null)
+            return;
+        
+        //Check if time object is at range so no effect applies.
+        if (Vector3.Distance(timeObject.transform.position, transform.position) > _timeControlSettings.GetMaxDistance)
+        {
+            Debug.Log($"<color=red>{timeObject.gameObject.name} </color>is NOT at range.");
+            timeObject.isAtRange = false;
+        }
+        else
+        {
+            Debug.Log($"<color=blue>{timeObject.gameObject.name} </color>is at range.");
+            timeObject.isAtRange = true;
+        }
     }
     
     /// <summary>
@@ -57,7 +93,7 @@ public class PlayerTimeController : MonoBehaviour
         if (timeObject == null)
             return;
         
-        if (PlayerInputManager.Instance.IsUseTimeCell())
+        if (PlayerInputManager.Instance.ChangeTimeState())
         {
             
 
@@ -66,7 +102,6 @@ public class PlayerTimeController : MonoBehaviour
                 _timeControlSettings.CurrentTimeCells --;
                 onTimeCellUsed.Raise();
                 timeObject.UseTimeCell();
-                Debug.Log(timeObject.getIsStopped);
                 //timeObject = null;
             }
             else if(!timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells < _timeControlSettings.GetMaxTimeCells)
@@ -75,7 +110,10 @@ public class PlayerTimeController : MonoBehaviour
                 _timeControlSettings.CurrentTimeCells ++;
                 onTimeCellUsed.Raise();
                 timeObject.TakeTimeCell();
-                Debug.Log(timeObject.getIsStopped);
+            }
+            else if (timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells <= 0)
+            {
+                onEmptyTimeCells.Raise();
             }
             
         }

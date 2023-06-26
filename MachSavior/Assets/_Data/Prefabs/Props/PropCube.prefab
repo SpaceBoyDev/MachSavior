@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4007558660384445687}
   - component: {fileID: 1622816738}
   - component: {fileID: 6205241459038868138}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PropCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   freezeInTime: 0
   isAtRange: 0
+  changeTimeDelay: 0.15
   onHoverEnter: {fileID: 11400000, guid: 6385e59ba47c20b47870b677456f3ed4, type: 2}
   onHoverExit: {fileID: 11400000, guid: 0d970a00348e12a47a38afa1aac8866e, type: 2}
   defaultFresnelColor: {r: 0, g: 1.9607843, b: 4, a: 0}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -16,15 +17,10 @@ public abstract class TimeObject : MonoBehaviour
     public bool getIsStopped => isStopped;
 
     [Tooltip("Checks if the time object is at manipulation range.")]
-    public bool isAtRange;
-    public bool setIsAtRange
-    {
-        set
-        {
-            isAtRange = value;
-        }
-    }
-    
+    public bool isAtRange = false;
+
+    [SerializeField] private float changeTimeDelay = 0.2f;
+
     /*[SerializeField,Tooltip("Selection state of the item.")] 
     protected bool isSelected = false;*/
     [Header("Events")] 
@@ -61,6 +57,7 @@ public abstract class TimeObject : MonoBehaviour
         outline.OutlineColor = Color.black;
         outline.OutlineWidth = 4f;
     }
+
     private void OnMouseEnter()
     {
         onHoverEnter.Raise();
@@ -77,6 +74,19 @@ public abstract class TimeObject : MonoBehaviour
             outline.OutlineColor = Color.yellow;
         }
     }
+
+    /*private void OnMouseOver()
+    {
+        if (!isAtRange)
+        {
+            StartCoroutine(HighlightEffect(0f,0.2f));
+        }
+        else
+        {
+            StartCoroutine(HighlightEffect(1f,0.2f));
+        }
+    }*/
+
     private void OnMouseExit()
     {
         onHoverExit.Raise();
@@ -98,8 +108,8 @@ public abstract class TimeObject : MonoBehaviour
         outline.OutlineColor = Color.yellow;
         //Apply Shader
         StartCoroutine(HighlightEffect(1f,0.2f, poweredFresnelColor, poweredInteriorColor));
-        
-        ResumeTime();
+        // Delay before resuming time.
+        StartCoroutine(DelayAction(ResumeTime));
     }
     public void TakeTimeCell()
     {
@@ -107,11 +117,20 @@ public abstract class TimeObject : MonoBehaviour
         
         outline.OutlineColor = Color.cyan;
         StartCoroutine(HighlightEffect(1f,0.2f, defaultFresnelColor, defaultInteriorColor));
-
-        StopTime();
+        //Delay before stopping time.
+        StartCoroutine(DelayAction(StopTime));
     }
+
+    // *********/ PRIVATE METHODS /********* //
+
     
     // *********/ COROUTINES /********* //
+
+    private IEnumerator DelayAction(Action action)
+    {
+        yield return new WaitForSeconds(changeTimeDelay);
+        action();
+    }
     
     /// <summary>
     /// Interpolate the value of the highlight effect.
