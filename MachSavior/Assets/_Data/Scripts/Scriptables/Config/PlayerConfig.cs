@@ -93,6 +93,15 @@ public class PlayerConfig : ScriptableObject
     }
 
     [SerializeField]
+    [Tooltip("Boost applied to vertical speed when entering wallrun")]
+    [Range(0f, 5f)]
+    private float verticalSpeedBoost = 2f;
+    public float VerticalSpeedBoost
+    {
+        get { return wallJumpForce; }
+    }
+
+    [SerializeField]
     [Tooltip("Minimum rigidbody velocity required to start wallrunning")]
     [Range(0f, 10f)]
     private float minimumWallrunVelocity = 5f;
@@ -108,6 +117,21 @@ public class PlayerConfig : ScriptableObject
     public float MinimumWallrunHeight
     {
         get { return minimumWallrunHeight; }
+    }
+
+    [SerializeField]
+    [Range(0.01f, 0.7f)]
+    private float jumpHoverWallrun = 0.1f; //When it has to be applied the jumpHoverPercent (between 0.1 and -0.1 rb.velocity.y)
+    public float JumpHoverWallrun
+    {
+        get { return jumpHoverWallrun; }
+    }
+    [SerializeField]
+    [Range(0.01f, 0.99f)]
+    private float jumpHoverPercentWallrun = 0.3f; //Percent of the gravity that will be applied when climax of the jump
+    public float JumpHoverPercentWallrun
+    {
+        get { return jumpHoverPercentWallrun; }
     }
 
     #endregion

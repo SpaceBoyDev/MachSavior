@@ -26,7 +26,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement bools")]
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool onSlope = false;
+    private bool m_OnWallrun = false;
     [SerializeField] private bool onWallrun = false;
+
     private enum WallState { none = 0, leftWall = 1, rightWall = 2}
     [SerializeField] private WallState wallState;
     private bool canCheckGround = true; //If the raycast can check for ground and slopes
@@ -125,8 +127,8 @@ public class PlayerMovement : MonoBehaviour
             else wallNormalMultiplier = 1;
 
             Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
-            Vector3 moveWallrun = (wallForward * verticalAxis * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
-            rb.velocity = moveWallrun;
+            Vector3 moveWallrunFinal = (wallForward * verticalAxis * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
+            rb.velocity = new Vector3(moveWallrunFinal.x, verticalSpeed, moveWallrunFinal.z);
             return;
         }
         else
@@ -140,19 +142,6 @@ public class PlayerMovement : MonoBehaviour
 
         xSpeed = combinedMovement.x;
         zSpeed = combinedMovement.z;
-        //
-        //if (xSpeed > 1)
-        //    xSpeed = 1;
-        //else if (xSpeed < -1)
-        //    xSpeed = -1;
-        //
-        //if (zSpeed > 1)
-        //    zSpeed = 1;
-        //else if (zSpeed < -1)
-        //    zSpeed = -1;
-
-
-        //print("x= " + xSpeed + " y z= " +zSpeed);
 
         Vector3 moveDirection = new Vector3(xSpeed + wallrunSpeed.x, verticalSpeed, zSpeed + wallrunSpeed.y);
 
@@ -181,9 +170,6 @@ public class PlayerMovement : MonoBehaviour
             print("padreando");
             return;
         }
-
-        //Vector3 floorMovement = new Vector3(rb.position.x, slopeHit.point.y + 1, rb.position.z);
-        //rb.MovePosition(floorMovement);
     }
 
     private void StepClimb()
@@ -236,8 +222,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-
-
         if (showDebugRay)
         {
             Debug.DrawRay(stepRayLow.position, transform.TransformDirection(Vector3.forward), stepUpRaysColor, 0.6f);
@@ -254,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
     #region Jump/Gravity
     private void JumpInput()
     {
-        if (PlayerInputManager.Instance.IsJumpDown() && isGrounded || PlayerInputManager.Instance.IsJumpDown() && onSlope)
+        if (PlayerInputManager.Instance.IsJumpDown() && isGrounded || PlayerInputManager.Instance.IsJumpDown() && onSlope) //JUMP
         {
             isGrounded = false;
             onSlope = false;
@@ -264,23 +248,17 @@ public class PlayerMovement : MonoBehaviour
             gravityToApply = playerConfig.Gravity;
             verticalSpeed = playerConfig.JumpForce;
         }
-        else if (PlayerInputManager.Instance.IsJumpDown() && onWallrun)
+        else if (PlayerInputManager.Instance.IsJumpDown() && onWallrun) //WALLJUMP
         {
             isGrounded = false;
             onSlope = false;
             canCheckGround = false;
-            canCheckWall = false;
-            onWallrun = false;
-            wallState = WallState.none;
+            ChangeOnWallrun(false);
             StartCoroutine(EnableCheckGround());
-            StartCoroutine(EnableCheckWall());
             gravityToApply = playerConfig.Gravity;
             Vector3 tempDirection = transform.up * playerConfig.WallJumpForce + hitWallrun.normal * playerConfig.WallJumpSideForce;
             verticalSpeed = tempDirection.y;
             wallrunSpeed = new Vector2(tempDirection.x, tempDirection.z);
-
-            print("walljump");
-            
         }
     }
 
@@ -323,24 +301,27 @@ public class PlayerMovement : MonoBehaviour
                 wallrunSpeed = new Vector2(wallrunSpeed.x, 0f);
             }
         }
-
-
-        //if (wallrunSpeed.y > 0f)
-        //{
-        //    wallrunSpeed -= new Vector2(0, 1) * Time.deltaTime;
-        //}
-        //else if (wallrunSpeed.y < 0f)
-        //{
-        //    wallrunSpeed = new Vector2(wallrunSpeed.x, 0f);
-        //}
     }
 
     private void ApplyGravity()
     {
-        if (isGrounded || onWallrun ||onSlope)
+        if (isGrounded || onSlope)
         {
             ResetVerticalSpeed();
             gravityToApply = playerConfig.Gravity;
+        }
+        else if (onWallrun)
+        {
+            if (verticalSpeed >= -playerConfig.JumpHoverWallrun && verticalSpeed <= playerConfig.JumpHoverWallrun)
+            {
+                gravityToApply = playerConfig.Gravity * playerConfig.JumpHoverPercentWallrun;
+            }
+            else if (verticalSpeed < -playerConfig.JumpHoverWallrun)
+            {
+                gravityToApply = playerConfig.Gravity;
+            }
+
+                verticalSpeed -= gravityToApply * Time.fixedDeltaTime;
         }
         else 
         {
@@ -410,19 +391,67 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
 
+    private void OnEnterWallrun()
+    {
+        if (rb.velocity.y < 0)
+        {
+            ResetVerticalSpeed();
+        }
+        else
+        {
+            verticalSpeed = playerConfig.VerticalSpeedBoost;
+            print("boost");
+        }
+        
+        print("onenter");
+    }
+
+    private void OnExitWallrun()
+    {
+        print("onexit");
+        ResetVerticalSpeed();
+        canCheckWall = false;
+        StartCoroutine(EnableCheckWall());
+        wallState = WallState.none;
+        CameraManager.Instance.clampCameraHorizontal = false;
+    }
+
+    private void ChangeOnWallrun(bool state)
+    {
+        if (state == onWallrun)
+        {
+            return;
+        }
+        else if (state == false && onWallrun == true)
+        {
+            OnExitWallrun();
+        }
+        else if (state == true && onWallrun == false)
+        {
+            OnEnterWallrun();
+        }
+
+        onWallrun = state;
+    }
+
     private void WallrunRaycast()
     {
         
         if (!isGrounded && !onSlope && verticalAxis > 0.9f)
         {
+            //Check left side
             int hits = 0;
             for (int i = 0; i < raycastWallrunOriginsLeft.Length; i++)
             {
                 if (showDebugRay)
+                {
                     Debug.DrawRay(raycastWallrunOriginsLeft[i].position, -root.transform.right, wallrunRayColor);
+                }
 
                 if (Physics.Raycast(raycastWallrunOriginsLeft[i].position, -root.transform.right, out hitWallrun, 0.5f))
+                {
                     hits++;
+                }
             }
 
             if (hits == raycastWallrunOriginsLeft.Length)
@@ -434,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (!Physics.Raycast(root.transform.position, Vector3.down, playerConfig.MinimumWallrunHeight))
                 {
                     wallrunSpeed = Vector2.zero;
-                    onWallrun = true;
+                    ChangeOnWallrun(true);
                     wallState = WallState.leftWall;
                     CameraManager.Instance.clampCameraHorizontal = true;
                     return;
@@ -442,48 +471,50 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                onWallrun = false;
-                wallState = WallState.none;
-                CameraManager.Instance.clampCameraHorizontal = false;
+
+                //Check right side
                 hits = 0;
-            }
-
-            for (int i = 0; i < raycastWallrunOriginsRight.Length; i++)
-            {
-                if (showDebugRay)
-                    Debug.DrawRay(raycastWallrunOriginsRight[i].position, root.transform.right, wallrunRayColor);
-                if (Physics.Raycast(raycastWallrunOriginsRight[i].position, root.transform.right, out hitWallrun, 0.5f))
-                    hits++;
-
-            }
-
-            if (hits == raycastWallrunOriginsRight.Length)
-            {
-                if (onWallrun)
+                for (int i = 0; i < raycastWallrunOriginsRight.Length; i++)
                 {
-                    return;
+                    if (showDebugRay)
+                    {
+                        Debug.DrawRay(raycastWallrunOriginsRight[i].position, root.transform.right, wallrunRayColor);
+                    }
+
+                    if (Physics.Raycast(raycastWallrunOriginsRight[i].position, root.transform.right, out hitWallrun, 0.5f))
+                    {
+                        hits++;
+                    }
                 }
-                else if (!Physics.Raycast(root.transform.position, Vector3.down, playerConfig.MinimumWallrunHeight))
+
+                if (hits == raycastWallrunOriginsRight.Length)
                 {
-                    wallrunSpeed = Vector2.zero;
-                    onWallrun = true;
-                    wallState = WallState.rightWall;
-                    CameraManager.Instance.clampCameraHorizontal = true;
-                    return;
+                    if (onWallrun)
+                    {
+                        return;
+                    }
+                    else if (!Physics.Raycast(root.transform.position, Vector3.down, playerConfig.MinimumWallrunHeight))
+                    {
+                        wallrunSpeed = Vector2.zero;
+                        ChangeOnWallrun(true);
+                        wallState = WallState.rightWall;
+                        CameraManager.Instance.clampCameraHorizontal = true;
+                        return;
+                    }
+                    else
+                    {
+                        ChangeOnWallrun(false);
+                    }
                 }
-            }
-            else
-            {
-                onWallrun = false;
-                wallState = WallState.none;
-                CameraManager.Instance.clampCameraHorizontal = false;
+                else
+                {
+                    ChangeOnWallrun(false);
+                }
             }
         }
         else
         {
-            onWallrun = false;
-            wallState = WallState.none;
-            CameraManager.Instance.clampCameraHorizontal = false;
+            ChangeOnWallrun(false);
         }
     }
 
