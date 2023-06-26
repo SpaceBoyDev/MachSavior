@@ -20,9 +20,8 @@ public class PlayerInputManager : MonoBehaviour
     private const string PICK_OBJECTS = "Pick";
     
     //Player Time Control
-    private const string USE_TIME_CELL = "UseTimeCell";
-    private const string TAKE_TIME_CELL = "TakeTimeCell";
-    
+    private const string CHANGE_TIME_STATE = "ChangeTimeState";
+
     private const string SELECT_MODE = "SelectMode";
     private const string SELECT_TIME_OBJECT = "SelectTimeObject";
 
@@ -126,22 +125,14 @@ public class PlayerInputManager : MonoBehaviour
     }
     
     //------ TIME SYSTEM ------//
-    public bool IsUseTimeCell()
+    public bool ChangeTimeState()
     {
         if (!isTimeChangeAllowed)
             return false;
 
-        return playerInput.GetButtonDown(USE_TIME_CELL);
+        return playerInput.GetButtonDown(CHANGE_TIME_STATE);
     }
 
-    public bool IsTakeTimeCell()
-    {
-        if (!isTimeChangeAllowed)
-            return false;
-
-        return playerInput.GetButtonDown(TAKE_TIME_CELL);
-    }
-    
     //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
 
     #region SelectMode
