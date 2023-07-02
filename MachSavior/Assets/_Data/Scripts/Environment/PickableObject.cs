@@ -13,7 +13,8 @@ public class PickableObject : MonoBehaviour
     
     [SerializeField]
     public bool _isPicked = false;
-    
+
+    [HideInInspector] public int currentWeight;
     private enum ObjectWeightCategory 
     { 
         lightWeight = 0, 
@@ -60,16 +61,19 @@ public class PickableObject : MonoBehaviour
     {
         if(objectWeight == ObjectWeightCategory.heavyWeight)
         {
+            currentWeight = 25;
             return 2;
         }
 
         if (objectWeight == ObjectWeightCategory.midWeight)
         {
+            currentWeight = 10;
             return 1;
         }
 
         if (objectWeight == ObjectWeightCategory.lightWeight)
         {
+            currentWeight = 5;
             return 0;
         }
 
