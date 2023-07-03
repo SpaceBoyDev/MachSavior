@@ -21,15 +21,15 @@ MonoBehaviour:
   playerWallrunDrag: 1.2
   wallJumpForce: 1.2
   wallJumpSideForce: 1
-  verticalSpeedBoost: 4
+  verticalSpeedBoost: 5
   minimumWallrunVelocity: 5
   minimumWallrunHeight: 1
-  jumpHoverWallrun: 0.2
-  jumpHoverPercentWallrun: 0.05
+  jumpHoverWallrun: 0.1
+  jumpHoverPercentWallrun: 0.1
   jumpForce: 1.5
   jumpHover: 0.1
   jumpHoverPercent: 0.3
   maxGravity: -80
   gravity: 3.5
-  sensibilityX: 0.4
-  sensibilityY: 0.4
+  sensibilityX: 0.25
+  sensibilityY: 0.25

@@ -19,9 +19,23 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
     [SerializeField]
-    private Transform cameraPos;
+    private Transform cameraExtraPos;
+    [SerializeField]
+    private Transform cameraExtraRot;
     [SerializeField]
     private TextMeshProUGUI textFPS;
+
+    private float mouseX = 0, mouseY = 0;
+
+    public float GetMouseX()
+    {
+        return mouseX;
+    }
+
+    public float GetMouseY()
+    {
+        return mouseY;
+    }
 
     private void Awake()
     {
@@ -58,13 +72,24 @@ public class PlayerManager : MonoBehaviour
         return root;
     }
 
+    public float GetPlayerRotationY()
+    {
+        return root.transform.rotation.y;
+    }
+
     public Camera GetPlayerCamera()
     {
         return playerCamera;
     }
 
-    public Transform GetCameraPos()
+    public Transform GetCameraExtraPos()
     {
-        return cameraPos;
+        return cameraExtraPos;
     }
+
+    public Transform GetCameraExtraRot()
+    {
+        return cameraExtraRot;
+    }
+
 }
