@@ -11,8 +11,15 @@ public class CameraManager : MonoBehaviour
     private bool isClampingCameraHorizontal = false;
 
     private float playerRotationYOnClamp;
+    private Vector3 cameraWallrunLookForward;
+    public Vector3 CameraWallrunLookForward{
+        get{
+            return cameraWallrunLookForward;
+        }
+    }
+    private bool isCameraUpdateAllowed = true;
 
-    [SerializeField] Camera playerCam;
+    [SerializeField] FirstPersonCamera playerCam;
 
     public bool GetIsClampingCameraHorizontal()
     {
@@ -23,6 +30,22 @@ public class CameraManager : MonoBehaviour
     {
         playerRotationYOnClamp = playerCam.transform.rotation.eulerAngles.y;
         isClampingCameraHorizontal = value;
+    }
+
+    public void SetCameraWallrunLookForward(Vector3 newCameraWallrunLookForward){
+        cameraWallrunLookForward = newCameraWallrunLookForward;
+        Debug.DrawLine(cameraWallrunLookForward, cameraWallrunLookForward + (Vector3.up * 0.5f), Color.green, 2f);
+    }
+
+    public bool IsCameraUpdateAllowed(){
+        return isCameraUpdateAllowed;
+    }
+    public void SetIsCameraUpdateAllowed(bool value){
+        isCameraUpdateAllowed = value;    
+        if(!isCameraUpdateAllowed)
+        {
+            playerCam.LerpToWallrunForward();
+        }    
     }
 
     public Camera GetPlayerCamera()
@@ -48,7 +71,7 @@ public class CameraManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayerManager.Instance.GetCameraExtraRot().transform.parent = null;
+        // PlayerManager.Instance.GetCameraExtraRot().transform.parent = null;
     }
 
     private void LateUpdate()

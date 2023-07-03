@@ -23,6 +23,9 @@ public class FirstPersonCamera : MonoBehaviour
 
     private Vector2 horizontalClamp;
 
+    private IEnumerator  wallrunCameraCoroutine;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +51,13 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void ClampCamera()
     {
+        if(!CameraManager.Instance.IsCameraUpdateAllowed()){
+            return;
+        }else if(wallrunCameraCoroutine != null){
+            StopCoroutine(wallrunCameraCoroutine);
+            wallrunCameraCoroutine = null;
+        }
+
         mouseY = Mathf.Clamp(mouseY, minY, maxY);
 
         if (CameraManager.Instance.GetIsClampingCameraHorizontal())
@@ -88,5 +98,29 @@ public class FirstPersonCamera : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, playerCamera.transform.rotation.eulerAngles.y, 0);
         }
+    }
+
+
+    public void LerpToWallrunForward(){
+        wallrunCameraCoroutine = LerpWallrunCameraToForward();
+        StartCoroutine(wallrunCameraCoroutine);        
+    }
+    
+    IEnumerator LerpWallrunCameraToForward(){
+        Quaternion newRot = Quaternion.LookRotation(CameraManager.Instance.CameraWallrunLookForward - playerCamera.transform.position, Vector3.up);
+        Vector3 newRotEuler = newRot.eulerAngles;
+        Quaternion currentRot = playerCamera.transform.rotation;
+        Vector3 currentRotEurler = currentRot.eulerAngles;
+        float elapsedTime = 0f;
+        float lerpTime = .5f;
+        while(elapsedTime < lerpTime){
+            playerCamera.transform.rotation = Quaternion.Lerp(currentRot, newRot, (elapsedTime / lerpTime));
+            transform.eulerAngles = new Vector3(0, playerCamera.transform.rotation.eulerAngles.y, 0);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        wallrunCameraCoroutine = null;
+        playerCamera.transform.rotation = newRot;
+        CameraManager.Instance.SetIsCameraUpdateAllowed(true);
     }
 }

@@ -69,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Color slopeRayColor;
     [SerializeField] private Color wallrunRayColor;
 
+    Vector3 cameraWallrunLookForward;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -136,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
             Vector3 moveWallrunFinal = (wallForward * verticalAxis * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
             rb.velocity = new Vector3(moveWallrunFinal.x, verticalSpeed, moveWallrunFinal.z);
+            cameraWallrunLookForward = transform.position + (wallForward * 1.5f);
             return;
         }
         else
@@ -406,7 +409,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnterWallrun()
     {
-        print("onenter");
+        print("onenter wall run");
 
         if (rb.velocity.y < 0)
         {
@@ -417,7 +420,8 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = playerConfig.VerticalSpeedBoost;
             print("boost");
         }
-
+        CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
+        CameraManager.Instance.SetIsCameraUpdateAllowed(false);
         CameraManager.Instance.SetIsClampingCameraHorizontal(true);
     }
 
@@ -450,12 +454,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnExitWallrun()
     {
-        print("onexit");
+        print("onexit wall run");
         ResetVerticalSpeed();
         canCheckWall = false;
         StartCoroutine(EnableCheckWall());
         wallState = WallState.none;
-
+        CameraManager.Instance.SetIsCameraUpdateAllowed(true);
         CameraManager.Instance.SetIsClampingCameraHorizontal(false);
     }
 
