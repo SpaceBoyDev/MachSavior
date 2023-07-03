@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Base time object class.
 /// </summary>
 public abstract class TimeObject : MonoBehaviour
 {
-    [Header("Time Settings")]
+    [Header("General")] 
+    
+    [SerializeField] 
+    private TimeControlSettings _timeSettings;
     
     [SerializeField,Tooltip("Makes so the object has no movement at all when its stopped in time.")] 
     protected bool freezeInTime;
@@ -18,27 +22,7 @@ public abstract class TimeObject : MonoBehaviour
 
     [Tooltip("Checks if the time object is at manipulation range.")]
     public bool isAtRange = false;
-
-    [SerializeField] private float changeTimeDelay = 0.2f;
-
-    /*[SerializeField,Tooltip("Selection state of the item.")] 
-    protected bool isSelected = false;*/
-    [Header("Events")] 
     
-    [SerializeField] private GameEvent onHoverEnter;
-    [SerializeField] private GameEvent onHoverExit;
-
-    [Header("Effects")] 
-    
-    [SerializeField, ColorUsage(true, true)]
-    private Color defaultFresnelColor;
-    [SerializeField,ColorUsage(true, true)] 
-    private Color defaultInteriorColor;
-    [SerializeField, ColorUsage(true, true)]
-    private Color poweredFresnelColor;
-    [SerializeField,ColorUsage(true, true)] 
-    private Color poweredInteriorColor;
-
     private Outline outline;
     private Renderer renderer;
     
@@ -60,9 +44,9 @@ public abstract class TimeObject : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        onHoverEnter.Raise();
+        _timeSettings.GetOnHoverEnter.Raise();
         outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-        outline.OutlineWidth = 8f;
+        outline.OutlineWidth = 6f;
 
         if (isStopped)
         {
@@ -75,21 +59,9 @@ public abstract class TimeObject : MonoBehaviour
         }
     }
 
-    /*private void OnMouseOver()
-    {
-        if (!isAtRange)
-        {
-            StartCoroutine(HighlightEffect(0f,0.2f));
-        }
-        else
-        {
-            StartCoroutine(HighlightEffect(1f,0.2f));
-        }
-    }*/
-
     private void OnMouseExit()
     {
-        onHoverExit.Raise();
+        _timeSettings.GetOnHoverExit.Raise();
         outline.OutlineMode = Outline.Mode.OutlineAll;
         outline.OutlineColor = Color.black;
         outline.OutlineWidth = 4f;
@@ -107,7 +79,7 @@ public abstract class TimeObject : MonoBehaviour
         
         outline.OutlineColor = Color.yellow;
         //Apply Shader
-        StartCoroutine(HighlightEffect(1f,0.2f, poweredFresnelColor, poweredInteriorColor));
+        StartCoroutine(HighlightEffect(1f,0.2f, _timeSettings.GetPoweredFresnelColor, _timeSettings.GetPoweredInteriorColor));
         // Delay before resuming time.
         StartCoroutine(DelayAction(ResumeTime));
     }
@@ -116,7 +88,7 @@ public abstract class TimeObject : MonoBehaviour
         isStopped = !isStopped;
         
         outline.OutlineColor = Color.cyan;
-        StartCoroutine(HighlightEffect(1f,0.2f, defaultFresnelColor, defaultInteriorColor));
+        StartCoroutine(HighlightEffect(1f,0.2f, _timeSettings.GetDefaultFresnelColor, _timeSettings.GetDefaultInteriorColor));
         //Delay before stopping time.
         StartCoroutine(DelayAction(StopTime));
     }
@@ -128,7 +100,7 @@ public abstract class TimeObject : MonoBehaviour
 
     private IEnumerator DelayAction(Action action)
     {
-        yield return new WaitForSeconds(changeTimeDelay);
+        yield return new WaitForSeconds(_timeSettings.GetChangeTimeDelay);
         action();
     }
     
@@ -172,16 +144,4 @@ public abstract class TimeObject : MonoBehaviour
         renderer.material.SetColor("_FresnelColor", endFresnelColor);
         renderer.material.SetColor("_InteriorColor", endInteriorColor);
     }
-    
-    //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
-    /*public bool GetIsSelected() { return isSelected; }
-    public void SetIsSelected(bool selected)
-    {
-        isSelected = selected;
-        if (isSelected)
-            outline.OutlineColor = Color.white;
-        else
-            outline.OutlineColor = isStopped ? Color.blue : Color.black;
-        //outline.OutlineWidth = 8f;
-    }*/
 }

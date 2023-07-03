@@ -367,7 +367,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -826,13 +826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1981426198}
-  _timeControlSettings: {fileID: 11400000, guid: 2a81e0e954f2963418b373bdb45e819b,
-    type: 2}
-  mask:
-    serializedVersion: 2
-    m_Bits: 256
-  onTimeCellUsed: {fileID: 11400000, guid: 065daaffc0e4d634c9dd097c0b777edc, type: 2}
-  onEmptyTimeCells: {fileID: 11400000, guid: 09bacb6b7a07e944882b0358ee7fdaa7, type: 2}
+  _timeSettings: {fileID: 11400000, guid: 2a81e0e954f2963418b373bdb45e819b, type: 2}
 --- !u!114 &5544830803333976535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,10 +839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97d159555aaa8f478afaf45a9dffa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickPositions:
-  - {fileID: 9152079636442281975}
-  - {fileID: 0}
-  - {fileID: 0}
+  pickPosition: {fileID: 0}
   pickObjectWeight: 0
   distanceToPick: 2
   pickDuration: 0.5

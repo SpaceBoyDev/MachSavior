@@ -13,5 +13,14 @@ MonoBehaviour:
   m_Name: TimeControlSettings
   m_EditorClassIdentifier: 
   maxDistance: 15
+  changeTimeDelay: 0.2
   maxTimeCells: 3
   CurrentTimeCells: 3
+  onHoverEnter: {fileID: 11400000, guid: 6385e59ba47c20b47870b677456f3ed4, type: 2}
+  onHoverExit: {fileID: 11400000, guid: 0d970a00348e12a47a38afa1aac8866e, type: 2}
+  onTimeCellUsed: {fileID: 11400000, guid: 065daaffc0e4d634c9dd097c0b777edc, type: 2}
+  onTimeCellsEmpty: {fileID: 11400000, guid: 09bacb6b7a07e944882b0358ee7fdaa7, type: 2}
+  defaultFresnelColor: {r: 0, g: 0.40784314, b: 5.992157, a: 1}
+  defaultInteriorColor: {r: 0, g: 0.09135306, b: 5.992157, a: 1}
+  poweredFresnelColor: {r: 5.992157, g: 1.6941177, b: 0, a: 1}
+  poweredInteriorColor: {r: 1.701961, g: 0.33478844, b: 0, a: 1}

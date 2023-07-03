@@ -9,18 +9,13 @@ public class PlayerTimeController : MonoBehaviour
     [Header("General")] 
     
     [SerializeField] private Camera cam;
-    //[SerializeField] private bool isSelectModeActive = false;
-    [SerializeField] private TimeControlSettings _timeControlSettings;
-    [SerializeField] private LayerMask mask;
-    [Header("Events")]
-    [SerializeField] private GameEvent onTimeCellUsed;
-    [SerializeField] private GameEvent onEmptyTimeCells;
-    //private List<ITimeInteractable> selectedTimeObjects = new List<ITimeInteractable>();
+    [SerializeField] private TimeControlSettings _timeSettings;
+    
     private TimeObject timeObject; // Stores currently selected interactable object.
 
     private void Start()
     {
-        _timeControlSettings.CurrentTimeCells = _timeControlSettings.GetMaxTimeCells;
+        _timeSettings.CurrentTimeCells = _timeSettings.GetMaxTimeCells;
     }
 
     private void Update()
@@ -60,7 +55,7 @@ public class PlayerTimeController : MonoBehaviour
     {
         var ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if (!Physics.Raycast(ray, out var hit, _timeControlSettings.GetMaxDistance))
+        if (!Physics.Raycast(ray, out var hit, _timeSettings.GetMaxDistance))
         {
             timeObject = null;
             return;
@@ -73,7 +68,7 @@ public class PlayerTimeController : MonoBehaviour
             return;
         
         //Check if time object is at range so no effect applies.
-        if (Vector3.Distance(timeObject.transform.position, transform.position) > _timeControlSettings.GetMaxDistance)
+        if (Vector3.Distance(timeObject.transform.position, transform.position) > _timeSettings.GetMaxDistance)
         {
             Debug.Log($"<color=red>{timeObject.gameObject.name} </color>is NOT at range.");
             timeObject.isAtRange = false;
@@ -96,91 +91,26 @@ public class PlayerTimeController : MonoBehaviour
         
         if (PlayerInputManager.Instance.ChangeTimeState())
         {
-            
 
-            if (timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells > 0)
+            if (timeObject.getIsStopped && _timeSettings.CurrentTimeCells > 0)
             {
-                _timeControlSettings.CurrentTimeCells --;
-                onTimeCellUsed.Raise();
+                _timeSettings.CurrentTimeCells --;
+                _timeSettings.GetOnTimeCellUsed.Raise();
                 timeObject.UseTimeCell();
                 //timeObject = null;
             }
-            else if(!timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells < _timeControlSettings.GetMaxTimeCells)
+            else if(!timeObject.getIsStopped && _timeSettings.CurrentTimeCells < _timeSettings.GetMaxTimeCells)
             {
                 //Time cells
-                _timeControlSettings.CurrentTimeCells ++;
-                onTimeCellUsed.Raise();
+                _timeSettings.CurrentTimeCells ++;
+                _timeSettings.GetOnTimeCellUsed.Raise();
                 timeObject.TakeTimeCell();
             }
-            else if (timeObject.getIsStopped && _timeControlSettings.CurrentTimeCells <= 0)
+            else if (timeObject.getIsStopped && _timeSettings.CurrentTimeCells <= 0)
             {
-                onEmptyTimeCells.Raise();
+                _timeSettings.GetOnTimeCellsEmpty.Raise();
             }
             
         }
-
-        // Change te time state in the selected objects inside selection mode.-> [SELECT MODE CURRENTLY UNUSED]
-        /*if (isSelectModeActive && selectedTimeObjects != null) 
-            {
-                foreach (var selection in selectedTimeObjects)
-                {
-                    if (selection.GetIsSelected())
-                    {
-                        selection.ChangeTimeState();
-                        //selection.SetIsSelected(false);
-                    }
-                }
-            }*/
     }
-    //-------------------------[SELECT MODE CURRENTLY UNUSED]--------------------------//
-    /*private void ToggleSelectMode()
-    {
-        if (PlayerInputManager.Instance.EnterSelectMode())
-        {
-            //TODO:: Add effects for selection mode.
-            Debug.Log($"<color=Blue>Selection mode activated.</color>");
-            isSelectModeActive = true;
-            SelectMode();
-        }
-        else if(PlayerInputManager.Instance.ExitSelectMode())
-        {
-            Debug.Log($"<color=Yellow>Selection mode exited.</color>");
-            isSelectModeActive = false;
-            
-            foreach (var selection in selectedTimeObjects)
-            {
-                selection.SetIsSelected(false);
-            }
-            //Empty the list of objects when exiting select mode.
-            selectedTimeObjects.Clear();
-            interactable = null;
-        }
-    }
-    /// <summary>
-    /// Contains all behaviour related to the time object selection mode.
-    /// </summary>
-    private void SelectMode()
-    {
-
-        if (PlayerInputManager.Instance.IsSelectTimeObject())
-        {
-            CheckTimeObject();
-            if (interactable == null)
-                return;
-            if (!interactable.GetIsSelected())
-            {
-                interactable.SetIsSelected(true);
-                selectedTimeObjects.Add(interactable);
-                interactable = null;
-                Debug.Log($"<color=green>Object added to select list.</color>");
-            }
-            else
-            {
-                interactable.SetIsSelected(false);
-                selectedTimeObjects.Remove(interactable);
-                interactable = null;
-                Debug.Log($"<color=cyan>Object removed from select list.</color>");
-            }
-        }   
-    }*/
 }
