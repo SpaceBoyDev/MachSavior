@@ -8,9 +8,7 @@ public class BreakableWall : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<BulletLogic>())
         {
-            // TO DO break the object here
-            Destroy(this.gameObject);
-            Destroy(collision.gameObject);
+           gameObject.SetActive(false);
         }
     }
 }

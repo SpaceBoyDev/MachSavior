@@ -13,7 +13,7 @@ public abstract class TimeObject : MonoBehaviour
     protected bool freezeInTime;
 
     [Tooltip("Checks the if the time state of the object is stopped or not.")]
-    protected bool isStopped = true;
+    public bool isStopped = true;
     public bool getIsStopped => isStopped;
 
     [Tooltip("Checks if the time object is at manipulation range.")]
