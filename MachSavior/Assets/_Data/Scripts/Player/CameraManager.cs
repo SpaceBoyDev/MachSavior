@@ -71,7 +71,7 @@ public class CameraManager : MonoBehaviour
     }
     private void Start()
     {
-        // PlayerManager.Instance.GetCameraExtraRot().transform.parent = null;
+        PlayerManager.Instance.GetCameraExtraRot().transform.parent = null;
     }
 
     private void LateUpdate()

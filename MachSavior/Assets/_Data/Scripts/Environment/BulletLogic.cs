@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class BulletLogic : PickableObject
     void OnEnable()
     {
         currentLifeTime = 0;
-        // gameObject.GetComponent<PhysicsTimeObject>().freezeintime // reset time logic
+        gameObject.GetComponent<PhysicsTimeObject>().isStopped = true; // reset time logic
     }
 
     void Update()
@@ -61,7 +62,6 @@ public class BulletLogic : PickableObject
     {
         if (IsPicked())
         {
-            currentLifeTime = 0;
             bulletDirection = Camera.main.transform.forward;
         }
     }
@@ -77,5 +77,10 @@ public class BulletLogic : PickableObject
                 SpawnPool.Instance.Despawn(transform);
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        gameObject.SetActive(false);
     }
 }

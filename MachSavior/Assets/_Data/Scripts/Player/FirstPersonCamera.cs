@@ -1,6 +1,8 @@
 using Rewired;
+using Sirenix.Utilities;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour
@@ -15,8 +17,8 @@ public class FirstPersonCamera : MonoBehaviour
 
     private float mouseX, mouseY;
 
-    private int maxY = 89;
-    private int minY = -89;
+    private int maxY = 290;
+    private int minY = 70;
 
     float rotationY;
     bool change = false;
@@ -43,10 +45,10 @@ public class FirstPersonCamera : MonoBehaviour
     {
         if (PlayerInputManager.Instance.IsHorizontalMouseAllowed)
         {
-            mouseX += PlayerInputManager.Instance.GetHorizontalMouse() * playerConfig.sensibilityX;
+            mouseX = PlayerInputManager.Instance.GetHorizontalMouse() * playerConfig.sensibilityX;
         }
 
-        mouseY -= PlayerInputManager.Instance.GetVerticalMouse() * playerConfig.sensibilityY;
+        mouseY = -PlayerInputManager.Instance.GetVerticalMouse() * playerConfig.sensibilityY;
     }
 
     private void ClampCamera()
@@ -58,43 +60,53 @@ public class FirstPersonCamera : MonoBehaviour
             wallrunCameraCoroutine = null;
         }
 
-        mouseY = Mathf.Clamp(mouseY, minY, maxY);
-
         if (CameraManager.Instance.GetIsClampingCameraHorizontal())
         {
-            if (!change)
+
+            if (playerMovement.wallState == PlayerMovement.WallState.rightWall)
             {
-                change = true;
-                print("A true-> " + change);
-                if (playerMovement.wallState == PlayerMovement.WallState.rightWall)
-                {
-                    horizontalClamp = new Vector2(mouseX - 40, mouseX + 5);
-                }
-                else if (playerMovement.wallState == PlayerMovement.WallState.leftWall)
-                {
-                    horizontalClamp = new Vector2(mouseX - 5, mouseX + 40);
-                }
+                horizontalClamp = new Vector2(CameraManager.Instance.GetPlayerRotationYOnClamp() - 40, CameraManager.Instance.GetPlayerRotationYOnClamp() + 5);
+            }
+            else if (playerMovement.wallState == PlayerMovement.WallState.leftWall)
+            {
+                horizontalClamp = new Vector2(CameraManager.Instance.GetPlayerRotationYOnClamp() - 5, CameraManager.Instance.GetPlayerRotationYOnClamp() + 40);
             }
 
-            mouseX = Mathf.Clamp(mouseX, horizontalClamp.x, horizontalClamp.y);
+            playerCamera.transform.eulerAngles = new Vector3(
+                playerCamera.transform.eulerAngles.x,
+                Mathf.Clamp(playerCamera.transform.eulerAngles.y, horizontalClamp.x, horizontalClamp.y),
+                playerCamera.transform.eulerAngles.z
+            );
         }
-        else if (change)
-        {
-            change = false;
-            print("A false-> " + change);
 
-        }
 
         if (PlayerInputManager.Instance.IsHorizontalMouseAllowed)
         {
-            playerCamera.transform.eulerAngles = new Vector3(mouseY, mouseX, playerCamera.transform.eulerAngles.z);
+            mouseY = Mathf.Clamp(mouseY, -19, 19);
+            float cannotAddTo = playerCamera.transform.eulerAngles.x + mouseY;
+            if (cannotAddTo < maxY && cannotAddTo > 270)
+            {
+                playerCamera.transform.eulerAngles = new Vector3(maxY, playerCamera.transform.eulerAngles.y, playerCamera.transform.eulerAngles.z);
+                print("Por encima de");
+            }
+            else if (cannotAddTo > minY && cannotAddTo < 90)
+            {
+                playerCamera.transform.eulerAngles = new Vector3(minY, playerCamera.transform.eulerAngles.y, playerCamera.transform.eulerAngles.z);
+                print("Por debajo de");
+            }
+            else
+            {
+                playerCamera.transform.eulerAngles += new Vector3(mouseY, 0f, 0f);
+            }
+
+            playerCamera.transform.eulerAngles += new Vector3(0f, mouseX, 0f);
         }
         else
         {
-            playerCamera.transform.eulerAngles = new Vector3(mouseY, playerCamera.transform.eulerAngles.x, playerCamera.transform.eulerAngles.z);
+            playerCamera.transform.eulerAngles += new Vector3(mouseY, 0f, 0f);
         }
 
-        if (!playerMovement.OnWallrun && PlayerInputManager.Instance.IsHorizontalMouseAllowed)
+        if (!playerMovement.OnWallrun || PlayerInputManager.Instance.IsHorizontalMouseAllowed)
         {
             transform.eulerAngles = new Vector3(0, playerCamera.transform.rotation.eulerAngles.y, 0);
         }
@@ -103,24 +115,37 @@ public class FirstPersonCamera : MonoBehaviour
 
     public void LerpToWallrunForward(){
         wallrunCameraCoroutine = LerpWallrunCameraToForward();
-        StartCoroutine(wallrunCameraCoroutine);        
+        StartCoroutine(wallrunCameraCoroutine);
     }
     
     IEnumerator LerpWallrunCameraToForward(){
-        Quaternion newRot = Quaternion.LookRotation(CameraManager.Instance.CameraWallrunLookForward - playerCamera.transform.position, Vector3.up);
-        Vector3 newRotEuler = newRot.eulerAngles;
+        //Vector3 newRotEuler = newRot.eulerAngles;
         Quaternion currentRot = playerCamera.transform.rotation;
-        Vector3 currentRotEurler = currentRot.eulerAngles;
-        float elapsedTime = 0f;
-        float lerpTime = .5f;
-        while(elapsedTime < lerpTime){
-            playerCamera.transform.rotation = Quaternion.Lerp(currentRot, newRot, (elapsedTime / lerpTime));
-            transform.eulerAngles = new Vector3(0, playerCamera.transform.rotation.eulerAngles.y, 0);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+        Vector3 currentRotEuler = currentRot.eulerAngles;
+        Quaternion newRot = Quaternion.LookRotation(CameraManager.Instance.CameraWallrunLookForward - playerCamera.transform.position, Vector3.up);
+
+        if (newRot != null)
+        {
+            float elapsedTime = 0f;
+            float lerpTime = .2f;
+
+            while(elapsedTime < lerpTime){
+                Quaternion rot = Quaternion.Lerp(currentRot, newRot, (elapsedTime / lerpTime));
+                playerCamera.transform.rotation = new Quaternion(
+                    rot.x,
+                    rot.y,
+                    rot.z,
+                    rot.w
+                    );
+                playerCamera.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, playerCamera.transform.eulerAngles.y, 0f);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            wallrunCameraCoroutine = null;
+            playerCamera.transform.rotation = newRot;
+            playerCamera.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, playerCamera.transform.eulerAngles.y, 0f);
+            CameraManager.Instance.SetIsCameraUpdateAllowed(true);
+            
         }
-        wallrunCameraCoroutine = null;
-        playerCamera.transform.rotation = newRot;
-        CameraManager.Instance.SetIsCameraUpdateAllowed(true);
     }
 }

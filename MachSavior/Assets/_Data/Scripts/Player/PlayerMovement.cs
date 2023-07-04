@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         ClampCamera();
         JumpInput();
         ApplyGravity();
-        StepClimb();
+        //StepClimb();
         ReduceWallrunSpeed();
     }
 
@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
             Vector3 moveWallrunFinal = (wallForward * verticalAxis * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
             rb.velocity = new Vector3(moveWallrunFinal.x, verticalSpeed, moveWallrunFinal.z);
-            cameraWallrunLookForward = transform.position + (wallForward * 1.5f);
+            
             return;
         }
         else
@@ -420,36 +420,28 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = playerConfig.VerticalSpeedBoost;
             print("boost");
         }
-        CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
-        CameraManager.Instance.SetIsCameraUpdateAllowed(false);
-        CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+
+        //Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
+        //cameraWallrunLookForward = transform.position + (wallForward * 2f);
+        //CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
+        //CameraManager.Instance.SetIsCameraUpdateAllowed(false);
+        //CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+        StartCoroutine(OnEnterRotateCamera());
     }
 
     private IEnumerator OnEnterRotateCamera()
     {
-        PlayerInputManager.Instance.IsHorizontalMouseAllowed = false;
+        yield return null;
+        yield return null;  //Hay que esperar dos frames para esperar a que se actualicen el hitWallrun y wallNormalMultiplier
 
-        Vector3 whereToLook;
-        whereToLook = transform.position + Vector3.Cross(hitWallrun.normal * wallNormalMultiplier * 50, transform.up);
-
-        //PlayerManager.Instance.GetPlayerCamera().transform.LookAt(whereToLook);
-
-        Vector3 camRot = new Vector3(playerCamera.transform.eulerAngles.x,
-            playerCamera.transform.eulerAngles.y,
-            playerCamera.transform.eulerAngles.z - (30 * wallNormalMultiplier));
-        
-        playerCamera.transform.DORotate(camRot, 0.4f).SetRelative(true);
-
-        //print("Mirar a -> " + whereToLook);
-
-        //Vector3 whereToLook = new Vector3(playerCamera.transform.eulerAngles.x, hitWallrun.transform.eulerAngles.y, playerCamera.transform.eulerAngles.z);
-        //playerCamera.transform.eulerAngles = whereToLook;
-
-        CameraManager.Instance.SetIsClampingCameraHorizontal(true);
-
-        yield return new WaitForSecondsRealtime(0.5f);
-
-        PlayerInputManager.Instance.IsHorizontalMouseAllowed = true;
+        if (hitWallrun.transform != null)
+        {
+            Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
+            cameraWallrunLookForward = (CameraManager.Instance.GetPlayerCamera().transform.position + (wallForward * 2f));
+            CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
+            CameraManager.Instance.SetIsCameraUpdateAllowed(false);
+            CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+        }
     }
 
     private void OnExitWallrun()
