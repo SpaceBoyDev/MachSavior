@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class BulletLogic : PickableObject
 {
     [SerializeField] 
-    private Vector3 bulletDirection;
+    public Vector3 bulletDirection;
     
     [SerializeField] 
     private float bulletSpeed;
@@ -19,13 +20,10 @@ public class BulletLogic : PickableObject
     //[SerializeField]
     //private float bulletLineRange;
     
-    void Start()
+    void OnEnable()
     {
-        if (bulletDirection == Vector3.zero)
-        {
-            bulletDirection = transform.forward;
-        }
         currentLifeTime = 0;
+        gameObject.GetComponent<PhysicsTimeObject>().isStopped = true; // reset time logic
     }
 
     void Update()
@@ -56,7 +54,7 @@ public class BulletLogic : PickableObject
     {
         if (!IsPicked())
         {
-            transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
+           transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
         }
     }
 
@@ -64,7 +62,6 @@ public class BulletLogic : PickableObject
     {
         if (IsPicked())
         {
-            currentLifeTime = 0;
             bulletDirection = Camera.main.transform.forward;
         }
     }
@@ -80,5 +77,10 @@ public class BulletLogic : PickableObject
                 SpawnPool.Instance.Despawn(transform);
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        gameObject.SetActive(false);
     }
 }

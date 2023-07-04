@@ -132,12 +132,13 @@ MonoBehaviour:
   _canPick: 1
   _useGravity: 0
   _isPicked: 0
+  currentWeight: 0
   objectWeight: 0
   _positionWhenPick: {x: 0, y: 0, z: 0}
   _rotationWhenPick: {x: 0, y: 0, z: 0}
   bulletDirection: {x: 0, y: 0, z: 0}
-  bulletSpeed: 0.5
-  lifeTime: 5
+  bulletSpeed: 0.2
+  lifeTime: 20
   currentLifeTime: 0
 --- !u!114 &-6759621499878561695
 MonoBehaviour:
