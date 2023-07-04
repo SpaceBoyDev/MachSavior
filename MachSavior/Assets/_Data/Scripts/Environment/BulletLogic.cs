@@ -5,10 +5,13 @@ using UnityEngine;
 public class BulletLogic : PickableObject
 {
     [SerializeField] 
-    private Vector3 bulletDirection;
+    public Vector3 bulletDirection;
     
     [SerializeField] 
     private float bulletSpeed;
+
+    [SerializeField] private float lifeTime;
+    [SerializeField] private float currentLifeTime;
 
     //[SerializeField]
     //private LineRenderer bulletDirectionLine;
@@ -16,41 +19,63 @@ public class BulletLogic : PickableObject
     //[SerializeField]
     //private float bulletLineRange;
     
-    void Start()
+    void OnEnable()
     {
-        if (bulletDirection == Vector3.zero)
-        {
-            bulletDirection = transform.forward;
-        }        
+        currentLifeTime = 0;
+        // gameObject.GetComponent<PhysicsTimeObject>().freezeintime // reset time logic
     }
 
     void Update()
     {
-        BulletMovement();
-        ChangeBulletDirection();
-
+        if (gameObject.activeInHierarchy)
+        {
+            BulletMovement();
+            ChangeBulletDirection();
+            
+            currentLifeTime += Time.deltaTime;
+            
+            if (currentLifeTime >= lifeTime)
+            {
+                Despawn();
+                currentLifeTime = 0;
+            }
+        }
         DirectionRaycast();
     }
 
-    void DirectionRaycast()
+    void DirectionRaycast() // A RAYCAST WITH THE DIRECTION OF THE BULLET 
     {
         Debug.DrawRay(transform.position, bulletDirection, Color.green);
         //bulletDirectionLine.SetPosition(1, bulletDirection + (bulletDirection * bulletLineRange));
     }
 
-    void BulletMovement()
+    void BulletMovement() // BULLET FORWARD MOVEMENT
     {
         if (!IsPicked())
         {
-            transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
+           transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
         }
     }
 
-    void ChangeBulletDirection()
+    void ChangeBulletDirection() // CHANGE THE BULLET DIRECTION WHEN PICK
     {
         if (IsPicked())
         {
+            currentLifeTime = 0;
             bulletDirection = Camera.main.transform.forward;
+        }
+    }
+
+    void Despawn() // DESPAWN BULLET 
+    {
+        if (!IsPicked())
+        {
+            if (transform != null && transform.gameObject.activeInHierarchy) 
+            {
+                transform.parent = null;
+                gameObject.SetActive(false);
+                SpawnPool.Instance.Despawn(transform);
+            }
         }
     }
 }
