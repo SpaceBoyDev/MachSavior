@@ -39,7 +39,9 @@ public class BulletSpawn : MonoBehaviour
 
     void RespanwBullet() // SPAWN / RESPAWN BULLET 
     {
+
         instance = SpawnPool.Instance.Spawn(BulletToSpawn.transform, this.transform);    
+        instance.GetComponent<BulletLogic>().bulletDirection = transform.forward;
     }
 
     public void ActiveTorret()

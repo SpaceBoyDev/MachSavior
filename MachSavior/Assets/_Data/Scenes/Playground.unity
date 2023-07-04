@@ -2102,6 +2102,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5138728477901005412, guid: 4237308c8ea7d0943aea808652091689,
+        type: 3}
+      propertyPath: prefabPools.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 400000, guid: b79a467ef85ca03428d5e28659d90ea1, type: 3}
+    - target: {fileID: 5138728477901005412, guid: 4237308c8ea7d0943aea808652091689,
+        type: 3}
+      propertyPath: prefabPools.Array.data[0].prefabGO
+      value: 
+      objectReference: {fileID: 100000, guid: b79a467ef85ca03428d5e28659d90ea1, type: 3}
     - target: {fileID: 5138728477901005413, guid: 4237308c8ea7d0943aea808652091689,
         type: 3}
       propertyPath: m_RootOrder
@@ -2157,6 +2167,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5138728477901005434, guid: 4237308c8ea7d0943aea808652091689,
+        type: 3}
+      propertyPath: BulletToSpawn
+      value: 
+      objectReference: {fileID: 100000, guid: b79a467ef85ca03428d5e28659d90ea1, type: 3}
     - target: {fileID: 5138728477901005435, guid: 4237308c8ea7d0943aea808652091689,
         type: 3}
       propertyPath: m_Name
@@ -2328,11 +2343,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rewired Input Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096717389695530267, guid: b321d9b44efbe1a47a5516033a674560,
-        type: 3}
-      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[5]._keyboardKeyCode
-      value: 113
       objectReference: {fileID: 0}
     - target: {fileID: 4506459921521853206, guid: b321d9b44efbe1a47a5516033a674560,
         type: 3}

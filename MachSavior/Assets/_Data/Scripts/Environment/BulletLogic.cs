@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletLogic : PickableObject
 {
     [SerializeField] 
-    private Vector3 bulletDirection;
+    public Vector3 bulletDirection;
     
     [SerializeField] 
     private float bulletSpeed;
@@ -19,13 +19,10 @@ public class BulletLogic : PickableObject
     //[SerializeField]
     //private float bulletLineRange;
     
-    void Start()
+    void OnEnable()
     {
-        if (bulletDirection == Vector3.zero)
-        {
-            bulletDirection = transform.forward;
-        }
         currentLifeTime = 0;
+        // gameObject.GetComponent<PhysicsTimeObject>().freezeintime // reset time logic
     }
 
     void Update()
@@ -56,7 +53,7 @@ public class BulletLogic : PickableObject
     {
         if (!IsPicked())
         {
-            transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
+           transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
         }
     }
 
