@@ -84,5 +84,19 @@ public class TimeControlSettings : ScriptableObject
     }
     //------------------------------------------------//
     
+    [SerializeField, ColorUsage(true, true)]
+    private Color defaultOutlineColor;
+    public Color GetDefaultOutlineColor
+    {
+        get { return defaultOutlineColor; }
+    }
+    
+    [SerializeField, ColorUsage(true, true)]
+    private Color poweredOutlineColor;
+    public Color GetPoweredOutlineColor
+    {
+        get { return poweredOutlineColor; }
+    }
+    
     #endregion
 }

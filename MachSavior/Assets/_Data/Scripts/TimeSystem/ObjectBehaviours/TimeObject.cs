@@ -38,36 +38,37 @@ public abstract class TimeObject : MonoBehaviour
         outline = GetComponent<Outline>();
         renderer = GetComponent<Renderer>();
         outline.OutlineMode = Outline.Mode.OutlineAll;
-        outline.OutlineColor = Color.black;
-        outline.OutlineWidth = 4f;
+        outline.OutlineWidth = 0f;
+        
+        renderer.material.SetColor("_FresnelColor", _timeSettings.GetDefaultFresnelColor);
+        renderer.material.SetColor("_InteriorColor", _timeSettings.GetDefaultInteriorColor);
     }
 
     private void OnMouseEnter()
     {
         _timeSettings.GetOnHoverEnter.Raise();
-        outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-        outline.OutlineWidth = 6f;
+
+        StartCoroutine(OutlineEffectLerp(6f, _timeSettings.GetChangeTimeDelay));
 
         if (isStopped)
         {
-            outline.OutlineColor = Color.cyan;
-            StartCoroutine(HighlightEffect(1f,0.2f));
+            outline.OutlineColor = _timeSettings.GetDefaultOutlineColor;
+            StartCoroutine(HighlightEffectLerp(1f,_timeSettings.GetChangeTimeDelay));
         }
         else
         {
-            outline.OutlineColor = Color.yellow;
+            outline.OutlineColor = _timeSettings.GetPoweredOutlineColor;
         }
     }
 
     private void OnMouseExit()
     {
         _timeSettings.GetOnHoverExit.Raise();
-        outline.OutlineMode = Outline.Mode.OutlineAll;
-        outline.OutlineColor = Color.black;
-        outline.OutlineWidth = 4f;
         
+        StartCoroutine(OutlineEffectLerp(0f, _timeSettings.GetChangeTimeDelay));
+
         if(isStopped)
-            StartCoroutine(HighlightEffect(0f,0.2f));
+            StartCoroutine(HighlightEffectLerp(0f,_timeSettings.GetChangeTimeDelay));
     }
     
     // *********/ PUBLIC METHODS /********* //
@@ -76,19 +77,20 @@ public abstract class TimeObject : MonoBehaviour
     {
         // Flip the time state.
         isStopped = !isStopped;
-        
-        outline.OutlineColor = Color.yellow;
+
+        outline.OutlineColor = _timeSettings.GetPoweredOutlineColor;
         //Apply Shader
-        StartCoroutine(HighlightEffect(1f,0.2f, _timeSettings.GetPoweredFresnelColor, _timeSettings.GetPoweredInteriorColor));
+        StartCoroutine(HighlightEffectLerp(1f,_timeSettings.GetChangeTimeDelay, _timeSettings.GetPoweredFresnelColor, _timeSettings.GetPoweredInteriorColor));
         // Delay before resuming time.
         StartCoroutine(DelayAction(ResumeTime));
     }
     public void TakeTimeCell()
     {
         isStopped = !isStopped;
-        
-        outline.OutlineColor = Color.cyan;
-        StartCoroutine(HighlightEffect(1f,0.2f, _timeSettings.GetDefaultFresnelColor, _timeSettings.GetDefaultInteriorColor));
+
+        outline.OutlineColor = _timeSettings.GetDefaultOutlineColor;
+        //Apply shader
+        StartCoroutine(HighlightEffectLerp(1f,_timeSettings.GetChangeTimeDelay, _timeSettings.GetDefaultFresnelColor, _timeSettings.GetDefaultInteriorColor));
         //Delay before stopping time.
         StartCoroutine(DelayAction(StopTime));
     }
@@ -110,7 +112,7 @@ public abstract class TimeObject : MonoBehaviour
     /// <param name="endValue"></param>
     /// <param name="duration"></param>
     /// <returns></returns>
-    private IEnumerator HighlightEffect(float endValue, float duration)
+    private IEnumerator HighlightEffectLerp(float endValue, float duration)
     {
         float time = 0f;
         float startValue = renderer.material.GetFloat("_EffectBlend");
@@ -123,7 +125,7 @@ public abstract class TimeObject : MonoBehaviour
         }
         renderer.material.SetFloat("_EffectBlend", endValue);
     }
-    private IEnumerator HighlightEffect(float endValue, float duration, Color endFresnelColor, Color endInteriorColor)
+    private IEnumerator HighlightEffectLerp(float endValue, float duration, Color endFresnelColor, Color endInteriorColor)
     {
         float time = 0f;
         float startValue = renderer.material.GetFloat("_EffectBlend");
@@ -136,12 +138,27 @@ public abstract class TimeObject : MonoBehaviour
             renderer.material.SetFloat("_EffectBlend", Mathf.Lerp(startValue, endValue, time / duration));
             renderer.material.SetColor("_FresnelColor", Color.Lerp(startFresnelColor, endFresnelColor, time / duration));
             renderer.material.SetColor("_InteriorColor", Color.Lerp(startInteriorColor, endInteriorColor, time / duration));
-            
+
             time += Time.deltaTime;
             yield return null;
         }
         renderer.material.SetFloat("_EffectBlend", endValue);
         renderer.material.SetColor("_FresnelColor", endFresnelColor);
         renderer.material.SetColor("_InteriorColor", endInteriorColor);
+    }
+
+    private IEnumerator OutlineEffectLerp(float endValue, float duration)
+    {
+        float time = 0f;
+        float startValue = outline.OutlineWidth;
+        
+        while (time < duration)
+        {
+            outline.OutlineWidth = Mathf.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        outline.OutlineWidth = endValue;
     }
 }
