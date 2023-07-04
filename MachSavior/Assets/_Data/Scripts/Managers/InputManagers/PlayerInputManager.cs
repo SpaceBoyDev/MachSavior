@@ -30,6 +30,8 @@ public class PlayerInputManager : MonoBehaviour
     private bool isMovementAllowed = true;
     private bool isJumpAllowed = true;
     private bool isCameraAllowed = true;
+    private bool isVerticalMouseAllowed = true;
+    private bool isHorizontalMouseAllowed = true;
     private bool isPickAllowed = true;
     private bool isTimeChangeAllowed = true;
 
@@ -42,7 +44,18 @@ public class PlayerInputManager : MonoBehaviour
     {
         set { isJumpAllowed = value; }
     }
-    
+
+    public bool IsVerticalMouseAllowed
+    {
+        set { isVerticalMouseAllowed = value; }
+    }
+
+    public bool IsHorizontalMouseAllowed
+    {
+        set { isHorizontalMouseAllowed = value; }
+        get { return isHorizontalMouseAllowed; }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -102,7 +115,7 @@ public class PlayerInputManager : MonoBehaviour
     
     public float GetVerticalMouse()
     {
-        if (!isCameraAllowed)
+        if (!isCameraAllowed || !isVerticalMouseAllowed)
             return 0f;
 
         return playerInput.GetAxis(VERTICAL_MOUSE);
@@ -110,7 +123,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public float GetHorizontalMouse()
     {
-        if (!isCameraAllowed)
+        if (!isCameraAllowed || !isHorizontalMouseAllowed)
             return 0f;
 
         return playerInput.GetAxis(HORIZONTAL_MOUSE);

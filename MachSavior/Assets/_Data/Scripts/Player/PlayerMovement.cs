@@ -1,4 +1,6 @@
+using DG.Tweening;
 using Rewired;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,25 +28,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement bools")]
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool onSlope = false;
-    private bool m_OnWallrun = false;
     [SerializeField] private bool onWallrun = false;
+    [HideInInspector] public bool OnWallrun { get { return onWallrun; } }
 
-    private enum WallState { none = 0, leftWall = 1, rightWall = 2}
-    [SerializeField] private WallState wallState;
+    public enum WallState { none = 0, leftWall = 1, rightWall = 2}
+    [SerializeField] public WallState wallState;
     private bool canCheckGround = true; //If the raycast can check for ground and slopes
     private bool canCheckWall = true; //If the raycast can check for walls
     private int wallNormalMultiplier;
-    //private enum PlayerStates
-    //{
-    //    isGrounded,
-    //    onSlope,
-    //    onWallrun
-    //}
-    //
-    //[SerializeField] private PlayerStates currentState;
 
     private Camera playerCamera;
-
 
     [Header("Ground Raycasts")]
     [SerializeField]
@@ -76,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Color slopeRayColor;
     [SerializeField] private Color wallrunRayColor;
 
+    Vector3 cameraWallrunLookForward;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -94,10 +89,24 @@ public class PlayerMovement : MonoBehaviour
         verticalAxis = PlayerInputManager.Instance.GetVerticalMovement();
         horizontalAxis = PlayerInputManager.Instance.GetHorizontalMovement();
 
+        ClampCamera();
         JumpInput();
         ApplyGravity();
         StepClimb();
         ReduceWallrunSpeed();
+    }
+
+    void ClampCamera()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (CameraManager.Instance.GetIsClampingCameraHorizontal())
+            {
+                CameraManager.Instance.SetIsClampingCameraHorizontal(false);
+                return;
+            }
+            CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+        }
     }
 
     private void FixedUpdate()
@@ -129,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
             Vector3 moveWallrunFinal = (wallForward * verticalAxis * playerConfig.PlayerAcceleration / playerConfig.PlayerGroundDrag) * Time.fixedDeltaTime;
             rb.velocity = new Vector3(moveWallrunFinal.x, verticalSpeed, moveWallrunFinal.z);
+            cameraWallrunLookForward = transform.position + (wallForward * 1.5f);
             return;
         }
         else
@@ -157,19 +167,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void AlignFloor()
     {
-        if (!isGrounded && !onSlope)
-            return;
-        if (slopeHit.transform == null)
+        if (centralGroundHit.transform == null)
             return;
 
-        if (transform.parent != slopeHit.transform && slopeHit.transform.tag == ("MovingObject"))
-        {
-            transform.SetParent(slopeHit.transform);
-            Vector3 alignWithParent = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
-            rb.position = alignWithParent;
-            print("padreando");
-            return;
-        }
+        //root.transform.position = centralGroundHit.point;
+
+        Vector3 alignWithParent = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
+        rb.MovePosition(alignWithParent);
+
+        ResetVerticalSpeed();
+        print("alineando");
+
+        //if (transform.parent != slopeHit.transform && slopeHit.transform.tag == ("MovingObject"))
+        //{
+        //    transform.SetParent(slopeHit.transform);
+        //    Vector3 alignWithParent = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
+        //    rb.position = alignWithParent;
+        //    print("padreando");
+        //    return;
+        //}
     }
 
     private void StepClimb()
@@ -393,6 +409,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnterWallrun()
     {
+        print("onenter wall run");
+
         if (rb.velocity.y < 0)
         {
             ResetVerticalSpeed();
@@ -402,18 +420,47 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = playerConfig.VerticalSpeedBoost;
             print("boost");
         }
+        CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
+        CameraManager.Instance.SetIsCameraUpdateAllowed(false);
+        CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+    }
+
+    private IEnumerator OnEnterRotateCamera()
+    {
+        PlayerInputManager.Instance.IsHorizontalMouseAllowed = false;
+
+        Vector3 whereToLook;
+        whereToLook = transform.position + Vector3.Cross(hitWallrun.normal * wallNormalMultiplier * 50, transform.up);
+
+        //PlayerManager.Instance.GetPlayerCamera().transform.LookAt(whereToLook);
+
+        Vector3 camRot = new Vector3(playerCamera.transform.eulerAngles.x,
+            playerCamera.transform.eulerAngles.y,
+            playerCamera.transform.eulerAngles.z - (30 * wallNormalMultiplier));
         
-        print("onenter");
+        playerCamera.transform.DORotate(camRot, 0.4f).SetRelative(true);
+
+        //print("Mirar a -> " + whereToLook);
+
+        //Vector3 whereToLook = new Vector3(playerCamera.transform.eulerAngles.x, hitWallrun.transform.eulerAngles.y, playerCamera.transform.eulerAngles.z);
+        //playerCamera.transform.eulerAngles = whereToLook;
+
+        CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        PlayerInputManager.Instance.IsHorizontalMouseAllowed = true;
     }
 
     private void OnExitWallrun()
     {
-        print("onexit");
+        print("onexit wall run");
         ResetVerticalSpeed();
         canCheckWall = false;
         StartCoroutine(EnableCheckWall());
         wallState = WallState.none;
-        CameraManager.Instance.clampCameraHorizontal = false;
+        CameraManager.Instance.SetIsCameraUpdateAllowed(true);
+        CameraManager.Instance.SetIsClampingCameraHorizontal(false);
     }
 
     private void ChangeOnWallrun(bool state)
@@ -465,7 +512,7 @@ public class PlayerMovement : MonoBehaviour
                     wallrunSpeed = Vector2.zero;
                     ChangeOnWallrun(true);
                     wallState = WallState.leftWall;
-                    CameraManager.Instance.clampCameraHorizontal = true;
+
                     return;
                 }
             }
@@ -498,7 +545,7 @@ public class PlayerMovement : MonoBehaviour
                         wallrunSpeed = Vector2.zero;
                         ChangeOnWallrun(true);
                         wallState = WallState.rightWall;
-                        CameraManager.Instance.clampCameraHorizontal = true;
+
                         return;
                     }
                     else
