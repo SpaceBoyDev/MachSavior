@@ -137,9 +137,10 @@ MonoBehaviour:
   _positionWhenPick: {x: 0, y: 0, z: 0}
   _rotationWhenPick: {x: 0, y: 0, z: 0}
   bulletDirection: {x: 0, y: 0, z: 0}
-  bulletSpeed: 0.2
+  bulletSpeed: 0.1
   lifeTime: 20
   currentLifeTime: 0
+  _despawn: {fileID: 11400000, guid: a1b14bcfe0c0f4e4d8a75170e9b2b69a, type: 2}
 --- !u!114 &-6759621499878561695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,15 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba11415795ec6f468aa92842e68ebb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeSettings: {fileID: 11400000, guid: 2a81e0e954f2963418b373bdb45e819b, type: 2}
   freezeInTime: 1
+  isStopped: 1
   isAtRange: 0
-  changeTimeDelay: 0.2
-  onHoverEnter: {fileID: 11400000, guid: 6385e59ba47c20b47870b677456f3ed4, type: 2}
-  onHoverExit: {fileID: 11400000, guid: 0d970a00348e12a47a38afa1aac8866e, type: 2}
-  defaultFresnelColor: {r: 0, g: 0, b: 0, a: 0}
-  defaultInteriorColor: {r: 0, g: 0, b: 0, a: 0}
-  poweredFresnelColor: {r: 0, g: 0, b: 0, a: 0}
-  poweredInteriorColor: {r: 0, g: 0, b: 0, a: 0}
   slowtime: 1
 --- !u!114 &4197660297047270936
 MonoBehaviour:
