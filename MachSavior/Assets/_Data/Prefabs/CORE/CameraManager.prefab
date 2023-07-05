@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793ba2f958a99b6458afc52c85b8a0dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPos: {fileID: 0}
+  playerCam: {fileID: 0}

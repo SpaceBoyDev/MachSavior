@@ -23,7 +23,7 @@ public class FirstPersonCamera : MonoBehaviour
     float rotationY;
     bool change = false;
 
-    private Vector2 horizontalClamp;
+    private float maxX, minX;
 
     private IEnumerator  wallrunCameraCoroutine;
 
@@ -51,6 +51,22 @@ public class FirstPersonCamera : MonoBehaviour
         mouseY = -PlayerInputManager.Instance.GetVerticalMouse() * playerConfig.sensibilityY;
     }
 
+    private float ClampFloatAround360(float value)
+    {
+        if (value < 0)
+        {
+            return 360 + value;
+        }
+        else if (value > 360)
+        {
+            return value - 360;
+        }
+        else
+        {
+            return value;
+        }
+    }
+    
     private void ClampCamera()
     {
         if(!CameraManager.Instance.IsCameraUpdateAllowed()){
@@ -59,27 +75,57 @@ public class FirstPersonCamera : MonoBehaviour
             StopCoroutine(wallrunCameraCoroutine);
             wallrunCameraCoroutine = null;
         }
-
+        
+        //--->CLAMP HORIZONTAL<---//
         if (CameraManager.Instance.GetIsClampingCameraHorizontal())
+        { 
+            mouseX = Mathf.Clamp(mouseX, -19, 19);
+            if (playerMovement.wallState == PlayerMovement.WallState.leftWall)
+            {
+               maxX = CameraManager.Instance.GetPlayerRotationYOnClamp() + 40;
+               minX = CameraManager.Instance.GetPlayerRotationYOnClamp() - 10;
+            }
+            else
+            {
+                maxX = CameraManager.Instance.GetPlayerRotationYOnClamp() - 10;
+                minX = CameraManager.Instance.GetPlayerRotationYOnClamp() + 40;
+            }
+
+           maxX = ClampFloatAround360(maxX);
+           minX = ClampFloatAround360(minX);
+           
+           float cannotAddToX = playerCamera.transform.eulerAngles.y + mouseX;
+           float deadZoneMaxX = maxX + 20;
+           float deadZoneMinX = minX - 20;
+           
+           cannotAddToX = ClampFloatAround360(cannotAddToX);
+           deadZoneMaxX = ClampFloatAround360(deadZoneMaxX);
+           deadZoneMinX = ClampFloatAround360(deadZoneMinX);
+
+           //HERE ACTUAL CLAMP
+           if (cannotAddToX < minX && cannotAddToX > deadZoneMinX)
+           {
+               playerCamera.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, minX, playerCamera.transform.eulerAngles.z);
+               print("Por debajo de" + minX);
+           }
+           else if (cannotAddToX > maxX && cannotAddToX < deadZoneMaxX)
+           {
+               playerCamera.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, maxX, playerCamera.transform.eulerAngles.z);
+               print("Por encima de" + maxX);
+           }
+           else
+           {
+               playerCamera.transform.eulerAngles += new Vector3(0f, mouseX, 0f);
+               //print("mouse x sumando-> " + mouseX);
+           }
+           
+        }
+        else
         {
-
-            if (playerMovement.wallState == PlayerMovement.WallState.rightWall)
-            {
-                horizontalClamp = new Vector2(CameraManager.Instance.GetPlayerRotationYOnClamp() - 40, CameraManager.Instance.GetPlayerRotationYOnClamp() + 5);
-            }
-            else if (playerMovement.wallState == PlayerMovement.WallState.leftWall)
-            {
-                horizontalClamp = new Vector2(CameraManager.Instance.GetPlayerRotationYOnClamp() - 5, CameraManager.Instance.GetPlayerRotationYOnClamp() + 40);
-            }
-
-            playerCamera.transform.eulerAngles = new Vector3(
-                playerCamera.transform.eulerAngles.x,
-                Mathf.Clamp(playerCamera.transform.eulerAngles.y, horizontalClamp.x, horizontalClamp.y),
-                playerCamera.transform.eulerAngles.z
-            );
+            playerCamera.transform.eulerAngles += new Vector3(0f, mouseX, 0f);
         }
 
-
+        //--->CLAMP VERTICAL<---//
         if (PlayerInputManager.Instance.IsHorizontalMouseAllowed)
         {
             mouseY = Mathf.Clamp(mouseY, -19, 19);
@@ -87,26 +133,23 @@ public class FirstPersonCamera : MonoBehaviour
             if (cannotAddTo < maxY && cannotAddTo > 270)
             {
                 playerCamera.transform.eulerAngles = new Vector3(maxY, playerCamera.transform.eulerAngles.y, playerCamera.transform.eulerAngles.z);
-                print("Por encima de");
             }
             else if (cannotAddTo > minY && cannotAddTo < 90)
             {
                 playerCamera.transform.eulerAngles = new Vector3(minY, playerCamera.transform.eulerAngles.y, playerCamera.transform.eulerAngles.z);
-                print("Por debajo de");
             }
             else
             {
                 playerCamera.transform.eulerAngles += new Vector3(mouseY, 0f, 0f);
             }
-
-            playerCamera.transform.eulerAngles += new Vector3(0f, mouseX, 0f);
         }
         else
         {
             playerCamera.transform.eulerAngles += new Vector3(mouseY, 0f, 0f);
         }
 
-        if (!playerMovement.OnWallrun || PlayerInputManager.Instance.IsHorizontalMouseAllowed)
+        //Update player transform
+        if (!playerMovement.OnWallrun)
         {
             transform.eulerAngles = new Vector3(0, playerCamera.transform.rotation.eulerAngles.y, 0);
         }
@@ -123,7 +166,6 @@ public class FirstPersonCamera : MonoBehaviour
         Quaternion currentRot = playerCamera.transform.rotation;
         Vector3 currentRotEuler = currentRot.eulerAngles;
         Quaternion newRot = Quaternion.LookRotation(CameraManager.Instance.CameraWallrunLookForward - playerCamera.transform.position, Vector3.up);
-
         if (newRot != null)
         {
             float elapsedTime = 0f;
@@ -141,11 +183,12 @@ public class FirstPersonCamera : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            
             wallrunCameraCoroutine = null;
             playerCamera.transform.rotation = newRot;
             playerCamera.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, playerCamera.transform.eulerAngles.y, 0f);
+            CameraManager.Instance.SetIsClampingCameraHorizontal(true);
             CameraManager.Instance.SetIsCameraUpdateAllowed(true);
-            
         }
     }
 }
