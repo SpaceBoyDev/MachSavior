@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Rewired;
 using UnityEngine;
 
 public class BulletLogic : PickableObject
@@ -14,6 +15,8 @@ public class BulletLogic : PickableObject
     [SerializeField] private float lifeTime;
     [SerializeField] private float currentLifeTime;
 
+    [SerializeField] private GameEvent _despawn;
+
     //[SerializeField]
     //private LineRenderer bulletDirectionLine;
     
@@ -23,7 +26,6 @@ public class BulletLogic : PickableObject
     void OnEnable()
     {
         currentLifeTime = 0;
-        gameObject.GetComponent<PhysicsTimeObject>().isStopped = true; // reset time logic
     }
 
     void Update()
@@ -72,15 +74,22 @@ public class BulletLogic : PickableObject
         {
             if (transform != null && transform.gameObject.activeInHierarchy) 
             {
+                _despawn.Raise();
                 transform.parent = null;
                 gameObject.SetActive(false);
                 SpawnPool.Instance.Despawn(transform);
+                
             }
         }
+        gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
+        
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        gameObject.SetActive(false);
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+        {
+           Despawn();
+        }
     }
 }
