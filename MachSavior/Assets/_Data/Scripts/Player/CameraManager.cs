@@ -28,6 +28,7 @@ public class CameraManager : MonoBehaviour
 
     public void SetIsClampingCameraHorizontal(bool value)
     {
+        print("Cambio clamp");
         playerRotationYOnClamp = playerCam.transform.rotation.eulerAngles.y;
         isClampingCameraHorizontal = value;
     }

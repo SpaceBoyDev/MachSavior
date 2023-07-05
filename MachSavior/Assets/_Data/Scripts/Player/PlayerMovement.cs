@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool onWallrun = false;
     [HideInInspector] public bool OnWallrun { get { return onWallrun; } }
 
+    
+    [Header("Wallrun")]
+    [SerializeField] private LayerMask wallrunMask;
     public enum WallState { none = 0, leftWall = 1, rightWall = 2}
     [SerializeField] public WallState wallState;
     private bool canCheckGround = true; //If the raycast can check for ground and slopes
@@ -88,32 +91,18 @@ public class PlayerMovement : MonoBehaviour
     {
         verticalAxis = PlayerInputManager.Instance.GetVerticalMovement();
         horizontalAxis = PlayerInputManager.Instance.GetHorizontalMovement();
-
-        ClampCamera();
+        
         JumpInput();
         ApplyGravity();
         //StepClimb();
         ReduceWallrunSpeed();
     }
 
-    void ClampCamera()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (CameraManager.Instance.GetIsClampingCameraHorizontal())
-            {
-                CameraManager.Instance.SetIsClampingCameraHorizontal(false);
-                return;
-            }
-            CameraManager.Instance.SetIsClampingCameraHorizontal(true);
-        }
-    }
-
     private void FixedUpdate()
     {
         Move();
 
-        if (canCheckGround)
+        if (canCheckGround && rb.velocity.y <= 0)
         {
             isGrounded = checkFloor();
             onSlope = OnSlope();
@@ -171,12 +160,11 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         //root.transform.position = centralGroundHit.point;
-
+        
         Vector3 alignWithParent = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
         rb.MovePosition(alignWithParent);
 
         ResetVerticalSpeed();
-        print("alineando");
 
         //if (transform.parent != slopeHit.transform && slopeHit.transform.tag == ("MovingObject"))
         //{
@@ -188,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         //}
     }
 
-    private void StepClimb()
+    private void StepClimb() //Sin utilizar porque ya existe AlignFloor()
     {
         RaycastHit hitLower;
         if (Physics.Raycast(stepRayLow.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.6f, groundMask, QueryTriggerInteraction.Ignore))
@@ -409,7 +397,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnterWallrun()
     {
-        print("onenter wall run");
 
         if (rb.velocity.y < 0)
         {
@@ -420,19 +407,13 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = playerConfig.VerticalSpeedBoost;
             print("boost");
         }
-
-        //Vector3 wallForward = Vector3.Cross(hitWallrun.normal * wallNormalMultiplier, transform.up);
-        //cameraWallrunLookForward = transform.position + (wallForward * 2f);
-        //CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
-        //CameraManager.Instance.SetIsCameraUpdateAllowed(false);
-        //CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+        
         StartCoroutine(OnEnterRotateCamera());
     }
 
     private IEnumerator OnEnterRotateCamera()
     {
-        yield return null;
-        yield return null;  //Hay que esperar dos frames para esperar a que se actualicen el hitWallrun y wallNormalMultiplier
+        yield return new WaitForSeconds(0.05f); //Hay que esperar un poco a que se actualicen el hitWallrun y wallNormalMultiplier
 
         if (hitWallrun.transform != null)
         {
@@ -440,13 +421,11 @@ public class PlayerMovement : MonoBehaviour
             cameraWallrunLookForward = (CameraManager.Instance.GetPlayerCamera().transform.position + (wallForward * 2f));
             CameraManager.Instance.SetCameraWallrunLookForward(cameraWallrunLookForward);
             CameraManager.Instance.SetIsCameraUpdateAllowed(false);
-            CameraManager.Instance.SetIsClampingCameraHorizontal(true);
         }
     }
 
     private void OnExitWallrun()
     {
-        print("onexit wall run");
         ResetVerticalSpeed();
         canCheckWall = false;
         StartCoroutine(EnableCheckWall());
@@ -487,7 +466,7 @@ public class PlayerMovement : MonoBehaviour
                     Debug.DrawRay(raycastWallrunOriginsLeft[i].position, -root.transform.right, wallrunRayColor);
                 }
 
-                if (Physics.Raycast(raycastWallrunOriginsLeft[i].position, -root.transform.right, out hitWallrun, 0.5f))
+                if (Physics.Raycast(raycastWallrunOriginsLeft[i].position, -root.transform.right, out hitWallrun, 0.5f, wallrunMask))
                 {
                     hits++;
                 }
@@ -520,7 +499,7 @@ public class PlayerMovement : MonoBehaviour
                         Debug.DrawRay(raycastWallrunOriginsRight[i].position, root.transform.right, wallrunRayColor);
                     }
 
-                    if (Physics.Raycast(raycastWallrunOriginsRight[i].position, root.transform.right, out hitWallrun, 0.5f))
+                    if (Physics.Raycast(raycastWallrunOriginsRight[i].position, root.transform.right, out hitWallrun, 0.5f, wallrunMask))
                     {
                         hits++;
                     }
