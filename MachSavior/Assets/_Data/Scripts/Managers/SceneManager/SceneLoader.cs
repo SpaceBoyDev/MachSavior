@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using static UnityEngine.ParticleSystem;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -11,11 +12,15 @@ public class SceneLoader : MonoBehaviour
 
     private AsyncOperation sceneLoading;
 
-    public GameObject panel;
-    public Slider sliderLoad;
-    public TextMeshProUGUI loadText;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject panelLoadScreenDone;
+    [SerializeField] private Slider sliderLoad;
+    [SerializeField] private TextMeshProUGUI loadText;
+    [SerializeField] private AnimationCurve curve;
+    [SerializeField] private float lerpSpeed = 1f;
 
-    public bool loading = false;
+    [SerializeField] bool loading = false;
+    [SerializeField] private bool isLoadAnimationDone = false;
 
     private void Awake()
     {
@@ -31,37 +36,83 @@ public class SceneLoader : MonoBehaviour
         }
 
         panel.SetActive(false);
+        panelLoadScreenDone.SetActive(false);
     }
 
+    void Update()
+    {
+        ChangeScene();
+    }
+
+    void ChangeScene()
+    {
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            Load(0);
+        }
+
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            Load(1);
+        }
+
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            Load(2);
+        }
+    }
 
     public void Load(int sceneToLoad)
     {
         sceneLoading = SceneManager.LoadSceneAsync(sceneToLoad);
         loading = true;
         panel.SetActive(true);
-        panel.GetComponent<Image>().DOColor(new Color(0.3490566f, 0.3490566f, 0.3490566f, 1f), 0.01f);
         StartCoroutine(Loading());
+        StartCoroutine(LoadingBar());
     }
-
+    
     private IEnumerator Loading()
     {
+        PlayerInputManager.Instance.IsInputAllowed = false;
+        PlayerInputManager.Instance.IsPauseAllowed = false;
         while (loading)
         {
-            sliderLoad.value = sceneLoading.progress;
             float loadingNumber = sceneLoading.progress * 100;
             loadText.text = loadingNumber + "%";
-            //yield return new WaitForSeconds(1);
 
             if (sceneLoading.progress == 1)
             {
                 loading = false;
-                panel.GetComponent<Image>().DOColor(new Color(0.9103928f, 1f, 0f, 0f), 0.5f);
-
                 yield return new WaitForSeconds(0.5f);
-                panel.SetActive(false);
             }
 
             yield return null;
         }
+    }
+    
+    private IEnumerator LoadingBar()
+    {
+        lerpSpeed = 0;
+        isLoadAnimationDone = false;
+        while (lerpSpeed < 1)
+        {
+            sliderLoad.value = curve.Evaluate(lerpSpeed);
+            lerpSpeed += Time.deltaTime * Random.Range(0.1f, 0.3f);
+            yield return null;
+        }
+
+        isLoadAnimationDone = true;
+
+        if (!loading)
+        {
+            panelLoadScreenDone.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            panelLoadScreenDone.SetActive(true);
+            panel.SetActive(false);
+            panelLoadScreenDone.GetComponent<Image>().DOColor(new Color(1f, 1f, 1f, 0f), 1f);
+            yield return new WaitForSecondsRealtime(1.3f);
+            panelLoadScreenDone.SetActive(false);
+            PlayerInputManager.Instance.IsInputAllowed = true;
+            PlayerInputManager.Instance.IsPauseAllowed = true;
+        }          
     }
 }

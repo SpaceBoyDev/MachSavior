@@ -780,9 +780,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerConfig: {fileID: 11400000, guid: b35cfb4d25b6956418d2c77a93249cb2, type: 2}
   wallrunSpeed: {x: 0, y: 0}
+  additionalSpeed: {x: 0, y: 0, z: 0}
   isGrounded: 1
   onSlope: 0
   onWallrun: 0
+  onMovingPlatform: 0
   wallrunMask:
     serializedVersion: 2
     m_Bits: 512
@@ -803,6 +805,7 @@ MonoBehaviour:
     m_Bits: 64
   secForEnableGroundCheck: 0.1
   secForEnableWallCheck: 0.2
+  secForEnableMovingPlatformCheck: 0.3
   raycastWallrunOriginsRight:
   - {fileID: 168403880857435592}
   - {fileID: 6844654268365709693}
@@ -836,6 +839,7 @@ MonoBehaviour:
   cameraExtraPos: {fileID: 1915959384463352058}
   cameraExtraRot: {fileID: 5967537034909267300}
   textFPS: {fileID: 51097090348523863}
+  OnPause: {fileID: 11400000, guid: 03cfef3215ad3c842a245b37b22364b1, type: 2}
 --- !u!114 &1915959385190008622
 MonoBehaviour:
   m_ObjectHideFlags: 0

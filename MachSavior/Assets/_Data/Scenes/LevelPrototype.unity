@@ -17950,6 +17950,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlacaDePresion
       objectReference: {fileID: 0}
+    - target: {fileID: 5000840205715473448, guid: 8c00faec90751824e8a07c1eaae2e35e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5000840205715473455, guid: 8c00faec90751824e8a07c1eaae2e35e,
         type: 3}
       propertyPath: m_RootOrder
