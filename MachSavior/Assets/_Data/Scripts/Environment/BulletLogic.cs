@@ -91,5 +91,12 @@ public class BulletLogic : PickableObject
         {
            Despawn();
         }
+
+        if (other.gameObject.tag == "Destructible")
+        {
+            // TO DO Animacion desaparicion puerta 
+            other.gameObject.SetActive(false);
+            Despawn();
+        }
     }
 }

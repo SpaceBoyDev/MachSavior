@@ -20,17 +20,17 @@ public class BulletSpawn : MonoBehaviour
         {
             RespawnBullet();
         }
+
+        RespawnCooldawn += TimeToRespawn;
     }
 
     void Update()
     {
         RespawnCooldawn += Time.deltaTime;
         
-        if (torretIsActive)
+        if (torretIsActive && RespawnCooldawn >= TimeToRespawn)
         {
-           RespawnBullet();         
-           RespawnCooldawn = 0;
-           
+           RespawnBullet();
         }
     }
 
@@ -38,6 +38,7 @@ public class BulletSpawn : MonoBehaviour
     {
         instance = SpawnPool.Instance.Spawn(BulletToSpawn.transform, this.transform);    
         instance.GetComponent<BulletLogic>().bulletDirection = transform.forward;
+        RespawnCooldawn = 0;
     }
 
     public void ActiveTorret()
