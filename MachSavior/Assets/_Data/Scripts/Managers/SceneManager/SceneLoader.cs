@@ -39,7 +39,7 @@ public class SceneLoader : MonoBehaviour
         sceneLoading = SceneManager.LoadSceneAsync(sceneToLoad);
         loading = true;
         panel.SetActive(true);
-        panel.GetComponent<Image>().DOColor(new Color(0.4481132f, 0.5453009f, 1f, 255), 0.5f);
+        panel.GetComponent<Image>().DOColor(new Color(0.3490566f, 0.3490566f, 0.3490566f, 1f), 0.01f);
         StartCoroutine(Loading());
     }
 
@@ -55,7 +55,7 @@ public class SceneLoader : MonoBehaviour
             if (sceneLoading.progress == 1)
             {
                 loading = false;
-                panel.GetComponent<Image>().DOColor(new Color(0.4481132f, 0.5453009f, 1f, 0), 0.5f);
+                panel.GetComponent<Image>().DOColor(new Color(0.9103928f, 1f, 0f, 0f), 0.5f);
 
                 yield return new WaitForSeconds(0.5f);
                 panel.SetActive(false);
