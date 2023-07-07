@@ -12,24 +12,17 @@ public class SspikyDoorLogic : MonoBehaviour
     [SerializeField] private float speed;
 
     [SerializeField] private GameObject Door;
+    
     void Start()
     {
-        if (Door.GetComponent<AnimatedTimeObject>().getIsStopped)
-        {
-            Door.GetComponent<AnimatedTimeObject>().StopTime();
-        }
-        else
-        {
-            Door.GetComponent<AnimatedTimeObject>().ResumeTime();
-        }
-            
-        OpenCloseDoor();
+       Door.GetComponent<AnimatedTimeObject>().ResumeTime();
+       OpenCloseDoor();
     }
 
     void OpenCloseDoor()
     {
         Colision.isTrigger = false;
-        Door.GetComponent<AnimatedTimeObject>().tweenAnim = Door.transform.DOLocalMoveY(-1, speed).
+        Door.GetComponent<AnimatedTimeObject>().tweenAnim = Door.transform.DOLocalMoveY(1f, speed).
         SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
     }
 
