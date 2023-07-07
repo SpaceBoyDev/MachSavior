@@ -9,6 +9,7 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private int currentWeight;
 
     [SerializeField] private GameEvent eventToActive;
+    [SerializeField] private GameEvent eventToDesactive;
     
     void Start()
     {
@@ -23,6 +24,10 @@ public class PressurePlate : MonoBehaviour
             // TO DO Animation of active plate here
             eventToActive.Raise();
         }
+        else
+        {
+            eventToDesactive.Raise();
+        }
 
     }
 
@@ -31,7 +36,7 @@ public class PressurePlate : MonoBehaviour
         if (other.gameObject.GetComponent<PickableObject>())
         {
             currentWeight += other.gameObject.GetComponent<PickableObject>().currentWeight;
-            Debug.Log(this.gameObject.name + " current weight: " + currentWeight);
+            // Debug.Log(this.gameObject.name + " current weight: " + currentWeight);
         }
     }
     private void OnCollisionExit(Collision other)
@@ -39,7 +44,7 @@ public class PressurePlate : MonoBehaviour
         if (other.gameObject.GetComponent<PickableObject>())
         {
             currentWeight -= other.gameObject.GetComponent<PickableObject>().currentWeight;
-            Debug.Log(this.gameObject.name + " current weight: " + currentWeight);
+            // Debug.Log(this.gameObject.name + " current weight: " + currentWeight);
         }
     }
 

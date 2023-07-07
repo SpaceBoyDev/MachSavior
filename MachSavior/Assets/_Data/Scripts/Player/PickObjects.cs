@@ -97,7 +97,7 @@ public class PickObjects : MonoBehaviour
         
         while (startTime < pickDuration)
         {
-            if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 0 && _pickAndReleaseCooldawn <= 0)
+            if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 0 /*&& _pickAndReleaseCooldawn <= 0*/)
             {
                 //Position
                  Vector3 startPosition = _pickedObject.transform.localPosition;
@@ -117,7 +117,7 @@ public class PickObjects : MonoBehaviour
                 yield return null;
             }
             
-            if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 1 && _pickAndReleaseCooldawn <= 0)
+            if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 1 /*&& _pickAndReleaseCooldawn <= 0*/)
             {
                 //Position
                 Vector3 startPosition = _pickedObject.transform.localPosition;
@@ -136,7 +136,7 @@ public class PickObjects : MonoBehaviour
                 yield return null;
             }
             
-            if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 2 && _pickAndReleaseCooldawn <= 0)
+            if (_pickedObject.GetComponent<PickableObject>().ObjectWeight() == 2 /*&& _pickAndReleaseCooldawn <= 0*/)
             {
                 
                 //Position
@@ -178,7 +178,7 @@ public class PickObjects : MonoBehaviour
             _pickedObject.gameObject.transform.SetParent(null);
             _pickedObject = null;
             
-            _pickAndReleaseCooldawn =+ 0.5f;       
+            _pickAndReleaseCooldawn = 0f;       
         }
     }
     #endregion
