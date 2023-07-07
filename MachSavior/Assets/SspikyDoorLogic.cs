@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -7,27 +8,40 @@ using UnityEngine.Serialization;
 public class SspikyDoorLogic : MonoBehaviour
 {
     [SerializeField] private BoxCollider Colision;
-    [SerializeField] private GameObject DoorR;
-    [SerializeField] private GameObject DoorL;
 
-    Tween DoorRT;
-    Tween DoorLT;
+    [SerializeField] private float speed;
+
+    [SerializeField] private GameObject Door;
     void Start()
     {
-        Colision.isTrigger = false;
-        DoorRT = DoorR.transform.DOLocalMoveZ(-2, 0.1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
-        DoorLT = DoorL.transform.DOLocalMoveZ(-2, 0.1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
-
-        DoorRT.Play();
-        DoorLT.Play();
+        if (Door.GetComponent<AnimatedTimeObject>().getIsStopped)
+        {
+            Door.GetComponent<AnimatedTimeObject>().StopTime();
+        }
+        else
+        {
+            Door.GetComponent<AnimatedTimeObject>().ResumeTime();
+        }
+            
+        OpenCloseDoor();
     }
 
-
-    public void DesactivateDoor()
+    void OpenCloseDoor()
     {
         Colision.isTrigger = false;
-        
-        DoorLT.timeScale = 0.05f;
-        DoorRT.timeScale = 0.05f;
+        Door.GetComponent<AnimatedTimeObject>().tweenAnim = Door.transform.DOLocalMoveY(-1, speed).
+        SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+    }
+
+    private void Update()
+    {
+        if (Door.GetComponent<AnimatedTimeObject>().getIsStopped)
+        {
+            Colision.isTrigger = true;
+        }
+        else
+        {
+            Colision.isTrigger = false;
+        }
     }
 }

@@ -15,8 +15,9 @@ MonoBehaviour:
   playerAcceleration: 450
   playerGroundDrag: 1
   playerAirDrag: 1.32
+  additionalSpeedGravity: 100
   playerSlopeDrag: 1
-  maximumSlopeAngle: 35
+  maximumSlopeAngle: 45
   minimumRaycastHits: 1
   playerWallrunDrag: 1.2
   wallJumpForce: 1.2

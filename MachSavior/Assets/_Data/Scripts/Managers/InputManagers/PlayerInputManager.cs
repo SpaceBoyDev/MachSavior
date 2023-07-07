@@ -11,6 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     private const string VERTICAL_MOVEMENT = "VerticalMovement";
     private const string HORIZONTAL_MOVEMENT = "HorizontalMovement";
     private const string JUMP = "Jump";
+    private const string PAUSE = "Pause";
 
     //Camera mouse
     private const string VERTICAL_MOUSE = "VerticalMouse";
@@ -27,14 +28,21 @@ public class PlayerInputManager : MonoBehaviour
 
     private Player playerInput;
 
+    private bool isInputAllowed = true;
     private bool isMovementAllowed = true;
     private bool isJumpAllowed = true;
+    private bool isPauseAllowed = true;
     private bool isCameraAllowed = true;
     private bool isVerticalMouseAllowed = true;
     private bool isHorizontalMouseAllowed = true;
     private bool isPickAllowed = true;
     private bool isTimeChangeAllowed = true;
 
+    public bool IsInputAllowed
+    {
+        set { isInputAllowed = value; }
+    }
+    
     public bool IsMovementAllowed
     {
         set { isMovementAllowed = value; }
@@ -43,6 +51,11 @@ public class PlayerInputManager : MonoBehaviour
     public bool IsJumpAllowed
     {
         set { isJumpAllowed = value; }
+    }
+    
+    public bool IsPauseAllowed
+    {
+        set { isPauseAllowed = value; }
     }
 
     public bool IsVerticalMouseAllowed
@@ -58,6 +71,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (Instance == null)
         {
             Instance = this;
@@ -75,7 +89,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public float GetVerticalMovement()
     {
-        if (!isMovementAllowed)
+        if (!isMovementAllowed || !isInputAllowed)
             return 0f;
 
         return playerInput.GetAxis(VERTICAL_MOVEMENT);
@@ -83,7 +97,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public float GetHorizontalMovement()
     {
-        if (!isMovementAllowed)
+        if (!isMovementAllowed || !isInputAllowed)
             return 0f;
 
         return playerInput.GetAxis(HORIZONTAL_MOVEMENT);
@@ -91,7 +105,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public bool IsJumpDown()
     {
-        if (!isJumpAllowed)
+        if (!isJumpAllowed || !isInputAllowed)
             return false;
 
         return playerInput.GetButtonDown(JUMP);
@@ -99,7 +113,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public bool IsJumpPressed()
     {
-        if (!isJumpAllowed)
+        if (!isJumpAllowed || !isInputAllowed)
             return false;
         
         return playerInput.GetButton(JUMP);
@@ -107,7 +121,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public bool IsJumpUp()
     {
-        if (!isJumpAllowed)
+        if (!isJumpAllowed || !isInputAllowed)
             return false;
 
         return playerInput.GetButtonUp(JUMP);
@@ -115,7 +129,7 @@ public class PlayerInputManager : MonoBehaviour
     
     public float GetVerticalMouse()
     {
-        if (!isCameraAllowed || !isVerticalMouseAllowed)
+        if (!isCameraAllowed || !isVerticalMouseAllowed || !isInputAllowed)
             return 0f;
 
         return playerInput.GetAxis(VERTICAL_MOUSE);
@@ -123,15 +137,23 @@ public class PlayerInputManager : MonoBehaviour
 
     public float GetHorizontalMouse()
     {
-        if (!isCameraAllowed || !isHorizontalMouseAllowed)
+        if (!isCameraAllowed || !isHorizontalMouseAllowed || !isInputAllowed)
             return 0f;
 
         return playerInput.GetAxis(HORIZONTAL_MOUSE);
     }
 
+    public bool GetPause()
+    {
+        if (!isPauseAllowed)
+            return false;
+
+        return playerInput.GetButtonDown(PAUSE);
+    }
+    
     public bool IsPickButtonPressed()
     {
-        if (!isPickAllowed)
+        if (!isPickAllowed || !isInputAllowed)
             return false;
 
         return playerInput.GetButtonDown(PICK_OBJECTS);
@@ -140,7 +162,7 @@ public class PlayerInputManager : MonoBehaviour
     //------ TIME SYSTEM ------//
     public bool ChangeTimeState()
     {
-        if (!isTimeChangeAllowed)
+        if (!isTimeChangeAllowed || !isInputAllowed)
             return false;
 
         return playerInput.GetButtonDown(CHANGE_TIME_STATE);
