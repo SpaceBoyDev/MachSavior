@@ -56,7 +56,8 @@ public class BulletLogic : PickableObject
     {
         if (!IsPicked())
         {
-           transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime;
+           transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime 
+                                 *Time.timeScale;
         }
     }
 
