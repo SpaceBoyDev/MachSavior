@@ -2,6 +2,7 @@ using DG.Tweening;
 using Rewired;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -23,12 +24,14 @@ public class PlayerMovement : MonoBehaviour
     private float xSpeed = 0;
     private float zSpeed = 0;
     [SerializeField] private Vector2 wallrunSpeed = Vector2.zero;
+    [SerializeField] private Vector3 additionalSpeed = Vector3.zero;
     private float gravityToApply;
 
     [Header("Movement bools")]
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool onSlope = false;
     [SerializeField] private bool onWallrun = false;
+    [SerializeField] private bool onMovingPlatform = false;
     [HideInInspector] public bool OnWallrun { get { return onWallrun; } }
 
     
@@ -38,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public WallState wallState;
     private bool canCheckGround = true; //If the raycast can check for ground and slopes
     private bool canCheckWall = true; //If the raycast can check for walls
+    private bool canCheckMovingPlatform = true;
     private int wallNormalMultiplier;
 
     private Camera playerCamera;
@@ -50,8 +54,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
     private RaycastHit slopeHit;
     private RaycastHit centralGroundHit;
+    private RaycastHit movingPlatformHit;
     [SerializeField] private float secForEnableGroundCheck;
     [SerializeField] private float secForEnableWallCheck;
+    [SerializeField] private float secForEnableMovingPlatformCheck;
 
     [Header("Raycast Origins")]
     [SerializeField] private Transform[] raycastWallrunOriginsRight;
@@ -86,29 +92,40 @@ public class PlayerMovement : MonoBehaviour
         verticalSpeed = 0;
         rb.velocity = -Vector3.up;
     }
-
+    
+    
     private void Update()
     {
         verticalAxis = PlayerInputManager.Instance.GetVerticalMovement();
         horizontalAxis = PlayerInputManager.Instance.GetHorizontalMovement();
         
+        AlignWithMovingPlatform();
         JumpInput();
         ApplyGravity();
-        //StepClimb();
         ReduceWallrunSpeed();
+        ReduceAdditionalSpeed();
     }
-
+    
     private void FixedUpdate()
     {
         Move();
-
-        if (canCheckGround && rb.velocity.y <= 0)
+        if (canCheckMovingPlatform)
+        {
+            ChangeOnMovingPlatform(CheckOnMovingPlatform());
+        }
+        
+        if (canCheckGround && rb.velocity.y <= 0 || canCheckGround && onSlope)
         {
             isGrounded = checkFloor();
             onSlope = OnSlope();
             AlignFloor();
         }
 
+        //if (!isGrounded)
+        //{
+        //    isGrounded = onMovingPlatform;
+        //}
+        
         if (canCheckWall)
             WallrunRaycast();
         
@@ -151,29 +168,136 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded)
             moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerAirDrag) * Time.fixedDeltaTime;
 
-        rb.velocity = moveDirection;
+        rb.velocity = moveDirection + additionalSpeed;
     }
 
+    private bool CheckOnMovingPlatform()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out movingPlatformHit, 1.5f, groundMask, QueryTriggerInteraction.Ignore))
+        {
+            if (movingPlatformHit.transform.CompareTag("MovingObject"))
+            {
+                return movingPlatformHit.transform;
+            }
+        }
+        return false;
+    }
+
+    private void AlignWithMovingPlatform()
+    {
+        if (!onMovingPlatform)
+        {
+            return;
+        }
+        
+        additionalSpeed = movingPlatformHit.transform.GetComponent<MovingPlatform>().GetSpeedVector();
+    }
+    
+    private void ChangeOnMovingPlatform(bool state)
+    {
+        if (state == onMovingPlatform)
+        {
+            return;
+        }
+        else if (state == false && onMovingPlatform == true)
+        {
+            OnExitMovingPlatform();
+        }
+        else if (state == true && onMovingPlatform == false)
+        {
+            OnEnterMovingPlatform();
+        }
+
+        onMovingPlatform = state;
+    }
+
+    private void OnEnterMovingPlatform()
+    {
+        Physics.Raycast(transform.position, Vector3.down, out movingPlatformHit, 1.5f, groundMask,
+            QueryTriggerInteraction.Ignore);
+        rb.MovePosition(new Vector3(rb.position.x, movingPlatformHit.point.y + 1, rb.position.z));
+        print("entro moving");
+    }
+    
+    private void OnExitMovingPlatform()
+    {
+        canCheckMovingPlatform = false;
+        StartCoroutine(EnableCheckMovingPlatform());
+        print("salgo moving");
+    }
+    
+    private void ReduceAdditionalSpeed()
+    {
+        if (onMovingPlatform)
+            return;
+        
+        if (additionalSpeed.x > 0f)//X
+        {
+            additionalSpeed -= new Vector3(playerConfig.AdditionalSpeedGravity,0,0) * Time.deltaTime;
+
+            if (additionalSpeed.x < 0f)
+            {
+                additionalSpeed = new Vector3(0f, additionalSpeed.y, additionalSpeed.z);
+            }
+        }
+        else if (additionalSpeed.x < 0f)
+        {
+            additionalSpeed += new Vector3(playerConfig.AdditionalSpeedGravity, 0, 0) * Time.deltaTime;
+
+            if (additionalSpeed.x > 0f)
+            {
+                additionalSpeed = new Vector3(0f, additionalSpeed.y, additionalSpeed.z);
+            }
+        }
+
+        if (additionalSpeed.y > 0f)//Y
+        {
+            additionalSpeed -= new Vector3(0, playerConfig.AdditionalSpeedGravity, 0) * Time.deltaTime;
+
+            if (additionalSpeed.y < 0f)
+            {
+                additionalSpeed = new Vector3(additionalSpeed.x, 0f, additionalSpeed.z);
+            }
+        }
+        else if (additionalSpeed.y < 0f)
+        {
+            additionalSpeed += new Vector3(0, playerConfig.AdditionalSpeedGravity, 0) * Time.deltaTime;
+
+            if (additionalSpeed.y > 0f)
+            {
+                additionalSpeed = new Vector3(additionalSpeed.x, 0f, additionalSpeed.z);
+            }
+        }
+        
+        if (additionalSpeed.z > 0f)//Z
+        {
+            additionalSpeed -= new Vector3(0, 0, playerConfig.AdditionalSpeedGravity) * Time.deltaTime;
+
+            if (additionalSpeed.z < 0f)
+            {
+                additionalSpeed = new Vector3(additionalSpeed.x, additionalSpeed.y, 0f);
+            }
+        }
+        else if (additionalSpeed.z < 0f)
+        {
+            additionalSpeed += new Vector3(0, 0, playerConfig.AdditionalSpeedGravity) * Time.deltaTime;
+
+            if (additionalSpeed.z > 0f)
+            {
+                additionalSpeed = new Vector3(additionalSpeed.x, additionalSpeed.y, 0f);
+            }
+        }
+    }
+    
     private void AlignFloor()
     {
-        if (centralGroundHit.transform == null)
+        if (centralGroundHit.transform == null || onMovingPlatform)
             return;
 
-        //root.transform.position = centralGroundHit.point;
-        
-        Vector3 alignWithParent = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
-        rb.MovePosition(alignWithParent);
+        Vector3 alignWithFloor = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
+        rb.MovePosition(alignWithFloor);
 
         ResetVerticalSpeed();
-
-        //if (transform.parent != slopeHit.transform && slopeHit.transform.tag == ("MovingObject"))
-        //{
-        //    transform.SetParent(slopeHit.transform);
-        //    Vector3 alignWithParent = new Vector3(rb.position.x, centralGroundHit.point.y + 1, rb.position.z);
-        //    rb.position = alignWithParent;
-        //    print("padreando");
-        //    return;
-        //}
     }
 
     private void StepClimb() //Sin utilizar porque ya existe AlignFloor()
@@ -247,6 +371,8 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
             onSlope = false;
             canCheckGround = false;
+            canCheckMovingPlatform = false;
+            StartCoroutine(EnableCheckMovingPlatform());
             StartCoroutine(EnableCheckGround());
             transform.SetParent(null);
             gravityToApply = playerConfig.Gravity;
@@ -258,6 +384,8 @@ public class PlayerMovement : MonoBehaviour
             onSlope = false;
             canCheckGround = false;
             ChangeOnWallrun(false);
+            canCheckMovingPlatform = false;
+            StartCoroutine(EnableCheckMovingPlatform());
             StartCoroutine(EnableCheckGround());
             gravityToApply = playerConfig.Gravity;
             Vector3 tempDirection = transform.up * playerConfig.WallJumpForce + hitWallrun.normal * playerConfig.WallJumpSideForce;
@@ -366,7 +494,7 @@ public class PlayerMovement : MonoBehaviour
         
 
         //Central ground raycast
-        Physics.Raycast(transform.position, Vector3.down, out centralGroundHit, 1.1f, groundMask, QueryTriggerInteraction.Ignore);
+        Physics.Raycast(transform.position, Vector3.down, out centralGroundHit, 1f, groundMask, QueryTriggerInteraction.Ignore);
 
             if (showDebugRay)
                 Debug.DrawLine(transform.position, transform.position - new Vector3(0, 1.1f, 0), groundRaysColor);
@@ -549,6 +677,12 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(secForEnableWallCheck);
         canCheckWall = true;
+    }
+    
+    private IEnumerator EnableCheckMovingPlatform()
+    {
+        yield return new WaitForSecondsRealtime(secForEnableMovingPlatformCheck);
+        canCheckMovingPlatform = true;
     }
     #endregion
 }

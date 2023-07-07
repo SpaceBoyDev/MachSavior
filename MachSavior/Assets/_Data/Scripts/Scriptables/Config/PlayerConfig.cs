@@ -30,6 +30,14 @@ public class PlayerConfig : ScriptableObject
     {
         get { return playerAirDrag; }
     }
+    
+    [SerializeField]
+    [Tooltip("Gravity at which additionalSpeed will decay")]
+    private float additionalSpeedGravity = 3f;
+    public float AdditionalSpeedGravity
+    {
+        get { return additionalSpeedGravity; }
+    }
 
     #endregion
     #region Slopes

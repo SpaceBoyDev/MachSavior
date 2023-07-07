@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     private Transform cameraExtraRot;
     [SerializeField]
     private TextMeshProUGUI textFPS;
+    [SerializeField] private GameEvent OnPause;
 
     private float mouseX = 0, mouseY = 0;
 
@@ -65,6 +66,12 @@ public class PlayerManager : MonoBehaviour
         }
 
         textFPS.text = m_lastFramerate.ToString();
+
+        if (PlayerInputManager.Instance.GetPause())
+        {
+            OnPause.Raise();
+            print("Pausa");
+        }
     }
 
     public GameObject GetRoot()
