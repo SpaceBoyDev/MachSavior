@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4975867851945476}
   - component: {fileID: 65451520621985556}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collision_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4793948503018340}
   m_RootOrder: 1
@@ -54,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4296229331438272}
   - component: {fileID: 65776324325079462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collision_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,6 +72,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4793948503018340}
   m_RootOrder: 2
@@ -99,7 +101,7 @@ GameObject:
   - component: {fileID: 4025574426889958}
   - component: {fileID: 33191601275108556}
   - component: {fileID: 23621783923493362}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +118,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4048580292529954}
   m_RootOrder: 1
@@ -139,6 +142,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -179,7 +183,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4488464383282864}
   - component: {fileID: 108534508978244008}
-  m_Layer: 0
+  - component: {fileID: 3602133565823470780}
+  m_Layer: 6
   m_Name: Spotlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,6 +201,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.1351, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4755379212537754}
   m_RootOrder: 0
@@ -262,6 +268,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &3602133565823470780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212469405167520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &1226456976983490
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4048580292529954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Light_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,6 +314,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.85, y: 3.585, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4534435462447348}
   - {fileID: 4025574426889958}
@@ -306,7 +333,7 @@ GameObject:
   - component: {fileID: 33092497521636642}
   - component: {fileID: 23881259563252562}
   - component: {fileID: 65935689784654696}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,6 +350,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1, y: 0.16716003, z: 3.00001}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4191135421434728}
   m_RootOrder: 1
@@ -346,6 +374,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -400,7 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4741289452633310}
   - component: {fileID: 65249659666108882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collision_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,6 +446,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4793948503018340}
   m_RootOrder: 3
@@ -443,7 +473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4755379212537754}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Light_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,6 +490,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.151, y: 3.585, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4488464383282864}
   - {fileID: 4814792117806292}
@@ -478,7 +509,7 @@ GameObject:
   - component: {fileID: 33134507868658048}
   - component: {fileID: 23073218970452878}
   - component: {fileID: 65102520067420430}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,6 +526,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1, y: 0.16716003, z: 3.00001}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4191135421434728}
   m_RootOrder: 0
@@ -518,6 +550,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -572,7 +605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4717063661785200}
   - component: {fileID: 65047155538630046}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collision_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,6 +622,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4793948503018340}
   m_RootOrder: 0
@@ -615,7 +649,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4793948503018340}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Wall_Int_Door_Simple_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,6 +666,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4717063661785200}
   - {fileID: 4975867851945476}
@@ -653,7 +688,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4534435462447348}
   - component: {fileID: 108470449040371854}
-  m_Layer: 0
+  - component: {fileID: 7342357609145283574}
+  m_Layer: 6
   m_Name: Spotlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,6 +706,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.1351, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4048580292529954}
   m_RootOrder: 0
@@ -736,6 +773,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &7342357609145283574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737643553388068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &1796499366845966
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +804,7 @@ GameObject:
   - component: {fileID: 4814792117806292}
   - component: {fileID: 33574786745563104}
   - component: {fileID: 23337520536082954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -764,6 +821,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4755379212537754}
   m_RootOrder: 1
@@ -787,6 +845,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -831,7 +890,7 @@ GameObject:
   - component: {fileID: 65180292413685348}
   - component: {fileID: 114800323371867684}
   - component: {fileID: 82592582853801496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_Int_Door_Simple_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -848,6 +907,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4665148884461208}
   - {fileID: 4765776112954416}
@@ -873,6 +933,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
