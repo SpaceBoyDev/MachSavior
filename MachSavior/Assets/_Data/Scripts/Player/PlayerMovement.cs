@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private float zSpeed = 0;
     [SerializeField] private Vector2 wallrunSpeed = Vector2.zero;
     [SerializeField] private Vector3 additionalSpeed = Vector3.zero;
+    [SerializeField] private Vector3 additionalTurbineSpeed = Vector3.zero;
     private float gravityToApply;
 
     [Header("Movement bools")]
@@ -168,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded)
             moveDirection = (moveDirection * playerConfig.PlayerAcceleration / playerConfig.PlayerAirDrag) * Time.fixedDeltaTime;
 
-        rb.velocity = moveDirection + additionalSpeed;
+        rb.velocity = moveDirection + additionalSpeed + PlayerManager.Instance.GetAdditionalTurbineSpeed();
     }
 
     private bool CheckOnMovingPlatform()
@@ -474,7 +475,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ResetVerticalSpeed()
+    public void ResetVerticalSpeed()
     {
         verticalSpeed = 0;
     }

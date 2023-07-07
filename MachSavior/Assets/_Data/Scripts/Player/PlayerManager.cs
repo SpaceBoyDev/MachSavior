@@ -25,6 +25,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textFPS;
     [SerializeField] private GameEvent OnPause;
+    private Vector3 additionalTurbineSpeed = Vector3.zero;
+    private float gravityAdditionalTurbineSpeed = 10f;
+    private bool isGravityAdditionalTurbineSpeedApplied = true;
 
     private float mouseX = 0, mouseY = 0;
 
@@ -70,8 +73,9 @@ public class PlayerManager : MonoBehaviour
         if (PlayerInputManager.Instance.GetPause())
         {
             OnPause.Raise();
-            print("Pausa");
         }
+        
+        ReduceAdditionalTurbineSpeed();
     }
 
     public GameObject GetRoot()
@@ -97,6 +101,87 @@ public class PlayerManager : MonoBehaviour
     public Transform GetCameraExtraRot()
     {
         return cameraExtraRot;
+    }
+
+    public Vector3 GetAdditionalTurbineSpeed()
+    {
+        return additionalTurbineSpeed;
+    }
+
+    public void CalculateAdditionalTurbineSpeed(Vector3 direction, float force)
+    {
+        additionalTurbineSpeed = direction * force;
+    }
+
+    public void SetIsGravityAdditionalTurbineSpeedApplied(bool value)
+    {
+        isGravityAdditionalTurbineSpeedApplied = value;
+    }
+    
+    private void ReduceAdditionalTurbineSpeed()
+    {
+        if (!isGravityAdditionalTurbineSpeedApplied)
+        {
+            additionalTurbineSpeed = Vector3.zero;
+            return;
+        }
+        
+        if (additionalTurbineSpeed.x > 0f)//X
+        {
+            additionalTurbineSpeed -= new Vector3(gravityAdditionalTurbineSpeed,0,0) * Time.deltaTime;
+
+            if (additionalTurbineSpeed.x < 0f)
+            {
+                additionalTurbineSpeed = new Vector3(0f, additionalTurbineSpeed.y, additionalTurbineSpeed.z);
+            }
+        }
+        else if (additionalTurbineSpeed.x < 0f)
+        {
+            additionalTurbineSpeed += new Vector3(gravityAdditionalTurbineSpeed, 0, 0) * Time.deltaTime;
+
+            if (additionalTurbineSpeed.x > 0f)
+            {
+                additionalTurbineSpeed = new Vector3(0f, additionalTurbineSpeed.y, additionalTurbineSpeed.z);
+            }
+        }
+
+        if (additionalTurbineSpeed.y > 0f)//Y
+        {
+            additionalTurbineSpeed -= new Vector3(0, gravityAdditionalTurbineSpeed, 0) * Time.deltaTime;
+
+            if (additionalTurbineSpeed.y < 0f)
+            {
+                additionalTurbineSpeed = new Vector3(additionalTurbineSpeed.x, 0f, additionalTurbineSpeed.z);
+            }
+        }
+        else if (additionalTurbineSpeed.y < 0f)
+        {
+            additionalTurbineSpeed += new Vector3(0, gravityAdditionalTurbineSpeed, 0) * Time.deltaTime;
+
+            if (additionalTurbineSpeed.y > 0f)
+            {
+                additionalTurbineSpeed = new Vector3(additionalTurbineSpeed.x, 0f, additionalTurbineSpeed.z);
+            }
+        }
+        
+        if (additionalTurbineSpeed.z > 0f)//Z
+        {
+            additionalTurbineSpeed -= new Vector3(0, 0, gravityAdditionalTurbineSpeed) * Time.deltaTime;
+
+            if (additionalTurbineSpeed.z < 0f)
+            {
+                additionalTurbineSpeed = new Vector3(additionalTurbineSpeed.x, additionalTurbineSpeed.y, 0f);
+            }
+        }
+        else if (additionalTurbineSpeed.z < 0f)
+        {
+            additionalTurbineSpeed += new Vector3(0, 0, gravityAdditionalTurbineSpeed) * Time.deltaTime;
+
+            if (additionalTurbineSpeed.z > 0f)
+            {
+                additionalTurbineSpeed = new Vector3(additionalTurbineSpeed.x, additionalTurbineSpeed.y, 0f);
+            }
+        }
     }
 
 }
