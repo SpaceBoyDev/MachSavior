@@ -5,39 +5,47 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler,
+    IPointerUpHandler
 {
+   // private RectTransform rectTransform;
     public int startRotationZ;
     public float duration;
-    private Vector2 startPosition;
+    private Vector3 startPosition;
+    private Vector3 startScale;
+    private Quaternion startRotation;
+    public Vector3 newPosition = new Vector3(0.05f, 0f, 0f);
+    public Vector3 newScale = new Vector3(1.1f, 1.1f, 1.1f);
 
     private void Start()
     {
-        transform.eulerAngles = new Vector3(0, 0, startRotationZ);
         startPosition = transform.position;
-        //transform.DORotate(new Vector3(0, 0, -startRotationZ), duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
-
+        startScale = transform.localScale;
+        startRotation = transform.rotation;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.2f);
-        transform.DOMoveY(startPosition.y + 10f, 0.3f, false).SetUpdate(true);
+        transform.DOLocalMove(startPosition + newPosition, 0.3f, false).SetUpdate(true).SetRelative(true);
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOMoveY(startPosition.y, 0.3f, false).SetUpdate(true);
+        print("exit button");
+        transform.DOMove(startPosition, 0.3f, false).SetUpdate(true);
+        //rectTransform.DOLocalMove(startPosition, 0.3f, false).SetUpdate(true).SetRelative(true);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (GetComponent<Button>().interactable == true)
         {
-            transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.2f).SetUpdate(true);
+            transform.DOScale(startScale + newScale, 0.2f).SetUpdate(true);
         }
     }
+
     public void OnPointerUp(PointerEventData eventData)
     {
-        transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f).SetUpdate(true).SetEase(Ease.InQuad);
+        transform.DOScale(startScale, 0.2f).SetUpdate(true).SetEase(Ease.InQuad);
     }
 }

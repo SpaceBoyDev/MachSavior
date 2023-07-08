@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4382510580441276}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Crate_Simple_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4238021371677670}
   m_Father: {fileID: 0}
@@ -43,7 +44,7 @@ GameObject:
   - component: {fileID: 33195284166828034}
   - component: {fileID: 23152687552129474}
   - component: {fileID: 65332286496026574}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate_Top_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +61,7 @@ Transform:
   m_LocalRotation: {x: 2.8710132e-22, y: 3.2840564e-15, z: -0.00000008742278, w: 1}
   m_LocalPosition: {x: -0.5000076, y: 0.6752167, z: -0.00000002951466}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4238021371677670}
   m_RootOrder: 0
@@ -83,9 +85,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,6 +103,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -110,6 +116,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &65332286496026574
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119,7 +126,7 @@ BoxCollider:
   m_GameObject: {fileID: 1704130732400510}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.0302955, y: 0.41186208, z: 2.0921962}
   m_Center: {x: 0.5151476, y: 0.15310389, z: 0.000002026558}
@@ -135,7 +142,7 @@ GameObject:
   - component: {fileID: 33943278539525320}
   - component: {fileID: 23040092382479064}
   - component: {fileID: 65709863834091418}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate_Simple_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +159,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4284423729349782}
   m_Father: {fileID: 4382510580441276}
@@ -176,9 +184,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -191,6 +202,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -203,6 +215,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &65709863834091418
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -214,5 +227,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0374485, y: 0.70368767, z: 2.1233869}
-  m_Center: {x: -0.018724024, y: 0.35184336, z: 0.0000010728836}
+  m_Size: {x: 1.0374485, y: 1.0323894, z: 2.1233869}
+  m_Center: {x: -0.018724006, y: 0.51619405, z: 0.0000010899136}
