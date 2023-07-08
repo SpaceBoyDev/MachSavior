@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5138728477901005413}
   - component: {fileID: 5138728477901005434}
-  - component: {fileID: 5138728477901005412}
   - component: {fileID: 5138728477901005415}
   m_Layer: 0
   m_Name: BulletTurretLogic
@@ -49,22 +48,6 @@ MonoBehaviour:
   BulletToSpawn: {fileID: 100000, guid: aa0829f3c9de23642903c970d85765fa, type: 3}
   TimeToRespawn: 2
   instance: {fileID: 0}
---- !u!114 &5138728477901005412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5138728477901005435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0456428e726f7704bae984de53857f45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabPools:
-  - prefab: {fileID: 400000, guid: aa0829f3c9de23642903c970d85765fa, type: 3}
-    prefabGO: {fileID: 100000, guid: aa0829f3c9de23642903c970d85765fa, type: 3}
-    preloadAmount: 10
 --- !u!114 &5138728477901005415
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class PressurePlate : MonoBehaviour
     private Tween activeTweenAnim;
     private Tween desactiveTweenAnim;
     public AudioSource plateActivate;
+    private bool pressurePlateActive;
     void Start()
     {
         currentWeight = 0;
@@ -26,10 +27,11 @@ public class PressurePlate : MonoBehaviour
             currentWeight += other.gameObject.GetComponent<PickableObject>().currentWeight;
             // Debug.Log(this.gameObject.name + " current weight: " + currentWeight);
             
-            if (weightToActive <= CheckCurrentWeightIn())
+            if (weightToActive <= CheckCurrentWeightIn() && pressurePlateActive == false)
             {
                 PressurePlateActivate();
                 eventToActive.Raise();
+                pressurePlateActive = true;
             }
         }
         
@@ -41,10 +43,11 @@ public class PressurePlate : MonoBehaviour
             currentWeight -= other.gameObject.GetComponent<PickableObject>().currentWeight;
             
             // Debug.Log(this.gameObject.name + " current weight: " + currentWeight);
-            if (weightToActive > CheckCurrentWeightIn())
+            if (weightToActive > CheckCurrentWeightIn() && pressurePlateActive == true)
             {
                 PressurePlateDesactivate();
                 eventToDesactive.Raise();
+                pressurePlateActive = false;
             }
         }
     }

@@ -6,28 +6,12 @@ using UnityEngine;
 
 public class BulletLogic : PickableObject
 {
-    [SerializeField] 
-    public Vector3 bulletDirection;
-    
-    [SerializeField] 
-    private float bulletSpeed;
-
-    [SerializeField] private float lifeTime;
-    [SerializeField] private float currentLifeTime;
-
+    [SerializeField] public Vector3 bulletDirection;
+    [SerializeField] private BulletSpawn bulletSpawn;
+    [SerializeField] private float bulletSpeed;
     [SerializeField] private GameEvent _despawn;
 
-    //[SerializeField]
-    //private LineRenderer bulletDirectionLine;
     
-    //[SerializeField]
-    //private float bulletLineRange;
-    
-    void OnEnable()
-    {
-        currentLifeTime = 0;
-    }
-
     void Update()
     {
         if (gameObject.activeInHierarchy)
@@ -35,13 +19,6 @@ public class BulletLogic : PickableObject
             BulletMovement();
             ChangeBulletDirection();
             
-            currentLifeTime += Time.deltaTime;
-            
-            if (currentLifeTime >= lifeTime)
-            {
-                Despawn();
-                currentLifeTime = 0;
-            }
         }
         DirectionRaycast();
     }
@@ -73,16 +50,10 @@ public class BulletLogic : PickableObject
     {
         if (!IsPicked())
         {
-            if (transform != null && transform.gameObject.activeInHierarchy) 
-            {
-                _despawn.Raise();
-                transform.parent = null;
-                gameObject.SetActive(false);
-                SpawnPool.Instance.Despawn(transform);
-                
-            }
+            gameObject.SetActive(false);
+            bulletSpawn.RespawnBullet();
+            gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
         }
-        gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
         
     }
 
