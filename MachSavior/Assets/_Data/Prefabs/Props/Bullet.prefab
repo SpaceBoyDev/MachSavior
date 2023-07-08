@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 13500000}
   - component: {fileID: 2300000}
   - component: {fileID: 5400000}
-  - component: {fileID: 4141939484432051995}
   - component: {fileID: -6759621499878561695}
+  - component: {fileID: 4141939484432051995}
   - component: {fileID: 4197660297047270936}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +117,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6759621499878561695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba11415795ec6f468aa92842e68ebb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeSettings: {fileID: 11400000, guid: 2a81e0e954f2963418b373bdb45e819b, type: 2}
+  freezeInTime: 0
+  isStopped: 1
+  isAtRange: 0
+  slowtime: 1
 --- !u!114 &4141939484432051995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,23 +157,7 @@ MonoBehaviour:
   bulletSpawn: {fileID: 0}
   bulletSpeed: 0.1
   _despawn: {fileID: 11400000, guid: a1b14bcfe0c0f4e4d8a75170e9b2b69a, type: 2}
---- !u!114 &-6759621499878561695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba11415795ec6f468aa92842e68ebb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeSettings: {fileID: 11400000, guid: 2a81e0e954f2963418b373bdb45e819b, type: 2}
-  freezeInTime: 1
-  isStopped: 1
-  isAtRange: 0
-  slowtime: 1
+  physicsTimeObject: {fileID: -6759621499878561695}
 --- !u!114 &4197660297047270936
 MonoBehaviour:
   m_ObjectHideFlags: 0

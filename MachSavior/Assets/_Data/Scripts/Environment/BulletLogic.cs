@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Rewired;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletLogic : PickableObject
@@ -11,6 +12,7 @@ public class BulletLogic : PickableObject
     [SerializeField] private float bulletSpeed;
     [SerializeField] private GameEvent _despawn;
 
+    [SerializeField] private PhysicsTimeObject physicsTimeObject;
     
     void Update()
     {
@@ -52,7 +54,6 @@ public class BulletLogic : PickableObject
         {
             gameObject.SetActive(false);
             bulletSpawn.RespawnBullet();
-            gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
         }
         
     }
@@ -66,9 +67,19 @@ public class BulletLogic : PickableObject
 
         if (other.gameObject.tag == "Destructible")
         {
-            // TO DO Animacion desaparicion puerta 
-            other.gameObject.SetActive(false);
+            if (GetMyTimeState() == false)
+            {
+                // TO DO Animacion desaparicion puerta 
+                other.gameObject.SetActive(false);
+                gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
+
+            }
             Despawn();
         }
+    }
+
+    bool GetMyTimeState()
+    {
+        return physicsTimeObject.isStopped;
     }
 }

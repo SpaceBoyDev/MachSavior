@@ -24,7 +24,8 @@ public class BulletSpawn : MonoBehaviour
         if (torretIsActive && BulletToSpawn.activeInHierarchy == false)
         {
             BulletToSpawn.transform.position = transform.position;
-            BulletToSpawn.SetActive(true);    
+            BulletToSpawn.SetActive(true);
+            BulletToSpawn.GetComponent<Rigidbody>().isKinematic = false;
             
             BulletToSpawn.GetComponent<BulletLogic>().bulletDirection = transform.forward;
         }

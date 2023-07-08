@@ -161,11 +161,18 @@ public class PickObjects : MonoBehaviour
     #endregion
 
     #region Release
-    void ReleaseObject()
+    public virtual void ReleaseObject()
     {
         if (PlayerInputManager.Instance.IsPickButtonPressed())
         {
-            _pickedObject.layer = LayerMask.NameToLayer("Default");
+            if (_pickedObject.GetComponent<BulletLogic>())
+            {
+                _pickedObject.layer = LayerMask.NameToLayer("IgnorePlayer");
+            }
+            else
+            {
+                _pickedObject.layer = LayerMask.NameToLayer("Default");
+            }
 
             _pickedObject.GetComponent<PickableObject>()._isPicked = false;
             _pickedObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
