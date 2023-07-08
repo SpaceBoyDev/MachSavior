@@ -51,6 +51,6 @@ public class BulletSpawn : MonoBehaviour
     public void DesactiveTorret()
     {
         torretIsActive = false;
-        RespawnCooldawn = TimeToRespawn;
+        RespawnCooldawn = 0;
     }
 }
