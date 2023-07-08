@@ -19,23 +19,13 @@ public class Turbine : MonoBehaviour
     {
         _animatedTimeObject = GetComponent<AnimatedTimeObject>();
         RotateTurbine();
+        ChangeIsStopped(_animatedTimeObject.IsActive());
     }
 
     private void Update()
     {
-        //if (_animatedTimeObject.getIsStopped)
-        //{
-        //        ChangeIsStopped(isActive);
-        //    
-        //}
-        //else
-        //{
-        //        _animatedTimeObject.ResumeTime();
-        //        airParticles.Play();
-        //        speed = 3f;
-        //}
-        
-        ChangeIsStopped(_animatedTimeObject.IsActive());
+
+        ChangeIsStopped(!_animatedTimeObject.getIsStopped);
     }
 
     private void ChangeIsStopped(bool state)
@@ -84,16 +74,5 @@ public class Turbine : MonoBehaviour
 
         _animatedTimeObject.tweenAnim.Play();
     }
-
-
-    private void ApplyAirForce()
-    {
-        if (_animatedTimeObject.IsActive())
-        {
-            
-        }
-    }
-
-
 }
 
