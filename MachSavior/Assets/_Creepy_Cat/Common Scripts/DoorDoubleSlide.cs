@@ -93,4 +93,20 @@ public class DoorDoubleSlide : MonoBehaviour {
             doorR.localPosition = initialDoorR + (-doorDirection * point * openDistance);
         }
 	}
+
+    public void OpenDoor()
+    {
+        opening = true;
+
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+    }
+
+    public void CloseDoor()
+    {
+        opening = false;
+
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+    }
 }

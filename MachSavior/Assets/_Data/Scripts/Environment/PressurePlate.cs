@@ -10,7 +10,10 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private int currentWeight;
 
     [SerializeField] private GameEvent eventToActive;
+    [SerializeField] private float YWhenActive;
     [SerializeField] private GameEvent eventToDesactive;
+    [SerializeField] private float YWhenDesactive;
+
     private Tween activeTweenAnim;
     private Tween desactiveTweenAnim;
     public AudioSource plateActivate;
@@ -59,13 +62,13 @@ public class PressurePlate : MonoBehaviour
 
     private void PressurePlateActivate()
     {
-        activeTweenAnim = transform.DOLocalMoveY(-0.03f, 1).SetEase(Ease.Linear);
+        activeTweenAnim = transform.DOLocalMoveY(YWhenActive, 1).SetEase(Ease.Linear);
         activeTweenAnim.Play();
         plateActivate.Play();
     }
     private void PressurePlateDesactivate()
     {
-        desactiveTweenAnim = transform.DOLocalMoveY(0.05f, 1).SetEase(Ease.Linear);
+        desactiveTweenAnim = transform.DOLocalMoveY(YWhenDesactive, 1).SetEase(Ease.Linear);
         desactiveTweenAnim.Play();
     }
     
