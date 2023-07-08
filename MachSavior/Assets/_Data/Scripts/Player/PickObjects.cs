@@ -176,6 +176,22 @@ public class PickObjects : MonoBehaviour
             _pickedObject.GetComponent<Rigidbody>().isKinematic = false;
 
             _pickedObject.gameObject.transform.SetParent(null);
+            
+            
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, distanceToPick))
+            {
+                if (hit.collider.gameObject)
+                {
+                    _pickedObject.gameObject.transform.position =_pickedObject.gameObject.transform.position;
+                }
+            }
+            else
+            {
+                _pickedObject.gameObject.transform.position =
+                    Camera.main.transform.position + Camera.main.transform.forward * 2;
+            }
+
             _pickedObject = null;
             
             _pickAndReleaseCooldawn = 0f;       
