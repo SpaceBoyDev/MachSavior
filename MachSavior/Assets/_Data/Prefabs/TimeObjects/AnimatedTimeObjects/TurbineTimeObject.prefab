@@ -5052,7 +5052,7 @@ MonoBehaviour:
   turbine: {fileID: 2014452910118729816}
   airCollider: {fileID: 4865096279388775476}
   airParticles: {fileID: 3618349981598374996}
-  isActive: 0
+  isActive: 1
 --- !u!114 &2013299705583872818
 MonoBehaviour:
   m_ObjectHideFlags: 0
