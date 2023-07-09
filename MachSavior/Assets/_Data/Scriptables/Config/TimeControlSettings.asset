@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46204396f80ad28409873e0cc8b3ef7c, type: 3}
   m_Name: TimeControlSettings
   m_EditorClassIdentifier: 
-  maxDistance: 15
+  maxDistance: 30
   changeTimeDelay: 0.2
   maxTimeCells: 3
   CurrentTimeCells: 3

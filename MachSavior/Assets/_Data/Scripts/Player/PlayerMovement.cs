@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool onWallrun = false;
     [SerializeField] private bool onMovingPlatform = false;
     [HideInInspector] public bool OnWallrun { get { return onWallrun; } }
+    private bool canFootStepSFX = true;
 
     
     [Header("Wallrun")]
@@ -105,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
         ApplyGravity();
         ReduceWallrunSpeed();
         ReduceAdditionalSpeed();
+        FootSteps();
     }
     
     private void FixedUpdate()
@@ -378,6 +381,7 @@ public class PlayerMovement : MonoBehaviour
             transform.SetParent(null);
             gravityToApply = playerConfig.Gravity;
             verticalSpeed = playerConfig.JumpForce;
+            AudioManager.Instance.PlaySFX("Jump");
         }
         else if (PlayerInputManager.Instance.IsJumpDown() && onWallrun) //WALLJUMP
         {
@@ -392,6 +396,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 tempDirection = transform.up * playerConfig.WallJumpForce + hitWallrun.normal * playerConfig.WallJumpSideForce;
             verticalSpeed = tempDirection.y;
             wallrunSpeed = new Vector2(tempDirection.x, tempDirection.z);
+            AudioManager.Instance.PlaySFX("Jump");
         }
     }
 
@@ -666,6 +671,29 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion
+
+    private void FootSteps()
+    {
+        if (isGrounded && rb.velocity.magnitude > 5 && canFootStepSFX
+            || onSlope && rb.velocity.magnitude > 5 && canFootStepSFX)
+        {
+            StartCoroutine(FootStepsSFX(0.15f));
+        }
+        else if (onWallrun && rb.velocity.magnitude > 5 && canFootStepSFX)
+        {
+            StartCoroutine(FootStepsSFX(0.1f));
+        }
+    }
+
+    private IEnumerator FootStepsSFX(float timeToWait)
+    {
+        canFootStepSFX = false;
+        int FSNumber = UnityEngine.Random.Range(1, 8);
+        string SFXName = "FS" + FSNumber.ToString();
+        AudioManager.Instance.PlaySFX(SFXName);
+        yield return new WaitForSeconds(timeToWait);
+        canFootStepSFX = true;
+    }
 
     #region Coroutines
     private IEnumerator EnableCheckGround()

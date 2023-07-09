@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuPanel.SetActive(false);
         PlayerInputManager.Instance.IsInputAllowed = true;
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnButtonExit()

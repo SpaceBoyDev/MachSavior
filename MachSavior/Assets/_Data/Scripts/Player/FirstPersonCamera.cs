@@ -69,9 +69,12 @@ public class FirstPersonCamera : MonoBehaviour
     
     private void ClampCamera()
     {
-        if(!CameraManager.Instance.IsCameraUpdateAllowed()){
+        if(!CameraManager.Instance.IsCameraUpdateAllowed())
+        {
             return;
-        }else if(wallrunCameraCoroutine != null){
+        }
+        else if(wallrunCameraCoroutine != null)
+        {
             StopCoroutine(wallrunCameraCoroutine);
             wallrunCameraCoroutine = null;
         }
@@ -187,7 +190,7 @@ public class FirstPersonCamera : MonoBehaviour
             wallrunCameraCoroutine = null;
             playerCamera.transform.rotation = newRot;
             playerCamera.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, playerCamera.transform.eulerAngles.y, 0f);
-            CameraManager.Instance.SetIsClampingCameraHorizontal(true);
+            //CameraManager.Instance.SetIsClampingCameraHorizontal(true);
             CameraManager.Instance.SetIsCameraUpdateAllowed(true);
         }
     }
