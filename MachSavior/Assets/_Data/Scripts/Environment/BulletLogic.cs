@@ -10,6 +10,7 @@ public class BulletLogic : PickableObject
     [SerializeField] public Vector3 bulletDirection;
     [SerializeField] private BulletSpawn bulletSpawn;
     [SerializeField] private float bulletSpeed;
+    [SerializeField] private float speedMultiplier;
     [SerializeField] private GameEvent _despawn;
 
     [SerializeField] private PhysicsTimeObject physicsTimeObject;
@@ -35,8 +36,17 @@ public class BulletLogic : PickableObject
     {
         if (!IsPicked())
         {
-           transform.position += bulletDirection * bulletSpeed * this.GetComponent<PhysicsTimeObject>().slowtime 
-                                 *Time.timeScale;
+           if (GetMyTimeState() == false)
+           {
+               transform.position += bulletDirection * bulletSpeed * GetComponent<PhysicsTimeObject>().slowtime 
+                                     *Time.timeScale * speedMultiplier;
+               
+           }
+           else
+           {
+               transform.position += bulletDirection * bulletSpeed * GetComponent<PhysicsTimeObject>().slowtime 
+                                     *Time.timeScale /speedMultiplier;
+           }
         }
     }
 

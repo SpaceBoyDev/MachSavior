@@ -156,6 +156,7 @@ MonoBehaviour:
   bulletDirection: {x: -0.8660255, y: 0, z: -0.5}
   bulletSpawn: {fileID: 0}
   bulletSpeed: 0.1
+  speedMultiplier: 4
   _despawn: {fileID: 11400000, guid: a1b14bcfe0c0f4e4d8a75170e9b2b69a, type: 2}
   physicsTimeObject: {fileID: -6759621499878561695}
 --- !u!114 &4197660297047270936
