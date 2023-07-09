@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance;
+    public bool isTriggerOn = false;
     
     private void Awake()
     {
@@ -17,9 +18,5 @@ public class TutorialManager : MonoBehaviour
             Destroy(this);
         }
     }
-
-    public void Trigger1()
-    {
-        
-    }
+    
 }

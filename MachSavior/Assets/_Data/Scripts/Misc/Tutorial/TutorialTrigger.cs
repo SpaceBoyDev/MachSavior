@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class TutorialTrigger : MonoBehaviour
 {
@@ -14,30 +15,72 @@ public class TutorialTrigger : MonoBehaviour
     [SerializeField] private Image sKey;
     [SerializeField] private Image dKey;
     
+    [SerializeField] private Image spacebar;
+    
     [Header("Sprite Pressed Keys")]
     [SerializeField] private Sprite wKeyPressed;
     [SerializeField] private Sprite aKeyPressed;
     [SerializeField] private Sprite sKeyPressed;
     [SerializeField] private Sprite dKeyPressed;
     
+    [SerializeField] private Sprite spacebarPressed;
+    
     [SerializeField] private bool hasBeenTriggered = false;
-    [SerializeField] private bool canCheckInputs;
+    [FormerlySerializedAs("canCheckInputs")] [SerializeField] private bool checkMovementInputs;
+    [SerializeField] private bool checkJumpInput;
     private void Awake()
     {
         canvas.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && !hasBeenTriggered)
+        if (other.CompareTag("Player") && !hasBeenTriggered && !TutorialManager.Instance.isTriggerOn)
         {
             hasBeenTriggered = true;
+            TutorialManager.Instance.isTriggerOn = true;
             canvas.SetActive(true);
-            if (canCheckInputs)
+            if (checkMovementInputs)
             {
                 StartCoroutine(CheckingInputs());
             }
+            else if (checkJumpInput)
+            {
+                StartCoroutine(CheckJumpInput());
+            }
+            else
+            {
+                StartCoroutine(NotCheckInputs());
+            }
         }
+    }
+
+    private IEnumerator CheckJumpInput()
+    {
+        bool jumpInputChecked = false;
+        while (!jumpInputChecked)
+        {
+            if (PlayerInputManager.Instance.IsJumpDown())
+            {
+                spacebar.gameObject.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f, 1, 0).SetEase(Ease.InQuad)
+                    .SetLoops(0);
+                spacebar.sprite = spacebarPressed;
+                jumpInputChecked = true;
+            }
+
+            yield return null;
+        }
+        
+        yield return new WaitForSeconds(1f);
+        TutorialManager.Instance.isTriggerOn = false;
+        canvas.SetActive(false);
+    }
+    
+    private IEnumerator NotCheckInputs()
+    {
+        yield return new WaitForSeconds(5f);
+        TutorialManager.Instance.isTriggerOn = false;
+        canvas.SetActive(false);
     }
 
     private IEnumerator CheckingInputs()
@@ -89,7 +132,7 @@ public class TutorialTrigger : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        
+        TutorialManager.Instance.isTriggerOn = false;
         canvas.SetActive(false);
     }
 }
