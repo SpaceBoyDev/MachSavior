@@ -21,7 +21,6 @@ public class SspikyDoorLogic : MonoBehaviour
 
     void OpenCloseDoor()
     {
-        Colision.isTrigger = false;
         Door.GetComponent<AnimatedTimeObject>().tweenAnim = Door.transform.DOLocalMoveY(1f, speed).
         SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
     }
@@ -30,11 +29,11 @@ public class SspikyDoorLogic : MonoBehaviour
     {
         if (Door.GetComponent<AnimatedTimeObject>().getIsStopped)
         {
-            Colision.isTrigger = true;
+            Colision.isTrigger = false;
         }
         else
         {
-            Colision.isTrigger = false;
+            Colision.isTrigger = true;
         }
     }
 }
