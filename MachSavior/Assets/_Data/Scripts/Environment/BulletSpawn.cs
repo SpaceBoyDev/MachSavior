@@ -28,6 +28,7 @@ public class BulletSpawn : MonoBehaviour
             BulletToSpawn.GetComponent<Rigidbody>().isKinematic = false;
             
             BulletToSpawn.GetComponent<BulletLogic>().bulletDirection = transform.forward;
+            BulletToSpawn.transform.rotation = transform.rotation;
         }
     }
 
