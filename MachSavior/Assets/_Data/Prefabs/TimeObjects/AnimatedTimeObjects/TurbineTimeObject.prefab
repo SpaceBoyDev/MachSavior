@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1240280530844099095}
   - component: {fileID: 3455508446829548561}
   - component: {fileID: 1822935221}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AirTrigger
   m_TagString: TurbineAirTrigger
   m_Icon: {fileID: 0}

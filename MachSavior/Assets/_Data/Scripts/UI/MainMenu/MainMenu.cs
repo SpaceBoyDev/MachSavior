@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Camera camera;
     private Transform cameraStartTransform;
+    [SerializeField] private GameObject buttons;
     [SerializeField] private Transform camPC;
     [SerializeField] private AnimationCurve curve;
     private float lerpSpeed;
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnButtonPlay()
     {
+        buttons.SetActive(false);
         StartCoroutine(CameraCloseUp());
     }
     

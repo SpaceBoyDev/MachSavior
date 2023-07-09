@@ -5,30 +5,9 @@ using UnityEngine;
 
 public class TurbineTrigger : MonoBehaviour
 {
-    //[SerializeField] private AnimatedTimeObject _animatedTimeObject;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnDisable()
     {
         PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(false);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            
-        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -39,12 +18,25 @@ public class TurbineTrigger : MonoBehaviour
             //PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(true);
             other.GetComponent<PlayerMovement>().ResetVerticalSpeed();
             other.GetComponent<Rigidbody>().AddForce(transform.up * 20f, ForceMode.VelocityChange);
-            print("Apply air force");
         }
         else
         {
             PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(false);
         }
-
     }
+
+   //private void OnTriggerExit(Collider other)
+   //{
+   //    if (other.CompareTag("Player"))
+   //    {
+   //        PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(false);
+   //        StartCoroutine(ApplyFinalAirForce(other));
+   //    }
+   //}
+   //
+   //private IEnumerator ApplyFinalAirForce(Collider other)
+   //{
+   //    yield return new WaitForSeconds(0.01f);
+   //    other.GetComponent<Rigidbody>().velocity = other.GetComponent<Rigidbody>().velocity
+   //}
 }

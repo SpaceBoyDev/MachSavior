@@ -149,6 +149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRotationZ: 0
   duration: 0
+  isCanvasWorld: 0
+  newPosition: {x: 0, y: 10, z: 0}
+  newScale: {x: 1.01, y: 1.01, z: 1.01}
 --- !u!1 &2613747759142019279
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +301,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRotationZ: 0
   duration: 0
+  isCanvasWorld: 0
+  newPosition: {x: 0, y: 10, z: 0}
+  newScale: {x: 1.01, y: 1.01, z: 1.01}
 --- !u!1 &2613747759695803471
 GameObject:
   m_ObjectHideFlags: 0

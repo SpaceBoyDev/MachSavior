@@ -14,6 +14,7 @@ public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private Vector3 startPosition;
     private Vector3 startScale;
     private Quaternion startRotation;
+    public bool isCanvasWorld = true;
     public Vector3 newPosition = new Vector3(0.05f, 0f, 0f);
     public Vector3 newScale = new Vector3(1.1f, 1.1f, 1.1f);
 
@@ -26,7 +27,14 @@ public class ButtonAnimations : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.DOLocalMove(startPosition + newPosition, 0.3f, false).SetUpdate(true).SetRelative(true);
+        if (!isCanvasWorld)
+        {
+            transform.DOMove(startPosition + newPosition, 0.3f, false).SetUpdate(true);
+        }
+        else
+        {
+            transform.DOLocalMove(startPosition + newPosition, 0.3f, false).SetUpdate(true).SetRelative(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
