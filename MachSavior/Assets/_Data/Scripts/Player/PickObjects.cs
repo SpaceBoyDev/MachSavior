@@ -54,7 +54,7 @@ public class PickObjects : MonoBehaviour
         {   
             if (hit.collider.gameObject.GetComponent<PickableObject>())
             {
-                if (hit.collider.gameObject.GetComponent<PickableObject>().CanPick() && !_pickedObject && _pickAndReleaseCooldawn <= 0)
+                if (hit.collider.gameObject.GetComponent<PickableObject>().CanPick() && !_pickedObject /*&& _pickAndReleaseCooldawn <= 0*/)
                 {
                     if (PlayerInputManager.Instance.IsPickButtonPressed())
                     {
@@ -83,6 +83,8 @@ public class PickObjects : MonoBehaviour
             objectToPick.GetComponent<Rigidbody>().useGravity = false; }
         
         objectToPick.GetComponent<Rigidbody>().isKinematic = true;
+        objectToPick.GetComponent<Collider>().isTrigger = true;
+
         objectToPick.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         _pickedObject = objectToPick;
@@ -181,6 +183,7 @@ public class PickObjects : MonoBehaviour
                 _pickedObject.GetComponent<Rigidbody>().useGravity = true; }
 
             _pickedObject.GetComponent<Rigidbody>().isKinematic = false;
+            _pickedObject.GetComponent<Collider>().isTrigger = false;
 
             _pickedObject.gameObject.transform.SetParent(null);
             

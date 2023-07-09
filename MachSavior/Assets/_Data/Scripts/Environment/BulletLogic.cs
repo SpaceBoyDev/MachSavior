@@ -55,7 +55,6 @@ public class BulletLogic : PickableObject
             gameObject.SetActive(false);
             bulletSpawn.RespawnBullet();
         }
-        
     }
 
     private void OnCollisionEnter(Collision other)
@@ -71,11 +70,13 @@ public class BulletLogic : PickableObject
             {
                 // TO DO Animacion desaparicion puerta 
                 other.gameObject.SetActive(false);
-                gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
 
             }
+
             Despawn();
         }
+        gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
+
     }
 
     bool GetMyTimeState()
