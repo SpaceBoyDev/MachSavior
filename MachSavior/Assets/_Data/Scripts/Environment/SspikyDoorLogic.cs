@@ -25,6 +25,13 @@ public class SspikyDoorLogic : MonoBehaviour
         SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
     }
 
+    void StopDoor()
+    {
+        Door.GetComponent<AnimatedTimeObject>().tweenAnim =
+            Door.transform.DOLocalMoveY(3.5f, speed).SetEase(Ease.Linear);
+
+    }
+
     private void Update()
     {
         if (Door.GetComponent<AnimatedTimeObject>().getIsStopped)
@@ -33,6 +40,7 @@ public class SspikyDoorLogic : MonoBehaviour
         }
         else
         {
+            StopDoor();
             Colision.isTrigger = true;
         }
     }
