@@ -480,9 +480,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void ResetVerticalSpeed()
+    public void ResetVerticalSpeed(float valueToReset = 0)
     {
-        verticalSpeed = 0;
+        verticalSpeed = valueToReset;
     }
     #endregion
 

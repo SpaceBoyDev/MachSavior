@@ -25,9 +25,12 @@ public class TutorialTrigger : MonoBehaviour
     
     [SerializeField] private Sprite spacebarPressed;
     
+    private enum TutorialType { checkMovementInputs, checkJumpInputs, textBox, textBoxTimeStop }
+    [SerializeField] private TutorialType tutorialType;
     [SerializeField] private bool hasBeenTriggered = false;
-    [FormerlySerializedAs("canCheckInputs")] [SerializeField] private bool checkMovementInputs;
-    [SerializeField] private bool checkJumpInput;
+    [SerializeField] private float onlyTextBoxSeconds;
+    [SerializeField] private float stopTimeSeconds;
+
     private void Awake()
     {
         canvas.SetActive(false);
@@ -40,19 +43,46 @@ public class TutorialTrigger : MonoBehaviour
             hasBeenTriggered = true;
             TutorialManager.Instance.isTriggerOn = true;
             canvas.SetActive(true);
-            if (checkMovementInputs)
+            if (tutorialType == TutorialType.checkMovementInputs)
             {
-                StartCoroutine(CheckingInputs());
+                StartCoroutine(CheckMovementInputs());
             }
-            else if (checkJumpInput)
+            else if (tutorialType== TutorialType.checkJumpInputs)
             {
                 StartCoroutine(CheckJumpInput());
             }
-            else
+            else if (tutorialType == TutorialType.textBox)
             {
-                StartCoroutine(NotCheckInputs());
+                StartCoroutine(TextBox());
+            }
+            else if (tutorialType == TutorialType.textBoxTimeStop)
+            {
+                StartCoroutine(TextBoxTimeStop());
             }
         }
+    }
+    
+    private IEnumerator TextBoxTimeStop()
+    {
+        PlayerInputManager.Instance.IsInputAllowed = false;
+        PlayerInputManager.Instance.IsPauseAllowed= false;
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(stopTimeSeconds);
+        
+        PlayerInputManager.Instance.IsInputAllowed = true;
+        PlayerInputManager.Instance.IsPauseAllowed= true;
+        Time.timeScale = 1;
+        
+        yield return new WaitForSeconds(onlyTextBoxSeconds);
+        TutorialManager.Instance.isTriggerOn = false;
+        canvas.SetActive(false);
+    }
+    
+    private IEnumerator TextBox()
+    {
+        yield return new WaitForSeconds(onlyTextBoxSeconds);
+        TutorialManager.Instance.isTriggerOn = false;
+        canvas.SetActive(false);
     }
 
     private IEnumerator CheckJumpInput()
@@ -75,15 +105,8 @@ public class TutorialTrigger : MonoBehaviour
         TutorialManager.Instance.isTriggerOn = false;
         canvas.SetActive(false);
     }
-    
-    private IEnumerator NotCheckInputs()
-    {
-        yield return new WaitForSeconds(5f);
-        TutorialManager.Instance.isTriggerOn = false;
-        canvas.SetActive(false);
-    }
 
-    private IEnumerator CheckingInputs()
+    private IEnumerator CheckMovementInputs()
     {
         int inputsChecked = 0;
         int[] keysPressed = new int[4];
