@@ -16,7 +16,7 @@ public class PlayerTimeController : MonoBehaviour
 
     private void Start()
     {
-        _timeSettings.CurrentTimeCells = _timeSettings.GetMaxTimeCells;
+        
     }
 
     private void Update()
@@ -75,16 +75,12 @@ public class PlayerTimeController : MonoBehaviour
 
             if (timeObject.getIsStopped && _timeSettings.CurrentTimeCells > 0)
             {
-                _timeSettings.CurrentTimeCells --;
-                _timeSettings.GetOnTimeCellUsed.Raise();
                 timeObject.UseTimeCell();
                 //timeObject = null;
             }
             else if(!timeObject.getIsStopped && _timeSettings.CurrentTimeCells < _timeSettings.GetMaxTimeCells)
             {
                 //Time cells
-                _timeSettings.CurrentTimeCells ++;
-                _timeSettings.GetOnTimeCellUsed.Raise();
                 timeObject.TakeTimeCell();
             }
             else if (timeObject.getIsStopped && _timeSettings.CurrentTimeCells <= 0)

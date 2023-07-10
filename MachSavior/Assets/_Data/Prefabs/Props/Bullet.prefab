@@ -151,13 +151,14 @@ MonoBehaviour:
   _useGravity: 0
   _isPicked: 0
   currentWeight: 0
+  distanceToRecall: 30
   objectWeight: 0
   _positionWhenPick: {x: 0, y: 0, z: 0}
   _rotationWhenPick: {x: 0, y: 0, z: 0}
   bulletDirection: {x: -0.8660255, y: 0, z: -0.5}
   bulletSpawn: {fileID: 0}
   bulletSpeed: 0.1
-  speedMultiplier: 4
+  speedMultiplier: 10
   _despawn: {fileID: 11400000, guid: a1b14bcfe0c0f4e4d8a75170e9b2b69a, type: 2}
   physicsTimeObject: {fileID: -6759621499878561695}
 --- !u!114 &4197660297047270936
@@ -195,7 +196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5169214243551271815
 Transform:
   m_ObjectHideFlags: 0
