@@ -44,7 +44,7 @@ public abstract class TimeObject : MonoBehaviour
         renderer.material.SetColor("_InteriorColor", _timeSettings.GetDefaultInteriorColor);
     }
 
-    private void OnMouseEnter()
+    public void OnHoverEnter()
     {
         _timeSettings.GetOnHoverEnter.Raise();
 
@@ -61,7 +61,7 @@ public abstract class TimeObject : MonoBehaviour
         }
     }
 
-    private void OnMouseExit()
+    public void OnHoverExit()
     {
         _timeSettings.GetOnHoverExit.Raise();
         
@@ -105,7 +105,6 @@ public abstract class TimeObject : MonoBehaviour
         yield return new WaitForSeconds(_timeSettings.GetChangeTimeDelay);
         action();
     }
-    
     /// <summary>
     /// Interpolate the value of the highlight effect.
     /// </summary>
@@ -146,7 +145,6 @@ public abstract class TimeObject : MonoBehaviour
         renderer.material.SetColor("_FresnelColor", endFresnelColor);
         renderer.material.SetColor("_InteriorColor", endInteriorColor);
     }
-
     private IEnumerator OutlineEffectLerp(float endValue, float duration)
     {
         float time = 0f;
