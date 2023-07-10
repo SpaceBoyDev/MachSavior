@@ -12828,6 +12828,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1351029541}
     m_Modifications:
+    - target: {fileID: 7516685578811256898, guid: 043cf9dd7e90f344ca663c2c8a38a073,
+        type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7516685578811256898, guid: 043cf9dd7e90f344ca663c2c8a38a073,
+        type: 3}
+      propertyPath: _animatedTimeObject
+      value: 
+      objectReference: {fileID: 1765156757}
+    - target: {fileID: 8635587561168043995, guid: 043cf9dd7e90f344ca663c2c8a38a073,
+        type: 3}
+      propertyPath: isStopped
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8635587561168043998, guid: 043cf9dd7e90f344ca663c2c8a38a073,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 8635587561168043998, guid: 043cf9dd7e90f344ca663c2c8a38a073,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8635587562419026003, guid: 043cf9dd7e90f344ca663c2c8a38a073,
         type: 3}
       propertyPath: m_RootOrder
@@ -65008,6 +65033,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 50
   m_TargetDisplay: 0
+--- !u!114 &1765156757 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8635587561168043995, guid: 043cf9dd7e90f344ca663c2c8a38a073,
+    type: 3}
+  m_PrefabInstance: {fileID: 339564440}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482b384f0c427314abbd503ec26e5c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1765347226
 Mesh:
   m_ObjectHideFlags: 0

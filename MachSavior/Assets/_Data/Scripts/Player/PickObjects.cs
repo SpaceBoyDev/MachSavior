@@ -38,7 +38,10 @@ public class PickObjects : MonoBehaviour
 
         else
         {
-            ReleaseObject();
+            if (PlayerInputManager.Instance.IsPickButtonPressed())
+            {
+                ReleaseObject();
+            }
         }      
 
         if (_pickAndReleaseCooldawn > 0)
@@ -165,8 +168,8 @@ public class PickObjects : MonoBehaviour
     #region Release
     public virtual void ReleaseObject()
     {
-        if (PlayerInputManager.Instance.IsPickButtonPressed())
-        {
+        
+        
             if (_pickedObject.GetComponent<BulletLogic>())
             {
                 _pickedObject.layer = LayerMask.NameToLayer("IgnorePlayer");
@@ -204,8 +207,7 @@ public class PickObjects : MonoBehaviour
 
             _pickedObject = null;
             
-            _pickAndReleaseCooldawn = 0f;       
-        }
+            _pickAndReleaseCooldawn = 0f;
     }
     #endregion
 

@@ -8,53 +8,27 @@ using UnityEngine.Serialization;
 
 public class SspikyDoorLogic : MonoBehaviour
 {
-    [SerializeField] private BoxCollider Colision;
-
+    [FormerlySerializedAs("Colision")] [SerializeField] private BoxCollider doorCollider;
+    [SerializeField] private AnimatedTimeObject _animatedTimeObject;
     [SerializeField] private float speed;
+    private Vector3 initPosition;
 
-    [SerializeField] private GameObject Door;
-    private bool isActive;
+    [FormerlySerializedAs("Door")] [SerializeField] private GameObject door;
+    [SerializeField] private bool isActive;
+
     private void Start()
     {
-        OpenCloseDoor();
-        CheckTimeState(Door.GetComponent<AnimatedTimeObject>().IsActive());
+        initPosition = door.transform.position;
+        _animatedTimeObject = door.GetComponent<AnimatedTimeObject>();
+        ChangeIsStopped(_animatedTimeObject.IsActive());
     }
 
-    void Update()
+    private void Update()
     {
-        CheckTimeState(!Door.GetComponent<AnimatedTimeObject>().getIsStopped);
-        
-        if (!Door.GetComponent<AnimatedTimeObject>().getIsStopped)
-        {
-            Colision.isTrigger = false;
-        }
-        else
-        {
-            Colision.isTrigger = true;
-        }
+        ChangeIsStopped(!_animatedTimeObject.getIsStopped);
     }
 
-    IEnumerator StopDoorCourutine()
-    {
-        yield return new WaitForSeconds(0.1f);
-        isActive = false;
-    }
-    IEnumerator ActiveDoorCourutine()
-    {
-        yield return new WaitForSeconds(0.1f);
-        isActive = true;
-        OpenCloseDoor();
-    }
-    void OpenCloseDoor()
-    {
-        Door.GetComponent<AnimatedTimeObject>().tweenAnim = Door.transform.DOLocalMoveY(1f, speed).
-        SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
-        
-        Door.GetComponent<AnimatedTimeObject>().tweenAnim.Play();
-        isActive = true;
-    }
-    
-    private void CheckTimeState(bool state)
+    private void ChangeIsStopped(bool state)
     {
         if (state == isActive)
         {
@@ -62,19 +36,46 @@ public class SspikyDoorLogic : MonoBehaviour
         }
         else if (state == false && isActive == true)
         {
-            Door.GetComponent<AnimatedTimeObject>().ResumeTime();
-            ActiveDoorCourutine();
-            Colision.isTrigger = true;
+            OnExitActive();
         }
-        else if (state == false && isActive == false)
+        else if (state == true && isActive == false)
         {
-            Door.GetComponent<AnimatedTimeObject>().StopTime();
-            StopDoorCourutine();
-            Colision.isTrigger = false;
+            OnEnterActive();
         }
-
+    
         isActive = state;
-
     }
 
+    private void OnEnterActive()
+    {
+        print("enter");
+        doorCollider.isTrigger = false;
+        speed = 0.1f;
+        MoveDoor();
+    }
+
+    private void OnExitActive()
+    {
+        print("exit");
+        doorCollider.isTrigger = true;
+        speed = 0f;
+        StopDoor();
+    }
+
+    private void MoveDoor()
+    {
+        door.transform.position = initPosition;
+        _animatedTimeObject.tweenAnim = door.transform.DOMoveY(initPosition.y + 3.5f, speed).SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.Linear);
+
+        _animatedTimeObject.ResumeTime();
+    }
+
+    private void StopDoor()
+    {
+        door.transform.position =
+            new Vector3(door.transform.position.x, initPosition.y + 3.5f, door.transform.position.z);
+        _animatedTimeObject.StopTime();
+        _animatedTimeObject.tweenAnim.Kill();
+    }
 }
