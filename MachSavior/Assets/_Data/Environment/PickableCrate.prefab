@@ -155,25 +155,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7762612210255090713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085871750034307145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e14749cdb7a66934abe2c8a452e7883b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canPick: 1
-  _useGravity: 0
-  _isPicked: 0
-  currentWeight: 0
-  objectWeight: 1
-  _positionWhenPick: {x: -0.4, y: -0.6, z: -0.6}
-  _rotationWhenPick: {x: 0, y: 90, z: 0}
 --- !u!114 &1273256454309244612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,3 +190,23 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &7762612210255090713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085871750034307145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14749cdb7a66934abe2c8a452e7883b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canPick: 1
+  _useGravity: 0
+  _isPicked: 0
+  currentWeight: 0
+  distanceToRecall: 25
+  objectWeight: 1
+  _positionWhenPick: {x: -0.4, y: -0.6, z: -0.6}
+  _rotationWhenPick: {x: 0, y: 90, z: 0}

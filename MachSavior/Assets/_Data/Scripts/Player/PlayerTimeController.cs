@@ -24,6 +24,7 @@ public class PlayerTimeController : MonoBehaviour
         //ToggleSelectMode();
         CheckTimeObject();
         OnHoverInput();
+        
     }
 
     /// <summary>
@@ -35,16 +36,17 @@ public class PlayerTimeController : MonoBehaviour
 
         if (!Physics.Raycast(ray, out var hit, _timeSettings.GetMaxDistance))
         {
-            if (lastTimeObject != null)
-            {
-                lastTimeObject.OnHoverExit();
-                lastTimeObject = null;
-            }
             if (timeObject != null)
             {
                 timeObject.OnHoverExit();
                 timeObject = null;
             }
+            if (lastTimeObject != null)
+            {
+                lastTimeObject.OnHoverExit();
+                lastTimeObject = null;  
+            }
+
             return;
         }
         
@@ -52,10 +54,7 @@ public class PlayerTimeController : MonoBehaviour
         timeObject = selection.GetComponent<TimeObject>();
 
         if (timeObject == lastTimeObject)
-        {
-            
             return;
-        }
         
         timeObject.OnHoverEnter();
 
