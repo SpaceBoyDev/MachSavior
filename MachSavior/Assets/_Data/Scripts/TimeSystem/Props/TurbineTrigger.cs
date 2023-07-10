@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TurbineTrigger : MonoBehaviour
 {
+    [SerializeField] private float valueToResetVerticalSpeed;
     private void OnDisable()
     {
         PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(false);
@@ -14,9 +15,7 @@ public class TurbineTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //PlayerManager.Instance.CalculateAdditionalTurbineSpeed(transform.up, 10f);
-            //PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(true);
-            other.GetComponent<PlayerMovement>().ResetVerticalSpeed();
+            other.GetComponent<PlayerMovement>().ResetVerticalSpeed(valueToResetVerticalSpeed);
             other.GetComponent<Rigidbody>().AddForce(transform.up * 20f, ForceMode.VelocityChange);
         }
         else
@@ -24,19 +23,4 @@ public class TurbineTrigger : MonoBehaviour
             PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(false);
         }
     }
-
-   //private void OnTriggerExit(Collider other)
-   //{
-   //    if (other.CompareTag("Player"))
-   //    {
-   //        PlayerManager.Instance.SetIsGravityAdditionalTurbineSpeedApplied(false);
-   //        StartCoroutine(ApplyFinalAirForce(other));
-   //    }
-   //}
-   //
-   //private IEnumerator ApplyFinalAirForce(Collider other)
-   //{
-   //    yield return new WaitForSeconds(0.01f);
-   //    other.GetComponent<Rigidbody>().velocity = other.GetComponent<Rigidbody>().velocity
-   //}
 }

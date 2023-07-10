@@ -37297,6 +37297,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 669030639}
     m_Modifications:
+    - target: {fileID: 1822935221, guid: 571c2cb05df636743abaa7717915ac2c, type: 3}
+      propertyPath: valueToResetVerticalSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2013299704939442650, guid: 571c2cb05df636743abaa7717915ac2c,
         type: 3}
       propertyPath: m_Name
@@ -41374,7 +41378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1176051209
 Transform:
   m_ObjectHideFlags: 0
@@ -55555,7 +55559,7 @@ PrefabInstance:
     - target: {fileID: 8205045094132183895, guid: 0d2a39b770656734bb4437c81dd6118f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8205045094132183895, guid: 0d2a39b770656734bb4437c81dd6118f,
         type: 3}
@@ -56927,6 +56931,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1176051209}
     m_Modifications:
+    - target: {fileID: 1822935221, guid: 571c2cb05df636743abaa7717915ac2c, type: 3}
+      propertyPath: valueToResetVerticalSpeed
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2013299704939442650, guid: 571c2cb05df636743abaa7717915ac2c,
         type: 3}
       propertyPath: m_Name
@@ -57763,7 +57771,7 @@ Transform:
   m_Children:
   - {fileID: 1750130833}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1591595684
 PrefabInstance:
