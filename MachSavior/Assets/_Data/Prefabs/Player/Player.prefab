@@ -1039,6 +1039,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  onCanPickObject: {fileID: 11400000, guid: a9f938de59551864e9b4be46beb0cce6, type: 2}
+  onCantPickObject: {fileID: 11400000, guid: fdca42db4f2e0ed45bf373d698b1eb20, type: 2}
 --- !u!1 &2024731695260059532
 GameObject:
   m_ObjectHideFlags: 0

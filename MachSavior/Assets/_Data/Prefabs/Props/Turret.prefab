@@ -434,7 +434,7 @@ PrefabInstance:
     - target: {fileID: 5138728477901005413, guid: 4237308c8ea7d0943aea808652091689,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.34
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 5138728477901005413, guid: 4237308c8ea7d0943aea808652091689,
         type: 3}
@@ -519,7 +519,7 @@ PrefabInstance:
     - target: {fileID: 5138728477901005434, guid: 4237308c8ea7d0943aea808652091689,
         type: 3}
       propertyPath: torretIsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5138728477901005435, guid: 4237308c8ea7d0943aea808652091689,
         type: 3}

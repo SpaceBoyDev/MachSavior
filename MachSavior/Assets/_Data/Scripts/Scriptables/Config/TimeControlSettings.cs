@@ -25,6 +25,10 @@ public class TimeControlSettings : ScriptableObject
     [SerializeField] private int maxTimeCells = 3;
     public int GetMaxTimeCells => maxTimeCells;
     
+    [SerializeField] private int startTimeCells = 3;
+    public int GetStartTimeCells => startTimeCells;
+    
+    [HideInInspector] 
     public int CurrentTimeCells;
     
     #endregion

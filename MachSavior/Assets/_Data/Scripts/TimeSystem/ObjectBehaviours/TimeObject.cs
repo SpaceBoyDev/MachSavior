@@ -77,8 +77,12 @@ public abstract class TimeObject : MonoBehaviour
     {
         // Flip the time state.
         isStopped = !isStopped;
-        _timeSettings.CurrentTimeCells --;
+        
+        if(_timeSettings.CurrentTimeCells>0)
+            _timeSettings.CurrentTimeCells --;
+        
         _timeSettings.GetOnTimeCellUsed.Raise();
+        
         outline.OutlineColor = _timeSettings.GetPoweredOutlineColor;
         //Apply Shader
         StartCoroutine(HighlightEffectLerp(1f,_timeSettings.GetChangeTimeDelay, _timeSettings.GetPoweredFresnelColor, _timeSettings.GetPoweredInteriorColor));
@@ -88,8 +92,12 @@ public abstract class TimeObject : MonoBehaviour
     public void TakeTimeCell()
     {
         isStopped = !isStopped;
-        _timeSettings.CurrentTimeCells ++;
+        
+        if(_timeSettings.CurrentTimeCells<_timeSettings.GetMaxTimeCells)
+            _timeSettings.CurrentTimeCells ++;
+        
         _timeSettings.GetOnTimeCellUsed.Raise();
+        
         outline.OutlineColor = _timeSettings.GetDefaultOutlineColor;
         //Apply shader
         StartCoroutine(HighlightEffectLerp(1f,_timeSettings.GetChangeTimeDelay, _timeSettings.GetDefaultFresnelColor, _timeSettings.GetDefaultInteriorColor));

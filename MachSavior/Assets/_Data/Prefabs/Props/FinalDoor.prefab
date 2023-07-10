@@ -88,6 +88,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.75
       objectReference: {fileID: 0}
@@ -136,10 +141,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423793, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_Name
       value: PressurePlate Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707402312983423796, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423798, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}

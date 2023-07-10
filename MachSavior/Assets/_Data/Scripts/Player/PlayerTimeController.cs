@@ -16,7 +16,7 @@ public class PlayerTimeController : MonoBehaviour
 
     private void Start()
     {
-        
+        _timeSettings.CurrentTimeCells = _timeSettings.GetStartTimeCells;
     }
 
     private void Update()

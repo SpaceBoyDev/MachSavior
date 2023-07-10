@@ -27,6 +27,8 @@ public class PickObjects : MonoBehaviour
     private GameObject _pickedObject = null;
 
     private float _pickAndReleaseCooldawn;
+
+    [SerializeField] private GameEvent onCanPickObject, onCantPickObject;
     
     
     void Update()
@@ -59,10 +61,15 @@ public class PickObjects : MonoBehaviour
             {
                 if (hit.collider.gameObject.GetComponent<PickableObject>().CanPick() && !_pickedObject /*&& _pickAndReleaseCooldawn <= 0*/)
                 {
+                    onCanPickObject.Raise();
                     if (PlayerInputManager.Instance.IsPickButtonPressed())
                     {
                         PickObject(hit.collider.gameObject);
                     }
+                }
+                else
+                {
+                    onCantPickObject.Raise();
                 }
 
                 Debug.Log(hit.collider.name);
@@ -78,6 +85,7 @@ public class PickObjects : MonoBehaviour
     #region Pick
     void PickObject(GameObject objectToPick)
     {
+        onCantPickObject.Raise();
         objectToPick.layer = LayerMask.NameToLayer("IgnorePlayer");
 
         objectToPick.GetComponent<PickableObject>()._isPicked = true;
@@ -168,9 +176,8 @@ public class PickObjects : MonoBehaviour
     #region Release
     public virtual void ReleaseObject()
     {
-        
-        
-            if (_pickedObject.GetComponent<BulletLogic>())
+
+         if (_pickedObject.GetComponent<BulletLogic>())
             {
                 _pickedObject.layer = LayerMask.NameToLayer("IgnorePlayer");
             }
