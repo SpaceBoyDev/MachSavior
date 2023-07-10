@@ -89,22 +89,22 @@ PrefabInstance:
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.25
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -33.35
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071079
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
@@ -114,7 +114,7 @@ PrefabInstance:
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7071057
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
@@ -129,7 +129,7 @@ PrefabInstance:
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7707402312983423787, guid: 6b55ecc7b6098424c9d48452dd19c3cf,
         type: 3}
@@ -184,17 +184,17 @@ PrefabInstance:
     - target: {fileID: 6438762593350191044, guid: d91f00de96bd7458c863cb4af8d7fa64,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.673318
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6438762593350191044, guid: d91f00de96bd7458c863cb4af8d7fa64,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3480711
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6438762593350191044, guid: d91f00de96bd7458c863cb4af8d7fa64,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -40.771748
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6438762593350191044, guid: d91f00de96bd7458c863cb4af8d7fa64,
         type: 3}
@@ -251,34 +251,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1824251640874573819}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1824251641753607827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4614535150463421299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e357610733dd5b469e9414316ee59ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 2e7b2519c948e634caa0521816b1d418, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4614535150463389129}
-        m_TargetAssemblyTypeName: DoorDoubleSlide, Assembly-CSharp
-        m_MethodName: CloseDoor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1824251641753607826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +270,34 @@ MonoBehaviour:
       - m_Target: {fileID: 4614535150463389129}
         m_TargetAssemblyTypeName: DoorDoubleSlide, Assembly-CSharp
         m_MethodName: OpenDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1824251641753607827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614535150463421299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e357610733dd5b469e9414316ee59ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 2e7b2519c948e634caa0521816b1d418, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4614535150463389129}
+        m_TargetAssemblyTypeName: DoorDoubleSlide, Assembly-CSharp
+        m_MethodName: CloseDoor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
