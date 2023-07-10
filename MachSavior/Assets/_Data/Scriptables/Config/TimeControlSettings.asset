@@ -15,7 +15,7 @@ MonoBehaviour:
   maxDistance: 30
   changeTimeDelay: 0.2
   maxTimeCells: 3
-  CurrentTimeCells: 3
+  CurrentTimeCells: 2
   onHoverEnter: {fileID: 11400000, guid: 6385e59ba47c20b47870b677456f3ed4, type: 2}
   onHoverExit: {fileID: 11400000, guid: 0d970a00348e12a47a38afa1aac8866e, type: 2}
   onTimeCellUsed: {fileID: 11400000, guid: 065daaffc0e4d634c9dd097c0b777edc, type: 2}

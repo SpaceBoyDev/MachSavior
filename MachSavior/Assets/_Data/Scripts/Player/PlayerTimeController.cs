@@ -55,8 +55,9 @@ public class PlayerTimeController : MonoBehaviour
 
         if (timeObject == lastTimeObject)
             return;
-        
-        timeObject.OnHoverEnter();
+
+        if(timeObject != null)
+            timeObject.OnHoverEnter();
 
         lastTimeObject = timeObject;
     }
