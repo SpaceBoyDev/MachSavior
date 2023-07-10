@@ -12,6 +12,7 @@ public class PlayerTimeController : MonoBehaviour
     [SerializeField] private TimeControlSettings _timeSettings;
     
     private TimeObject timeObject; // Stores currently selected interactable object.
+    private TimeObject lastTimeObject;
 
     private void Start()
     {
@@ -22,29 +23,6 @@ public class PlayerTimeController : MonoBehaviour
     {
         //ToggleSelectMode();
         CheckTimeObject();
-
-        /*var ray = new Ray(cam.transform.position, cam.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, _timeControlSettings.GetMaxDistance, mask))
-        {
-            timeObject = hit.transform.gameObject.GetComponent<TimeObject>();
-            
-            if (Vector3.Distance(timeObject.transform.position, transform.position) > _timeControlSettings.GetMaxDistance)
-            {
-                Debug.Log($"<color=red>{timeObject.gameObject.name} </color>is NOT at range.");
-                timeObject.isAtRange = false;
-            }
-            else
-            {
-                Debug.Log($"<color=blue>{timeObject.gameObject.name} </color>is at range.");
-                timeObject.isAtRange = true;
-            }
-        }
-        else
-        {
-            timeObject = null;
-        }*/
-        
         OnHoverInput();
     }
 
@@ -53,32 +31,35 @@ public class PlayerTimeController : MonoBehaviour
     /// </summary>
     private void CheckTimeObject()
     {
-        var ray = cam.ScreenPointToRay(Input.mousePosition);
+        var ray = new Ray(cam.transform.position, cam.transform.forward);
 
         if (!Physics.Raycast(ray, out var hit, _timeSettings.GetMaxDistance))
         {
-            timeObject = null;
+            if (lastTimeObject != null)
+            {
+                lastTimeObject.OnHoverExit();
+                lastTimeObject = null;
+            }
+            if (timeObject != null)
+            {
+                timeObject.OnHoverExit();
+                timeObject = null;
+            }
             return;
         }
         
         var selection = hit.transform;
-        timeObject = selection.gameObject.GetComponent<TimeObject>();
-        
-        if (timeObject == null)
+        timeObject = selection.GetComponent<TimeObject>();
+
+        if (timeObject == lastTimeObject)
+        {
+            
             return;
+        }
         
-        //Check if time object is at range so no effect applies.
-        if (Vector3.Distance(timeObject.transform.position, transform.position) > _timeSettings.GetMaxDistance)
-        {
-            Debug.Log($"<color=red>{timeObject.gameObject.name} </color>is NOT at range.");
-            timeObject.isAtRange = false;
-        }
-        else
-        {
-            Debug.Log($"<color=blue>{timeObject.gameObject.name} </color>is at range.");
-            timeObject.isAtRange = true;
-        }
-        //TODO::Last frame time obj 
+        timeObject.OnHoverEnter();
+
+        lastTimeObject = timeObject;
     }
     
     /// <summary>
