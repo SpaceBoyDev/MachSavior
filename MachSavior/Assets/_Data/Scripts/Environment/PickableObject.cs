@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,17 @@ public class PickableObject : MonoBehaviour
     public bool _isPicked = false;
 
     [HideInInspector] public int currentWeight;
+
+    protected Vector3 initialPos;
+
+    
+    public float distanceToRecall = 30;
+
+    void Start()
+    {
+        initialPos = transform.position;
+    }
+
     private enum ObjectWeightCategory 
     { 
         lightWeight = 0, 
@@ -98,4 +110,17 @@ public class PickableObject : MonoBehaviour
     }
 
     #endregion
+
+
+    private void Update()
+    {
+        if (distanceToRecall <= Vector3.Distance(initialPos, transform.position))
+        {
+            if (_isPicked)
+            {
+                FindObjectOfType<PickObjects>().ReleaseObject();
+                transform.position = initialPos;
+            }
+        }
+    }
 }

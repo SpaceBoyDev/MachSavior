@@ -171,6 +171,7 @@ MonoBehaviour:
   _useGravity: 0
   _isPicked: 0
   currentWeight: 0
+  distanceToRecall: 25
   objectWeight: 0
   _positionWhenPick: {x: 0.25, y: -0.1, z: -0.7}
   _rotationWhenPick: {x: 0, y: 0, z: 0}

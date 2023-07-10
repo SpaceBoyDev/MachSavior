@@ -128,15 +128,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4979899561286670, guid: 628038b4314654d05bb93413e0aae568, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.1335602
+      value: 3.016655
       objectReference: {fileID: 0}
     - target: {fileID: 4979899561286670, guid: 628038b4314654d05bb93413e0aae568, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3480711
+      value: 0.48000002
       objectReference: {fileID: 0}
     - target: {fileID: 4979899561286670, guid: 628038b4314654d05bb93413e0aae568, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -37.827187
+      value: 11.413412
       objectReference: {fileID: 0}
     - target: {fileID: 4979899561286670, guid: 628038b4314654d05bb93413e0aae568, type: 3}
       propertyPath: m_LocalRotation.w
@@ -235,25 +235,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8165130738476457952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3529041266754648507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e14749cdb7a66934abe2c8a452e7883b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canPick: 1
-  _useGravity: 0
-  _isPicked: 0
-  currentWeight: 0
-  objectWeight: 2
-  _positionWhenPick: {x: 0.1, y: -0.4, z: -0.25}
-  _rotationWhenPick: {x: 90, y: -90, z: 0}
 --- !u!114 &4859183343983016876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,3 +270,23 @@ MonoBehaviour:
   isStopped: 1
   isAtRange: 0
   slowtime: 1
+--- !u!114 &8165130738476457952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529041266754648507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14749cdb7a66934abe2c8a452e7883b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canPick: 1
+  _useGravity: 0
+  _isPicked: 0
+  currentWeight: 0
+  distanceToRecall: 25
+  objectWeight: 2
+  _positionWhenPick: {x: -1.4, y: -0.4, z: -0.25}
+  _rotationWhenPick: {x: 90, y: -90, z: 0}

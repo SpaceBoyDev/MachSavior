@@ -24,6 +24,19 @@ public class BulletLogic : PickableObject
             
         }
         DirectionRaycast();
+        
+        if (distanceToRecall <= Vector3.Distance(initialPos, transform.position))
+        {
+            if (_isPicked)
+            {
+                FindObjectOfType<PickObjects>().ReleaseObject();
+                transform.position = initialPos;
+                transform.rotation = bulletSpawn.transform.rotation;
+
+
+            }
+        }
+        
     }
 
     void DirectionRaycast() // A RAYCAST WITH THE DIRECTION OF THE BULLET 
