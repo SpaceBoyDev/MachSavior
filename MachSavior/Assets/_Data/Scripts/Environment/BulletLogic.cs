@@ -32,11 +32,8 @@ public class BulletLogic : PickableObject
                 FindObjectOfType<PickObjects>().ReleaseObject();
                 transform.position = initialPos;
                 transform.rotation = bulletSpawn.transform.rotation;
-
-
             }
         }
-        
     }
 
     void DirectionRaycast() // A RAYCAST WITH THE DIRECTION OF THE BULLET 
@@ -99,6 +96,7 @@ public class BulletLogic : PickableObject
             Despawn();
         }
         gameObject.GetComponent<PhysicsTimeObject>().StopTime(); // reset time logic
+        physicsTimeObject.TakeTimeCell();
 
     }
 
